@@ -368,7 +368,7 @@ export default function SimulationPage() {
   // Simulation controls
   const [isPlaying, setIsPlaying] = useState(false);
   const [simTime, setSimTime] = useState(0);
-  const [simSpeed, setSimSpeed] = useState<1 | 2 | 3 | 5>(1);
+  const [simSpeed, setSimSpeed] = useState<1 | 2 | 3 | 5 | 10>(1);
   const [simLogs, setSimLogs] = useState<VisualLog[]>([]);
   const [leakerCount, setLeakerCount] = useState(0);
   const [hitCount, setHitCount] = useState(0);
@@ -1744,7 +1744,7 @@ export default function SimulationPage() {
               <span className="text-xs font-mono text-[#6b7280]">TACTICAL RADAR SCROLL SCAN</span>
               <div className="flex items-center gap-1">
                 <span className="text-[9px] uppercase font-mono text-[#6b7280] mr-1">Speed:</span>
-                {([1, 2, 3, 5] as const).map(speed => (
+                {([1, 2, 3, 5, 10] as const).map(speed => (
                   <button
                     key={speed}
                     type="button"
