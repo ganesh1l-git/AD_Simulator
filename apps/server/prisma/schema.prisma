@@ -1,0 +1,304 @@
+// ============================================
+// IADES - SQLite Database Schema with Json support
+// ============================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---- Users ----
+model User {
+  id             String           @id @default(uuid())
+  email          String           @unique
+  name           String
+  passwordHash   String
+  role           String           @default("PLAYER") // "PLAYER" | "ADMIN" | "OBSERVER"
+  avatar         String?
+  
+  // Stats
+  simulationsRun     Int          @default(0)
+  interceptionRate   Float        @default(0)
+  totalCostSpent     Float        @default(0)
+  campaignsCompleted Int          @default(0)
+  multiplayerWins    Int          @default(0)
+  multiplayerLosses  Int          @default(0)
+
+  // Relations
+  simulations    Simulation[]
+  scenarios      Scenario[]
+  campaigns      Campaign[]
+  procurements   Procurement[]
+  roomPlayers    RoomPlayer[]
+  
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@map("users")
+}
+
+// ---- Air Defence Systems ----
+model AirDefenceSystem {
+  id                    String         @id @default(uuid())
+  name                  String         @unique
+  countryOfOrigin       String
+  category              String         // "LONG_RANGE" | "MEDIUM_RANGE" | "SHORT_RANGE" | "VERY_SHORT_RANGE" | "ANTI_DRONE" | "RADAR"
+  minRange              Float          // km
+  maxRange              Float          // km
+  minAltitude           Float          // meters
+  maxAltitude           Float          // meters
+  radarType             String
+  missileType           String
+  mobilityClass         String         // "FIXED" | "SEMI_MOBILE" | "MOBILE" | "MAN_PORTABLE"
+  serviceEntryYear      Int
+  cost                  Float          // USD millions (educational estimate)
+  operatingCostPerHour  Float          // USD
+  reloadTime            Float          // seconds
+  maxSimultaneousTargets Int
+  accuracy              Float          // 0-1
+  interceptorSpeed      Float          @default(3.0) // Mach
+  description           String
+  imageUrl              String?
+  isIndian              Boolean        @default(false)
+
+  // Relations
+  procurements          Procurement[]
+  
+  createdAt             DateTime       @default(now())
+  updatedAt             DateTime       @updatedAt
+
+  @@map("air_defence_systems")
+}
+
+// ---- Threats ----
+model Threat {
+  id                String           @id @default(uuid())
+  name              String           @unique
+  type              String           // "BALLISTIC_MISSILE" | "CRUISE_MISSILE" | "UAV" | "DRONE_SWARM" | "FIGHTER_AIRCRAFT" | ...
+  countryOfOrigin   String
+  speedClass        String           // "SUBSONIC" | "TRANSONIC" | "SUPERSONIC" | "HYPERSONIC"
+  maxSpeed          Float            // Mach
+  altitudeClass     String           // "SEA_SKIMMING" | "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH" | "EXOATMOSPHERIC"
+  minAltitude       Float            // meters
+  maxAltitude       Float            // meters
+  radarVisibility   String           // "STEALTH" | "LOW" | "MEDIUM" | "HIGH" | "VERY_HIGH"
+  rcs               Float            // m²
+  threatScore       Int              // 1-100
+  costEstimate      Float            // USD thousands
+  range             Float            // km
+  warheadWeight     Float            // kg
+  description       String
+  imageUrl          String?
+
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
+
+  @@map("threats")
+}
+
+// ---- Scenarios ----
+model Scenario {
+  id            String       @id @default(uuid())
+  name          String
+  description   String
+  isPublic      Boolean      @default(false)
+  
+  // Map configuration (JSON)
+  mapConfig     Json         // { centerLat, centerLng, zoom, zones[] }
+  
+  // Setup (JSON)
+  defenderSetup Json         // { systems[], budget }
+  attackerSetup Json         // { waves[], budget }
+  
+  // Relations
+  userId        String
+  user          User         @relation(fields: [userId], references: [id])
+  simulations   Simulation[]
+  
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@map("scenarios")
+}
+
+// ---- Simulations ----
+model Simulation {
+  id            String            @id @default(uuid())
+  name          String
+  status        String            @default("PENDING") // "PENDING" | "RUNNING" | "PAUSED" | "COMPLETED" | "FAILED"
+  
+  // Config (JSON)
+  config        Json              // SimulationConfig
+  
+  // Results (JSON)
+  results       Json?             // SimulationResults
+  
+  duration      Float             @default(0) // seconds
+  
+  // Relations
+  userId        String
+  user          User              @relation(fields: [userId], references: [id])
+  scenarioId    String
+  scenario      Scenario          @relation(fields: [scenarioId], references: [id])
+  events        SimulationEvent[]
+  replayData    ReplayData?
+  analytics     AnalyticsRecord?
+  
+  createdAt     DateTime          @default(now())
+  completedAt   DateTime?
+
+  @@map("simulations")
+}
+
+// ---- Simulation Events ----
+model SimulationEvent {
+  id            String      @id @default(uuid())
+  timestamp     Float       // simulation seconds
+  type          String      // SimEventType
+  data          Json        // event-specific data (JSON)
+  
+  simulationId  String
+  simulation    Simulation  @relation(fields: [simulationId], references: [id], onDelete: Cascade)
+
+  @@index([simulationId, timestamp])
+  @@map("simulation_events")
+}
+
+// ---- Campaigns ----
+model Campaign {
+  id              String          @id @default(uuid())
+  name            String
+  currentDay      Int             @default(1)
+  totalDays       Int             @default(10)
+  budget          Float           // total budget
+  remainingBudget Float           // current remaining
+  status          String          @default("ACTIVE") // "ACTIVE" | "PAUSED" | "WON" | "LOST" | "ABANDONED"
+  difficulty      String          @default("MEDIUM") // "EASY" | "MEDIUM" | "HARD" | "EXPERT"
+  
+  // Owned systems (JSON array of system IDs)
+  ownedSystems    Json            // [systemId, ...]
+  
+  // Relations
+  userId          String
+  user            User            @relation(fields: [userId], references: [id])
+  days            CampaignDay[]
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("campaigns")
+}
+
+// ---- Campaign Days ----
+model CampaignDay {
+  id            String    @id @default(uuid())
+  day           Int
+  budget        Float
+  
+  // Day state (JSON)
+  threats       Json      // threat IDs used
+  results       Json?     // SimulationResults
+  systemDamage  Json      // { systemId: damagePercent }
+  ammoUsed      Json      // { systemId: ammoCount }
+  
+  // Relations
+  campaignId    String
+  campaign      Campaign  @relation(fields: [campaignId], references: [id], onDelete: Cascade)
+
+  @@unique([campaignId, day])
+  @@map("campaign_days")
+}
+
+// ---- Procurement ----
+model Procurement {
+  id              String             @id @default(uuid())
+  purchaseCost    Float
+  maintenanceCost Float
+  level           Int                @default(1)
+  status          String             @default("ORDERED") // "ORDERED" | "DELIVERED" | "OPERATIONAL" | "UPGRADING" | "DECOMMISSIONED"
+  
+  // Relations
+  userId          String
+  user            User               @relation(fields: [userId], references: [id])
+  systemId        String
+  system          AirDefenceSystem   @relation(fields: [systemId], references: [id])
+  
+  purchasedAt     DateTime           @default(now())
+  updatedAt       DateTime           @updatedAt
+
+  @@map("procurements")
+}
+
+// ---- Analytics Records ----
+model AnalyticsRecord {
+  id                   String     @id @default(uuid())
+  interceptionRate     Float
+  detectionRate        Float
+  costEfficiency       Float      // cost per successful interception
+  radarEffectiveness   Float
+  threatPenetrationRate Float
+  systemUtilization    Float
+  
+  // Relations
+  simulationId         String     @unique
+  simulation           Simulation @relation(fields: [simulationId], references: [id], onDelete: Cascade)
+  
+  createdAt            DateTime   @default(now())
+
+  @@map("analytics_records")
+}
+
+// ---- Replay Data ----
+model ReplayData {
+  id            String     @id @default(uuid())
+  duration      Float
+  events        Json       // Full event array for replay
+  snapshot      Json       // Initial state snapshot
+  
+  simulationId  String     @unique
+  simulation    Simulation @relation(fields: [simulationId], references: [id], onDelete: Cascade)
+  
+  createdAt     DateTime   @default(now())
+
+  @@map("replay_data")
+}
+
+// ---- Multiplayer Rooms ----
+model Room {
+  id            String       @id @default(uuid())
+  code          String       @unique
+  mode          String       // "1v1" | "2v2" | ...
+  status        String       @default("WAITING") // "WAITING" | "STARTING" | "IN_PROGRESS" | "COMPLETED" | "CANCELLED"
+  maxPlayers    Int          @default(2)
+  
+  // Settings (JSON)
+  settings      Json         // GameSettings
+  
+  // Relations
+  players       RoomPlayer[]
+  
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@map("rooms")
+}
+
+// ---- Room Players ----
+model RoomPlayer {
+  id        String  @id @default(uuid())
+  team      String  // "DEFENDER" | "ATTACKER" | "OBSERVER"
+  ready     Boolean @default(false)
+  connected Boolean @default(true)
+  
+  userId    String
+  user      User    @relation(fields: [userId], references: [id])
+  roomId    String
+  room      Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, roomId])
+  @@map("room_players")
+}
