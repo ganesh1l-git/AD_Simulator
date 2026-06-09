@@ -128,10 +128,10 @@ function SystemUsageChart() {
     const chart = new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: ['S-400', 'MRSAM', 'Akash', 'QRSAM', 'Igla-S', 'Anti-Drone'],
+        labels: ['S-400', 'Barak 8 ER', 'MRSAM', 'SPYDER', 'Akash', 'Pechora-2M', 'QRSAM', 'VSHORAD MANPAD', 'Igla-S', 'Anti-Drone'],
         datasets: [{
-          data: [15, 25, 20, 18, 12, 10],
-          backgroundColor: [chartColors.red, chartColors.amber, '#f97316', chartColors.green, chartColors.cyan, chartColors.purple],
+          data: [15, 10, 20, 12, 18, 8, 14, 6, 10, 8],
+          backgroundColor: [chartColors.red, chartColors.indigo, chartColors.amber, '#eab308', '#f97316', '#84cc16', chartColors.green, '#06b6d4', chartColors.cyan, chartColors.purple],
           borderColor: '#0a0e17',
           borderWidth: 2,
         }],

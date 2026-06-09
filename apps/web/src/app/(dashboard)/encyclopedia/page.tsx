@@ -98,13 +98,13 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
     ]
   },
   {
-    id: 'def-mrsam',
-    name: 'MRSAM / Barak-8 Battery',
+    id: 'def-barak8er',
+    name: 'Barak 8 ER SAM Battery',
     category: 'MEDIUM_RANGE',
     country: 'India/Israel',
-    cost: '$150 Million (Battery Cost)',
+    cost: '$180 Million (Battery Cost)',
     isIndian: true,
-    description: 'Jointly developed by DRDO (India) and IAI (Israel), the Medium Range Surface-to-Air Missile system provides advanced 360-degree defense for ground forces, naval ships, and cities.',
+    description: 'Extended Range version of the MRSAM system. Incorporates an active booster stage to extend range to 150km, specifically enhanced for anti-ballistic and high-altitude standoff threat neutralization.',
     composition: [
       { name: 'Mobile Command & Control (MCP)', type: 'C2 Station', qty: '1 per Battery', description: 'Coordinates weapon deployments and tracks target allocations.' },
       { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar (S-band)', qty: '1 per Battery', description: 'Advanced AESA radar capable of tracking low-altitude targets and cruise missiles up to 150km.' },
@@ -121,7 +121,23 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
         accuracy: '88%',
         warhead: '60 kg HE-Frag',
         description: 'Equipped with a booster to intercept aircraft and stand-off missiles before launch.'
-      },
+      }
+    ]
+  },
+  {
+    id: 'def-mrsam',
+    name: 'MRSAM / Barak-8 Battery',
+    category: 'MEDIUM_RANGE',
+    country: 'India/Israel',
+    cost: '$150 Million (Battery Cost)',
+    isIndian: true,
+    description: 'Jointly developed by DRDO (India) and IAI (Israel), the Medium Range Surface-to-Air Missile system provides advanced 360-degree defense for ground forces, naval ships, and cities.',
+    composition: [
+      { name: 'Mobile Command & Control (MCP)', type: 'C2 Station', qty: '1 per Battery', description: 'Coordinates weapon deployments and tracks target allocations.' },
+      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar (S-band)', qty: '1 per Battery', description: 'Advanced AESA radar capable of tracking low-altitude targets and cruise missiles up to 150km.' },
+      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: '3 per Battery', description: '8-cell vertical launcher canisters, allowing rapid 360-degree firing of up to 24 missiles.' }
+    ],
+    missiles: [
       {
         name: 'Barak-8 Standard',
         type: 'Active Radar Homing',
@@ -174,6 +190,32 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
     ]
   },
   {
+    id: 'def-pechora2m',
+    name: 'Pechora-2M SAM Battery',
+    category: 'MEDIUM_RANGE',
+    country: 'Russia/India',
+    cost: '$15 Million (Battery Cost)',
+    isIndian: true,
+    description: 'Upgraded mobile version of the S-125 Pechora-2M system. Operates upgraded electronic warfare suites and modern command vehicles to extend operational life, targeting medium-altitude tactical aircraft and cruise missiles.',
+    composition: [
+      { name: 'UNV-2M Command Cabin', type: 'Guidance Cabin', qty: '1 per Battery', description: 'Processes target data and transmits command guidance signals.' },
+      { name: 'Pechora-2M 5P73 TEL Launcher', type: 'Launcher Trailer (2 rails)', qty: '4 per Battery', description: '2-rail mobile launchers, providing rapid setup times and deployment mobility.' }
+    ],
+    missiles: [
+      {
+        name: '5V27DE Interceptor',
+        type: 'Command Guided',
+        range: '35 km',
+        speed: 'Mach 3.5',
+        cost: '$0.1 Million',
+        guidance: 'Command guided radio control + optical tracking option',
+        accuracy: '72%',
+        warhead: '60 kg HE-Frag',
+        description: 'Command-guided heavy missile upgraded for Pechora-2M launchers.'
+      }
+    ]
+  },
+  {
     id: 'def-qrsam',
     name: 'QRSAM Battery',
     category: 'SHORT_RANGE',
@@ -201,6 +243,44 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
     ]
   },
   {
+    id: 'def-spyder',
+    name: 'SPYDER SAM Battery',
+    category: 'SHORT_RANGE',
+    country: 'Israel/India',
+    cost: '$80 Million (Battery Cost)',
+    isIndian: true,
+    description: 'Surface-to-air Python and Derby (SPYDER) mobile air defence battery. Operating highly agile infrared Python-5 and active radar Derby missiles for quick-reaction point defence against cruise missiles, fighter jets, and low-altitude UAVs.',
+    composition: [
+      { name: 'Mobile Command & Control Post (MCP)', type: 'Tactical C2', qty: '1 per Battery', description: 'Receives air surveillance data and handles weapon assignments.' },
+      { name: 'EL/M-2106 ATAR 3D Surveillance Radar', type: 'Surveillance Radar', qty: '1 per Battery', description: 'Tracks up to 60 targets simultaneously at ranges up to 180km.' },
+      { name: 'SPYDER Mobile Launcher (Derby/Python-5)', type: 'TEL Launcher (4 rails)', qty: '4 per Battery', description: 'Launcher trucks equipped with 4 ready-to-fire quick launching interceptors.' }
+    ],
+    missiles: [
+      {
+        name: 'Derby Interceptor',
+        type: 'Active Radar Homing',
+        range: '50 km',
+        speed: 'Mach 4.0',
+        cost: '$0.5 Million',
+        guidance: 'Active radar terminal homing + data link',
+        accuracy: '82%',
+        warhead: '23 kg HE-Frag',
+        description: 'Active radar-homing interceptor for SPYDER system, highly effective against maneuvering targets.'
+      },
+      {
+        name: 'Python-5 Interceptor',
+        type: 'Dual-band IR/CCD Seeker',
+        range: '20 km',
+        speed: 'Mach 4.0',
+        cost: '$0.3 Million',
+        guidance: 'Dual-band IR/CCD imaging seeker + lock-on after launch',
+        accuracy: '82%',
+        warhead: '11 kg HE-Frag',
+        description: 'Infrared-homing point defence missile with full sphere capability and high countermeasure resistance.'
+      }
+    ]
+  },
+  {
     id: 'def-iglas',
     name: 'Igla-S MANPADS Team',
     category: 'VERY_SHORT_RANGE',
@@ -223,6 +303,32 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
         accuracy: '65%',
         warhead: '2.5 kg HE-Frag with laser fuze',
         description: 'Shoulder-fired infrared tracking missile designed to intercept targets using thermal exhaust signatures.'
+      }
+    ]
+  },
+  {
+    id: 'def-vshoradmanpad',
+    name: 'VSHORAD MANPADS Team',
+    category: 'VERY_SHORT_RANGE',
+    country: 'India',
+    cost: '$0.15 Million (Unit Cost)',
+    isIndian: true,
+    description: 'Indigenous Very Short Range Air Defence System (VSHORAD) MANPADS developed by DRDO. Deployed by shoulder-fired operators to defend point assets against low-altitude attack helicopters, subsonic cruise missiles, and UAVs using advanced dual-band IR seekers.',
+    composition: [
+      { name: 'DRDO VSHORAD Launcher', type: 'MANPADS Launcher', qty: '4 per Team', description: 'Indigenous shoulder-fired launching mechanism.' },
+      { name: 'Optical Target Acquisition Sight', type: 'Target Scope', qty: '4 per Team', description: 'Visual and thermal acquisition assist sensor.' }
+    ],
+    missiles: [
+      {
+        name: 'DRDO VSHORAD',
+        type: 'Dual-band IR Seeker',
+        range: '6.5 km',
+        speed: 'Mach 2.5',
+        cost: '$0.08 Million',
+        guidance: 'Dual-band passive infrared homing',
+        accuracy: '70%',
+        warhead: '2.5 kg HE-Frag',
+        description: 'Shoulder-fired very short range interceptor developed by DRDO.'
       }
     ]
   },
@@ -330,6 +436,10 @@ const MUNITIONS: MissileVariant[] = [
   { name: '48N6DM SAM', type: 'Long-Range SAM', range: '250 km', speed: 'Mach 6.0', cost: '$1.5 Million', guidance: 'Semi-Active Radar (TVM)', accuracy: '88%', warhead: '180 kg HE-Frag', description: 'Standard heavy missile for S-400 battalions targeting maneuvering aircraft.' },
   { name: '9M96E2 SAM', type: 'Medium-Range Agile SAM', range: '120 km', speed: 'Mach 4.5', cost: '$0.8 Million', guidance: 'Active Radar / Hit-To-Kill', accuracy: '85%', warhead: '24 kg Directed HE-Frag', description: 'Agile interceptor with thruster vectors for kinetic neutralization.' },
   { name: 'Barak-8 ER', type: 'Extended Range SAM', range: '150 km', speed: 'Mach 3.0', cost: '$1.2 Million', guidance: 'Active Radar', accuracy: '88%', warhead: '60 kg HE-Frag', description: 'Used by MRSAM batteries to deny stand-off strikes from fighter jets.' },
+  { name: 'Derby Interceptor', type: 'Medium-Range Radar SAM', range: '50 km', speed: 'Mach 4.0', cost: '$0.5 Million', guidance: 'Active Radar Homing', accuracy: '82%', warhead: '23 kg HE-Frag', description: 'Active radar-homing interceptor for SPYDER system, highly effective against maneuvering targets.' },
+  { name: 'Python-5 Interceptor', type: 'Short-Range Infrared SAM', range: '20 km', speed: 'Mach 4.0', cost: '$0.3 Million', guidance: 'Dual-band IR/CCD', accuracy: '82%', warhead: '11 kg HE-Frag', description: 'Infrared-homing point defence missile with full sphere capability and high countermeasure resistance.' },
+  { name: '5V27DE Interceptor', type: 'Medium-Range Point SAM', range: '35 km', speed: 'Mach 3.5', cost: '$0.1 Million', guidance: 'Command Guided', accuracy: '72%', warhead: '60 kg HE-Frag', description: 'Command-guided heavy missile upgraded for Pechora-2M launchers.' },
+  { name: 'DRDO VSHORAD', type: 'Man-Portable VSHORAD', range: '6.5 km', speed: 'Mach 2.5', cost: '$0.08 Million', guidance: 'Dual-band IR Seeker', accuracy: '70%', warhead: '2.5 kg HE-Frag', description: 'Shoulder-fired very short range interceptor developed by DRDO.' },
   { name: 'Akash-NG', type: 'Medium-Range active SAM', range: '80 km', speed: 'Mach 3.5', cost: '$0.3 Million', guidance: 'Active RF Seeker', accuracy: '85%', warhead: '25 kg Pre-fragmented HE', description: 'DRDO next-generation canisterized solid-fuel rocket interceptor.' },
   
   // Attacker Payloads

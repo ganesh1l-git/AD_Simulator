@@ -12,6 +12,8 @@ import {
   calculateInterceptionProbability,
   calculateEngagementCost,
   calculateDetectionTime,
+  findSystemKey,
+  SYSTEM_THREAT_MULTIPLIERS,
 } from '@iades/shared';
 import { v4 as uuid } from 'uuid';
 
@@ -50,6 +52,7 @@ interface SimSystem {
   maxTargets: number;
   currentTargets: number;
   readyAt: number; // simulation time when ready to fire again
+  missileType: string;
 }
 
 interface SimEvent {
@@ -132,6 +135,7 @@ export async function runSimulation(simulationId: string): Promise<void> {
         maxTargets: systemData.maxSimultaneousTargets,
         currentTargets: 0,
         readyAt: 0,
+        missileType: systemData.missileType,
       };
     }).filter(Boolean) as SimSystem[];
 
@@ -179,6 +183,7 @@ export async function runSimulation(simulationId: string): Promise<void> {
           reloadTime: sys.reloadTime, cost: sys.cost,
           operatingCostPerHour: sys.operatingCostPerHour,
           maxTargets: sys.maxSimultaneousTargets, currentTargets: 0, readyAt: 0,
+          missileType: sys.missileType,
         });
       }
 
@@ -251,13 +256,18 @@ export async function runSimulation(simulationId: string): Promise<void> {
                   data: { threatId: threat.id, type: threat.type, speed: threat.speed, altitude: threat.altitude },
                 });
 
-                // STEP 3: ASSIGN INTERCEPTOR
-                const availableSystem = simSystems.find(s =>
-                  s.category !== 'RADAR' &&
-                  s.currentTargets < s.maxTargets &&
-                  s.readyAt <= simTime &&
-                  s.accuracy > 0
-                );
+                // STEP 3: ASSIGN INTERCEPTOR (Only capable systems)
+                const availableSystem = simSystems.find(s => {
+                  if (s.category === 'RADAR' || s.currentTargets >= s.maxTargets || s.readyAt > simTime || s.accuracy <= 0) {
+                    return false;
+                  }
+                  const systemKey = findSystemKey(s.name);
+                  if (systemKey && SYSTEM_THREAT_MULTIPLIERS[systemKey]) {
+                    const multiplier = SYSTEM_THREAT_MULTIPLIERS[systemKey][threat.type];
+                    if (multiplier === 0.0) return false; // Not capable against this threat type
+                  }
+                  return true;
+                });
 
                 if (availableSystem) {
                   const assignTime = classTime + 1 + Math.random() * 2;
@@ -305,6 +315,8 @@ export async function runSimulation(simulationId: string): Promise<void> {
                     range: engagementRange,
                     systemMaxRange: availableSystem.maxRange,
                     targetType: threat.type,
+                    systemName: availableSystem.name,
+                    missileName: availableSystem.missileType,
                   });
 
                   const success = Math.random() < interceptProb;

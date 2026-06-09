@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { api } from '@/lib/api';
+import { getMissileThreatMultiplier } from '@iades/shared';
 
 // ---- Data Catalogs ----
 interface WeaponItem {
@@ -126,6 +127,37 @@ interface DefenceItem {
   composition?: { name: string; type: string; qty: number }[];
 }
 
+const LOCAL_SYSTEM_THREAT_MULTIPLIERS: Record<string, Record<string, number>> = {
+  'S-400': { BALLISTIC: 0.90, CRUISE: 0.95, UAV: 0.95, SWARM: 0.70, FIGHTER: 0.98, BOMBER: 0.98, ATTACK_HELICOPTER: 0.95, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.95, HYPERSONIC: 0.35, GLIDE_BOMB: 0.80, ROCKET: 0.80 },
+  'Barak 8 ER': { BALLISTIC: 0.65, CRUISE: 0.90, UAV: 0.92, SWARM: 0.65, FIGHTER: 0.95, BOMBER: 0.95, ATTACK_HELICOPTER: 0.92, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.85, HYPERSONIC: 0.15, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
+  'Barak 8': { BALLISTIC: 0.40, CRUISE: 0.85, UAV: 0.90, SWARM: 0.60, FIGHTER: 0.92, BOMBER: 0.92, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.75, HYPERSONIC: 0.05, GLIDE_BOMB: 0.80, ROCKET: 0.80 },
+  'SPYDER': { BALLISTIC: 0.00, CRUISE: 0.85, UAV: 0.95, SWARM: 0.75, FIGHTER: 0.90, BOMBER: 0.90, ATTACK_HELICOPTER: 0.95, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.40, HYPERSONIC: 0.00, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
+  'Pechora': { BALLISTIC: 0.00, CRUISE: 0.55, UAV: 0.65, SWARM: 0.30, FIGHTER: 0.75, BOMBER: 0.80, ATTACK_HELICOPTER: 0.75, LOITERING_MUNITION: 0.40, TACTICAL_MISSILE: 0.20, HYPERSONIC: 0.00, GLIDE_BOMB: 0.40, ROCKET: 0.40 },
+  'Akash-NG': { BALLISTIC: 0.50, CRUISE: 0.85, UAV: 0.90, SWARM: 0.60, FIGHTER: 0.92, BOMBER: 0.92, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.70, HYPERSONIC: 0.05, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
+  'Akash': { BALLISTIC: 0.00, CRUISE: 0.70, UAV: 0.80, SWARM: 0.40, FIGHTER: 0.85, BOMBER: 0.85, ATTACK_HELICOPTER: 0.80, LOITERING_MUNITION: 0.70, TACTICAL_MISSILE: 0.30, HYPERSONIC: 0.00, GLIDE_BOMB: 0.70, ROCKET: 0.70 },
+  'QRSAM': { BALLISTIC: 0.00, CRUISE: 0.80, UAV: 0.90, SWARM: 0.70, FIGHTER: 0.88, BOMBER: 0.80, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.40, HYPERSONIC: 0.00, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
+  'VSHORAD': { BALLISTIC: 0.00, CRUISE: 0.78, UAV: 0.94, SWARM: 0.78, FIGHTER: 0.88, BOMBER: 0.88, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.30, HYPERSONIC: 0.00, GLIDE_BOMB: 0.82, ROCKET: 0.82 },
+  'Igla-S': { BALLISTIC: 0.00, CRUISE: 0.72, UAV: 0.88, SWARM: 0.72, FIGHTER: 0.82, BOMBER: 0.82, ATTACK_HELICOPTER: 0.85, LOITERING_MUNITION: 0.80, TACTICAL_MISSILE: 0.20, HYPERSONIC: 0.00, GLIDE_BOMB: 0.78, ROCKET: 0.78 },
+  'Anti-Drone': { BALLISTIC: 0.00, CRUISE: 0.00, UAV: 0.90, SWARM: 0.85, FIGHTER: 0.00, BOMBER: 0.00, ATTACK_HELICOPTER: 0.10, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.00, HYPERSONIC: 0.00, GLIDE_BOMB: 0.90, ROCKET: 0.00 }
+};
+
+const localFindSystemKey = (systemName: string): string | undefined => {
+  const name = systemName.toLowerCase();
+  if (name.includes('s-400') || name.includes('s400')) return 'S-400';
+  if (name.includes('barak 8 er') || name.includes('barak-8 er')) return 'Barak 8 ER';
+  if (name.includes('barak-8') || name.includes('barak 8') || name.includes('mrsam')) return 'Barak 8';
+  if (name.includes('spyder') || name.includes('syder')) return 'SPYDER';
+  if (name.includes('pechora')) return 'Pechora';
+  if (name.includes('akash-ng')) return 'Akash-NG';
+  if (name.includes('akash')) return 'Akash';
+  if (name.includes('qrsam')) return 'QRSAM';
+  if (name.includes('vshorad manpad') || name.includes('vshorad (mistral)')) return 'VSHORAD';
+  if (name.includes('vshorad') || name.includes('mistral')) return 'VSHORAD';
+  if (name.includes('igla')) return 'Igla-S';
+  if (name.includes('anti-drone') || name.includes('smash')) return 'Anti-Drone';
+  return undefined;
+};
+
 const DEFENCE_CATALOG: DefenceItem[] = [
   {
     id: 'd1',
@@ -155,14 +187,35 @@ const DEFENCE_CATALOG: DefenceItem[] = [
     ]
   },
   {
+    id: 'd2b',
+    name: 'Barak 8 ER SAM Battery',
+    category: 'MEDIUM_RANGE',
+    batteryCost: 180.0,
+    missileCost: 1.2,
+    missileName: 'Barak-8 ER',
+    range: 150,
+    radarRange: 200,
+    defaultAmmo: 24,
+    minAlt: 15,
+    maxAlt: 30000,
+    accuracy: 0.88,
+    color: '#f59e0b',
+    speed: 3.0,
+    composition: [
+      { name: 'Mobile Command & Control (MCP)', type: 'C2 Station', qty: 1 },
+      { name: 'MF-STAR AESA Radar', type: 'Active AESA Radar', qty: 1 },
+      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: 3 }
+    ]
+  },
+  {
     id: 'd2',
     name: 'MRSAM / Barak-8 Battery',
     category: 'MEDIUM_RANGE',
     batteryCost: 150.0,
     missileCost: 1.2,
     missileName: 'Barak-8',
-    range: 100,
-    radarRange: 150,
+    range: 70,
+    radarRange: 120,
     defaultAmmo: 24,
     minAlt: 15,
     maxAlt: 16000,
@@ -170,7 +223,6 @@ const DEFENCE_CATALOG: DefenceItem[] = [
     color: '#f59e0b',
     speed: 4.0,
     missileOptions: [
-      { name: 'Barak-8 ER (Extended Range)', range: 150, speed: 3.0, cost: 1.2, accuracy: 0.88, minAlt: 15, maxAlt: 16000, description: 'Booster-equipped stand-off interceptor.' },
       { name: 'Barak-8 Standard', range: 70, speed: 2.0, cost: 1.0, accuracy: 0.85, minAlt: 15, maxAlt: 12000, description: 'Local tactical area protection.' }
     ],
     composition: [
@@ -199,9 +251,54 @@ const DEFENCE_CATALOG: DefenceItem[] = [
       { name: 'Akash Standard Command', range: 30, speed: 2.5, cost: 0.2, accuracy: 0.75, minAlt: 30, maxAlt: 15000, description: 'PESA command guided legacy variant.' }
     ],
     composition: [
-      { name: 'Battery Command Post (BCP)', type: 'Tactical C2', qty: 1 },
+      { name: 'Battery Command Post (BCP)', type: 'Tactical BCP', qty: 1 },
       { name: '3D Active Electronically Scanned Radar', type: 'PESA/AESA Radar', qty: 1 },
       { name: 'Mobile Launcher Unit (ML)', type: 'TEL Trailer (3 cells)', qty: 4 }
+    ]
+  },
+  {
+    id: 'd3b',
+    name: 'Pechora-2M SAM Battery',
+    category: 'MEDIUM_RANGE',
+    batteryCost: 15.0,
+    missileCost: 0.1,
+    missileName: '5V27DE',
+    range: 35,
+    radarRange: 50,
+    defaultAmmo: 8,
+    minAlt: 20,
+    maxAlt: 20000,
+    accuracy: 0.72,
+    color: '#f59e0b',
+    speed: 3.5,
+    composition: [
+      { name: 'UNV-2M Command Cabin', type: 'Guidance Cabin', qty: 1 },
+      { name: 'Pechora-2M 5P73 TEL Launcher', type: 'TEL Launcher (2 rails)', qty: 4 }
+    ]
+  },
+  {
+    id: 'd4b',
+    name: 'SPYDER SAM Battery',
+    category: 'SHORT_RANGE',
+    batteryCost: 80.0,
+    missileCost: 0.5,
+    missileName: 'Derby',
+    range: 50,
+    radarRange: 80,
+    defaultAmmo: 16,
+    minAlt: 20,
+    maxAlt: 16000,
+    accuracy: 0.82,
+    color: '#00ff88',
+    speed: 4.0,
+    missileOptions: [
+      { name: 'Derby Interceptor', range: 50, speed: 4.0, cost: 0.5, accuracy: 0.82, minAlt: 20, maxAlt: 16000, description: 'Active radar-homing interception.' },
+      { name: 'Python-5 Interceptor', range: 20, speed: 4.0, cost: 0.3, accuracy: 0.82, minAlt: 20, maxAlt: 9000, description: 'Dual-band infrared point defence.' }
+    ],
+    composition: [
+      { name: 'Mobile Command Post (MCP)', type: 'Tactical C2', qty: 1 },
+      { name: 'EL/M-2106 ATAR 3D Radar', type: 'Surveillance Radar', qty: 1 },
+      { name: 'SPYDER Mobile Launcher', type: 'TEL Launcher (4 rails)', qty: 4 }
     ]
   },
   {
@@ -226,6 +323,26 @@ const DEFENCE_CATALOG: DefenceItem[] = [
     ]
   },
   {
+    id: 'd5b',
+    name: 'VSHORAD MANPADS Team',
+    category: 'VERY_SHORT_RANGE',
+    batteryCost: 0.15,
+    missileCost: 0.08,
+    missileName: 'DRDO VSHORAD',
+    range: 6.5,
+    radarRange: 10,
+    defaultAmmo: 4,
+    minAlt: 5,
+    maxAlt: 15000,
+    accuracy: 0.85,
+    color: '#00b4d8',
+    speed: 2.5,
+    composition: [
+      { name: 'DRDO VSHORAD Launcher', type: 'MANPADS Tube', qty: 4 },
+      { name: 'Optical Target Sight', type: 'Thermal Visual sight', qty: 4 }
+    ]
+  },
+  {
     id: 'd5',
     name: 'Igla-S MANPADS Team',
     category: 'VERY_SHORT_RANGE',
@@ -236,8 +353,8 @@ const DEFENCE_CATALOG: DefenceItem[] = [
     radarRange: 10,
     defaultAmmo: 4,
     minAlt: 10,
-    maxAlt: 3500,
-    accuracy: 0.65,
+    maxAlt: 15000,
+    accuracy: 0.80,
     color: '#00b4d8',
     speed: 1.5,
     composition: [
@@ -284,6 +401,8 @@ interface SelectedDefence {
   x: number; // location coordinates 0-100 on map
   y: number;
   isDestroyed?: boolean;
+  initialMissilesPurchased?: number;
+  ballisticFiredCount?: number;
 }
 
 const getBatteryDefaultMissile = (system: DefenceItem): MissileOption => {
@@ -365,6 +484,21 @@ export default function SimulationPage() {
   // Defender list of placed defense batteries
   const [defenderProcured, setDefenderProcured] = useState<SelectedDefence[]>([]);
 
+  // Validation warning state
+  const [warning, setWarning] = useState<string | null>(null);
+  
+  // Track group battery counts as editable values (including empty string/0 during typing)
+  const [groupQuantities, setGroupQuantities] = useState<Record<string, number | string>>({});
+
+  // Interception engagements details for post-action report
+  interface EngagementRecord {
+    systemId: string;
+    systemName: string;
+    threatType: string;
+    success: boolean;
+  }
+  const [engagements, setEngagements] = useState<EngagementRecord[]>([]);
+
   // Simulation controls
   const [isPlaying, setIsPlaying] = useState(false);
   const [simTime, setSimTime] = useState(0);
@@ -377,15 +511,16 @@ export default function SimulationPage() {
 
   // Attacker Procurement Cost Calculation (Base + Loadout)
   const attackerTotalSpent = attackerProcured.reduce((sum, item) => {
+    const countVal = Number(item.count) || 0;
     const loadoutCost = Object.entries(item.loadout).reduce((lSum, [wName, qty]) => {
       const weapon = item.threat.weaponsCatalog?.find(w => w.name === wName);
-      return lSum + (weapon ? weapon.cost * qty : 0);
+      return lSum + (weapon ? weapon.cost * (Number(qty) || 0) : 0);
     }, 0);
-    return sum + (item.threat.cost + loadoutCost) * item.count;
+    return sum + (item.threat.cost + loadoutCost) * countVal;
   }, 0);
 
   // Defender Procurement Cost Calculation (Battery costs + Initial ammo purchases based on selected missile type)
-  const defenderTotalSpent = defenderProcured.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * item.missilesPurchased), 0);
+  const defenderTotalSpent = defenderProcured.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * (Number(item.missilesPurchased) || 0)), 0);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const visualThreatsRef = useRef<VisualThreat[]>([]);
@@ -422,21 +557,78 @@ export default function SimulationPage() {
       if (!target) return prev;
       const loadoutCost = Object.entries(target.loadout).reduce((lSum, [wName, qty]) => {
         const weapon = target.threat.weaponsCatalog?.find(w => w.name === wName);
-        return lSum + (weapon ? weapon.cost * qty : 0);
+        return lSum + (weapon ? weapon.cost * (Number(qty) || 0) : 0);
       }, 0);
       const unitCost = target.threat.cost + loadoutCost;
       if (attackerTotalSpent + unitCost > attackerBudget) return prev;
-      return prev.map(item => item.id === instanceId ? { ...item, count: item.count + 1 } : item);
+      const currentVal = Number(target.count) || 0;
+      return prev.map(item => item.id === instanceId ? { ...item, count: currentVal + 1 } : item);
     });
   };
 
   const decreaseThreatQuantity = (instanceId: string) => {
     setAttackerProcured(prev => {
       const existing = prev.find(item => item.id === instanceId);
-      if (existing && existing.count > 1) {
-        return prev.map(item => item.id === instanceId ? { ...item, count: item.count - 1 } : item);
+      const currentVal = Number(existing?.count) || 0;
+      if (existing && currentVal > 1) {
+        return prev.map(item => item.id === instanceId ? { ...item, count: currentVal - 1 } : item);
       }
       return prev.filter(item => item.id !== instanceId);
+    });
+  };
+
+  const setThreatWeaponQty = (instanceId: string, weaponName: string, val: number | string) => {
+    setAttackerProcured(prev => {
+      const target = prev.find(item => item.id === instanceId);
+      if (!target || !target.threat.weaponsCatalog) return prev;
+
+      const weapon = target.threat.weaponsCatalog.find(w => w.name === weaponName);
+      if (!weapon) return prev;
+
+      const numericVal = val === '' ? 0 : Number(val);
+      if (numericVal < 0 || numericVal > weapon.maxQty) return prev;
+
+      // Validate loadout constraints:
+      // Ra'ad and CM-400AKG are mutually exclusive on JF-17 Block III (t3)
+      if (target.threat.id === 't3' && numericVal > 0) {
+        if (weaponName === "Ra'ad ALCM" && (Number(target.loadout['CM-400AKG Supersonic Missile']) || 0) > 0) {
+          return prev;
+        }
+        if (weaponName === 'CM-400AKG Supersonic Missile' && (Number(target.loadout["Ra'ad ALCM"]) || 0) > 0) {
+          return prev;
+        }
+      }
+
+      // Check slot limits
+      const nextLoadout = { ...target.loadout, [weaponName]: val as any };
+      const totalSlots = Object.entries(nextLoadout).reduce((sum, [wName, qty]) => {
+        const w = target.threat.weaponsCatalog?.find(item => item.name === wName);
+        return sum + (w ? w.weightSlots * (Number(qty) || 0) : 0);
+      }, 0);
+
+      if (target.threat.maxSlots && totalSlots > target.threat.maxSlots) {
+        return prev;
+      }
+
+      // Check budget limit
+      const otherSpent = prev.reduce((sum, x) => {
+        if (x.id === instanceId) return sum;
+        const loadoutCost = Object.entries(x.loadout).reduce((lSum, [wName, q]) => {
+          const w = x.threat.weaponsCatalog?.find(item => item.name === wName);
+          return lSum + (w ? w.cost * (Number(q) || 0) : 0);
+        }, 0);
+        return sum + (x.threat.cost + loadoutCost) * (Number(x.count) || 0);
+      }, 0);
+
+      const thisLoadoutCost = Object.entries(nextLoadout).reduce((lSum, [wName, q]) => {
+        const w = target.threat.weaponsCatalog?.find(item => item.name === wName);
+        return lSum + (w ? w.cost * (Number(q) || 0) : 0);
+      }, 0);
+
+      const prospectiveTotal = otherSpent + (target.threat.cost + thisLoadoutCost) * (Number(target.count) || 0);
+      if (prospectiveTotal > attackerBudget) return prev;
+
+      return prev.map(item => item.id === instanceId ? { ...item, loadout: nextLoadout } : item);
     });
   };
 
@@ -448,17 +640,17 @@ export default function SimulationPage() {
       const weapon = target.threat.weaponsCatalog.find(w => w.name === weaponName);
       if (!weapon) return prev;
 
-      const currentQty = target.loadout[weaponName] || 0;
+      const currentQty = Number(target.loadout[weaponName]) || 0;
       const newQty = Math.max(0, Math.min(weapon.maxQty, currentQty + delta));
       if (currentQty === newQty) return prev;
 
       // Validate loadout constraints:
       // Ra'ad and CM-400AKG are mutually exclusive on JF-17 Block III (t3)
       if (target.threat.id === 't3') {
-        if (weaponName === "Ra'ad ALCM" && newQty > 0 && (target.loadout['CM-400AKG Supersonic Missile'] || 0) > 0) {
+        if (weaponName === "Ra'ad ALCM" && newQty > 0 && (Number(target.loadout['CM-400AKG Supersonic Missile']) || 0) > 0) {
           return prev;
         }
-        if (weaponName === 'CM-400AKG Supersonic Missile' && newQty > 0 && (target.loadout["Ra'ad ALCM"] || 0) > 0) {
+        if (weaponName === 'CM-400AKG Supersonic Missile' && newQty > 0 && (Number(target.loadout["Ra'ad ALCM"]) || 0) > 0) {
           return prev;
         }
       }
@@ -467,7 +659,7 @@ export default function SimulationPage() {
       const nextLoadout = { ...target.loadout, [weaponName]: newQty };
       const totalSlots = Object.entries(nextLoadout).reduce((sum, [wName, qty]) => {
         const w = target.threat.weaponsCatalog?.find(item => item.name === wName);
-        return sum + (w ? w.weightSlots * qty : 0);
+        return sum + (w ? w.weightSlots * (Number(qty) || 0) : 0);
       }, 0);
 
       if (target.threat.maxSlots && totalSlots > target.threat.maxSlots) {
@@ -475,14 +667,14 @@ export default function SimulationPage() {
       }
 
       // Check budget limit
-      const weaponCostDiff = weapon.cost * delta * target.count;
+      const weaponCostDiff = weapon.cost * delta * (Number(target.count) || 0);
       if (attackerTotalSpent + weaponCostDiff > attackerBudget) return prev;
 
       return prev.map(item => item.id === instanceId ? { ...item, loadout: nextLoadout } : item);
     });
   };
 
-  const adjustGroupQuantity = (systemId: string, targetQty: number) => {
+  const adjustGroupQuantity = (systemId: string, targetQty: number, syncMap = true) => {
     const system = DEFENCE_CATALOG.find(s => s.id === systemId);
     if (!system) return;
 
@@ -491,11 +683,14 @@ export default function SimulationPage() {
       const currentQty = currentItems.length;
       const otherItems = prev.filter(x => x.system.id !== systemId);
 
-      if (targetQty === currentQty) return prev;
+      if (targetQty === currentQty) {
+        if (syncMap) setGroupQuantities(g => ({ ...g, [systemId]: targetQty }));
+        return prev;
+      }
 
       if (targetQty > currentQty) {
         const newItems = [...prev];
-        let tempSpent = prev.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * item.missilesPurchased), 0);
+        let tempSpent = prev.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * (Number(item.missilesPurchased) || 0)), 0);
         const selectedMissile = currentItems[0]?.selectedMissile || getBatteryDefaultMissile(system);
         const initialAmmo = system.category === 'RADAR' ? 0 : (system.defaultAmmo ?? 8);
 
@@ -513,10 +708,21 @@ export default function SimulationPage() {
             y: 40 + Math.random() * 30
           });
         }
+        
+        if (syncMap) {
+          const finalCount = newItems.filter(x => x.system.id === systemId).length;
+          setGroupQuantities(g => ({ ...g, [systemId]: finalCount }));
+        }
+        
         return newItems;
       } else {
         const keepCount = Math.max(0, targetQty);
         const thisSystemKept = currentItems.slice(0, keepCount);
+        
+        if (syncMap) {
+          setGroupQuantities(g => ({ ...g, [systemId]: keepCount }));
+        }
+        
         return [...otherItems, ...thisSystemKept];
       }
     });
@@ -543,13 +749,25 @@ export default function SimulationPage() {
       y: 40 + Math.random() * 30
     };
     setDefenderProcured(prev => [...prev, newBattery]);
+    setGroupQuantities(g => ({ ...g, [system.id]: 1 }));
+  };
+
+  const setBatteryAmmo = (id: string, val: number | string) => {
+    setDefenderProcured(prev => prev.map(battery => {
+      if (battery.id !== id) return battery;
+      const numericVal = val === '' ? 0 : Number(val);
+      const costDiff = (numericVal - (Number(battery.missilesPurchased) || 0)) * battery.selectedMissile.cost;
+      if (defenderTotalSpent + costDiff > defenderBudget) return battery;
+      return { ...battery, missilesPurchased: val as any };
+    }));
   };
 
   const adjustBatteryAmmo = (id: string, delta: number) => {
     setDefenderProcured(prev => prev.map(battery => {
       if (battery.id !== id) return battery;
-      const nextAmmo = Math.max(0, battery.missilesPurchased + delta);
-      const costDiff = (nextAmmo - battery.missilesPurchased) * battery.selectedMissile.cost;
+      const currentAmmo = Number(battery.missilesPurchased) || 0;
+      const nextAmmo = Math.max(0, currentAmmo + delta);
+      const costDiff = (nextAmmo - currentAmmo) * battery.selectedMissile.cost;
       if (defenderTotalSpent + costDiff > defenderBudget) return battery;
       return { ...battery, missilesPurchased: nextAmmo };
     }));
@@ -567,7 +785,7 @@ export default function SimulationPage() {
         return { ...item, selectedMissile: opt };
       });
 
-      const nextTotalSpent = nextProcured.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * item.missilesPurchased), 0);
+      const nextTotalSpent = nextProcured.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * (Number(item.missilesPurchased) || 0)), 0);
       if (nextTotalSpent > defenderBudget) return prev;
       return nextProcured;
     });
@@ -581,7 +799,111 @@ export default function SimulationPage() {
     setDefenderProcured(prev => prev.map(b => b.id === id ? { ...b, x, y } : b));
   };
 
-  const initSimulationState = () => {
+  const handleConfirmAttacker = () => {
+    const hasInvalid = attackerProcured.some(item => {
+      const count = Number(item.count);
+      return isNaN(count) || count <= 0;
+    });
+
+    if (hasInvalid) {
+      setWarning('Wrong entry of equipment detected! Removing zero/empty items from list...');
+      
+      const validList = attackerProcured.filter(item => {
+        const count = Number(item.count);
+        return !isNaN(count) && count > 0;
+      });
+
+      const cleanedList = validList.map(item => {
+        const nextLoadout = { ...item.loadout };
+        Object.keys(nextLoadout).forEach(wName => {
+          const qty = Number(nextLoadout[wName]);
+          if (isNaN(qty) || qty <= 0) {
+            delete nextLoadout[wName];
+          }
+        });
+        return { ...item, loadout: nextLoadout };
+      });
+
+      setAttackerProcured(cleanedList);
+
+      setTimeout(() => {
+        setWarning(null);
+        if (cleanedList.length > 0) {
+          setPhase('procure_defender');
+        }
+      }, 3000);
+    } else {
+      const cleanedList = attackerProcured.map(item => {
+        const nextLoadout = { ...item.loadout };
+        Object.keys(nextLoadout).forEach(wName => {
+          const qty = Number(nextLoadout[wName]);
+          if (isNaN(qty) || qty <= 0) {
+            delete nextLoadout[wName];
+          }
+        });
+        return { ...item, loadout: nextLoadout };
+      });
+      setAttackerProcured(cleanedList);
+      setPhase('procure_defender');
+    }
+  };
+
+  const handleConfirmDefender = () => {
+    const invalidGroupIds = Object.keys(groupQuantities).filter(systemId => {
+      const qty = groupQuantities[systemId];
+      return qty === '' || Number(qty) <= 0;
+    });
+
+    const hasInvalidAmmo = defenderProcured.some(battery => {
+      if (battery.system.category === 'RADAR') return false;
+      const ammo = Number(battery.missilesPurchased);
+      return isNaN(ammo) || ammo <= 0;
+    });
+
+    const hasInvalidGroup = invalidGroupIds.length > 0;
+
+    if (hasInvalidGroup || hasInvalidAmmo) {
+      setWarning('Wrong entry of equipment detected! Removing zero/empty items from list...');
+
+      const nextGroupQuantities = { ...groupQuantities };
+      invalidGroupIds.forEach(id => {
+        delete nextGroupQuantities[id];
+      });
+      setGroupQuantities(nextGroupQuantities);
+
+      const validDefender = defenderProcured.filter(battery => {
+        const isGroupInvalid = invalidGroupIds.includes(battery.system.id);
+        if (isGroupInvalid) return false;
+
+        if (battery.system.category === 'RADAR') return true;
+        const ammo = Number(battery.missilesPurchased);
+        return !isNaN(ammo) && ammo > 0;
+      });
+
+      const cleanedDefender = validDefender.map(battery => ({
+        ...battery,
+        missilesPurchased: Number(battery.missilesPurchased) || 0
+      }));
+
+      setDefenderProcured(cleanedDefender);
+
+      setTimeout(() => {
+        setWarning(null);
+        if (cleanedDefender.length > 0) {
+          initSimulationState(cleanedDefender);
+        }
+      }, 3000);
+    } else {
+      const cleanedDefender = defenderProcured.map(battery => ({
+        ...battery,
+        missilesPurchased: Number(battery.missilesPurchased) || 0
+      }));
+      setDefenderProcured(cleanedDefender);
+      initSimulationState(cleanedDefender);
+    }
+  };
+
+  const initSimulationState = (overrideDefenderList?: SelectedDefence[]) => {
     setSimTime(0);
     simTimeRef.current = 0;
     setSimLogs([
@@ -591,12 +913,21 @@ export default function SimulationPage() {
     setLeakerCount(0);
     setHitCount(0);
     setSpentDefenderMissilesCost(0);
+    setEngagements([]);
+
+    const defenderListToUse = (overrideDefenderList || defenderProcured).map(battery => ({
+      ...battery,
+      initialMissilesPurchased: Number(battery.missilesPurchased) || 0,
+      ballisticFiredCount: 0
+    }));
+    defenderProcuredRef.current = defenderListToUse;
 
     // Populate visual threats from the attacker setup
     const threatList: VisualThreat[] = [];
     let tIndex = 0;
     attackerProcured.forEach(item => {
-      for (let i = 0; i < item.count; i++) {
+      const itemCount = Number(item.count) || 0;
+      for (let i = 0; i < itemCount; i++) {
         // Attackers originate from border edges (Top: 0, Right: 100, Left: 0) and fly towards HQ center (50, 80)
         const angle = Math.random() * Math.PI; // Top hemisphere arc
         const startX = 50 + Math.cos(angle) * 44;
@@ -606,7 +937,7 @@ export default function SimulationPage() {
         const loadoutStatus: { [wName: string]: { fired: number, total: number, weapon: WeaponItem } } = {};
         if (item.threat.weaponsCatalog) {
           item.threat.weaponsCatalog.forEach(w => {
-            const qty = item.loadout[w.name] || 0;
+            const qty = Number(item.loadout[w.name]) || 0;
             if (qty > 0) {
               loadoutStatus[w.name] = {
                 fired: 0,
@@ -782,8 +1113,10 @@ export default function SimulationPage() {
         if (!t.isReturning && nextDistance <= 0.01) {
           t.isLeaked = true;
           if (t.targetBatteryId) {
-            setDefenderProcured(prev => prev.map(b => b.id === t.targetBatteryId ? { ...b, isDestroyed: true } : b));
             const hitBattery = currentPlacements.find(b => b.id === t.targetBatteryId);
+            if (hitBattery) {
+              hitBattery.isDestroyed = true;
+            }
             const batteryName = hitBattery ? hitBattery.system.name : 'Defender Battery';
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
@@ -837,8 +1170,77 @@ export default function SimulationPage() {
         for (const t of activeThreats) {
           if (!t.detected || t.isDead || t.isLeaked) continue;
 
+          // Check if system/missile is capable of targeting this threat type
+          let capability = getMissileThreatMultiplier(placed.selectedMissile.name, t.threat.type);
+          if (capability === undefined) {
+            const sysKey = localFindSystemKey(placed.system.name);
+            if (sysKey && LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
+              capability = LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey][t.threat.type];
+            }
+          }
+          if (capability === 0.0) continue; // Not capable against this threat type
+
+          // Special layered defense logic: S-400 and Barak 8 ER should avoid firing at drone swarms (SWARM)
+          // if other active complementary SAMs are present, unless in the final stage and not targeted by anyone else.
+          const isS400OrBarak8ER = placed.system.name.includes('S-400') || placed.system.name.includes('Barak 8 ER') || placed.system.name.includes('Barak-8 ER');
+          const isDroneSwarm = t.threat.type === 'SWARM';
+          if (isS400OrBarak8ER && isDroneSwarm) {
+            const otherSAMsActive = currentPlacements.some(p => {
+              if (p.id === placed.id) return false;
+              const name = p.system.name;
+              const isOtherS400OrBarak8ER = name.includes('S-400') || name.includes('Barak 8 ER') || name.includes('Barak-8 ER');
+              return !isOtherS400OrBarak8ER && p.system.category !== 'RADAR' && !p.isDestroyed && p.missilesPurchased > 0;
+            });
+            if (otherSAMsActive) {
+              const isFinalStage = t.distanceToTarget !== undefined && t.distanceToTarget <= 45;
+              const noOneFiring = !activeInterceptors.some(i => !i.isDead && i.targetId === t.id);
+              if (!(isFinalStage && noOneFiring)) {
+                continue;
+              }
+            }
+          }
+
+          // Special layered ballistic defense logic: Akash and Pechora should limit engagements against ballistic threats
+          // to at most 10% of their initial inventory when teamed with S-400, Barak-8 ER, or Barak-8.
+          if (t.threat.type === 'BALLISTIC') {
+            const isAkashOrPechora = placed.system.name.includes('Akash') || placed.system.name.includes('Pechora');
+            if (isAkashOrPechora) {
+              const teamedWithABM = currentPlacements.some(p => {
+                if (p.id === placed.id) return false;
+                const name = p.system.name;
+                const isABMSystem = name.includes('S-400') || name.includes('Barak 8') || name.includes('Barak-8');
+                return isABMSystem && !p.isDestroyed && p.missilesPurchased > 0;
+              });
+              if (teamedWithABM) {
+                const limit = Math.ceil((placed.initialMissilesPurchased ?? 0) * 0.1);
+                if ((placed.ballisticFiredCount ?? 0) >= limit) {
+                  continue; // Exceeded 10% limit for ballistic missiles, reserve the rest for other threats
+                }
+              }
+            }
+          }
+
           const currentDistance = t.distanceToTarget ?? 200.0;
-          const currentAlt = t.threat.altitude * (currentDistance / 200.0);
+          let currentAlt = t.threat.type === 'BALLISTIC' || t.threat.type === 'HYPERSONIC' 
+            ? t.threat.altitude * Math.max((currentDistance / 200.0), 0.05)
+            : t.threat.altitude;
+          
+          // Check if system or missile is ABM-capable to adjust apogee altitude checks
+          const isABM = placed.system.name.includes('S-400') ||
+                        placed.system.name.includes('Barak-8') ||
+                        placed.system.name.includes('Barak 8') ||
+                        placed.system.name.includes('Akash-NG') ||
+                        placed.selectedMissile.name.includes('40N6') ||
+                        placed.selectedMissile.name.includes('48N6') ||
+                        placed.selectedMissile.name.includes('Barak-8') ||
+                        placed.selectedMissile.name.includes('Barak 8') ||
+                        placed.selectedMissile.name.includes('Akash-NG');
+                        
+          if (t.threat.type === 'BALLISTIC' && currentAlt > placed.selectedMissile.maxAlt && isABM) {
+            // Scale adjusted altitude to mid-envelope so it is not penalized for its mid-course apogee
+            currentAlt = (placed.selectedMissile.minAlt + placed.selectedMissile.maxAlt) / 2;
+          }
+          
           if (currentAlt < placed.selectedMissile.minAlt || currentAlt > placed.selectedMissile.maxAlt) continue;
           
           const alreadyEngagedByThisBattery = activeInterceptors.some(i => !i.isDead && i.targetId === t.id && i.batteryId === placed.id);
@@ -855,7 +1257,26 @@ export default function SimulationPage() {
           placed.missilesPurchased--;
           setSpentDefenderMissilesCost(prev => prev + placed.selectedMissile.cost);
           
+          if (targetThreat.threat.type === 'BALLISTIC') {
+            if (placed.ballisticFiredCount !== undefined) {
+              placed.ballisticFiredCount++;
+            }
+          }
+          
           let interceptAccuracy = placed.selectedMissile.accuracy;
+          
+          // Apply system/missile threat capability coefficient to match real-world success rates
+          let coefficient = getMissileThreatMultiplier(placed.selectedMissile.name, targetThreat.threat.type);
+          if (coefficient === undefined) {
+            const sysKey = localFindSystemKey(placed.system.name);
+            if (sysKey && LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
+              coefficient = LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey][targetThreat.threat.type];
+            }
+          }
+          if (coefficient !== undefined) {
+            interceptAccuracy = placed.selectedMissile.accuracy * coefficient;
+          }
+
           if (ecm === 'LOW') interceptAccuracy -= 0.08;
           if (ecm === 'HIGH') interceptAccuracy -= 0.18;
 
@@ -875,7 +1296,9 @@ export default function SimulationPage() {
           });
 
           const currentDistance = targetThreat.distanceToTarget ?? 200.0;
-          const currentAlt = Math.round(targetThreat.threat.altitude * (currentDistance / 200.0));
+          const currentAlt = Math.round(targetThreat.threat.type === 'BALLISTIC' || targetThreat.threat.type === 'HYPERSONIC' 
+            ? targetThreat.threat.altitude * Math.max((currentDistance / 200.0), 0.05)
+            : targetThreat.threat.altitude);
           setSimLogs(prev => [...prev, {
             time: simTimeRef.current,
             message: `🚀 LAUNCH: ${placed.system.name} launched ${placed.selectedMissile.name} interceptor. Target Alt: ${currentAlt}m, Range: ${currentDistance.toFixed(0)}km`,
@@ -891,6 +1314,18 @@ export default function SimulationPage() {
         const target = activeThreats.find(t => t.id === interceptor.targetId);
         if (!target || target.isDead || target.isLeaked) {
           interceptor.isDead = true;
+          const battery = currentPlacements.find(b => b.id === interceptor.batteryId);
+          if (battery) {
+            setEngagements(prev => [
+              ...prev,
+              {
+                systemId: battery.system.id,
+                systemName: battery.system.name,
+                threatType: target ? target.threat.type : 'UAV',
+                success: false
+              }
+            ]);
+          }
           return;
         }
 
@@ -907,6 +1342,20 @@ export default function SimulationPage() {
           interceptor.isDead = true;
           
           const hits = Math.random() < interceptor.accuracy;
+          
+          const battery = currentPlacements.find(b => b.id === interceptor.batteryId);
+          if (battery) {
+            setEngagements(prev => [
+              ...prev,
+              {
+                systemId: battery.system.id,
+                systemName: battery.system.name,
+                threatType: target.threat.type,
+                success: hits
+              }
+            ]);
+          }
+
           if (hits) {
             target.isDead = true;
             setHitCount(prev => prev + 1);
@@ -1029,7 +1478,8 @@ export default function SimulationPage() {
       ctx.stroke();
 
       // Draw placed defender batteries & range coverage
-      defenderProcured.forEach(sys => {
+      const activePlacements = (phase === 'simulate' || phase === 'report') ? defenderProcuredRef.current : defenderProcured;
+      activePlacements.forEach(sys => {
         const sysX = (sys.x / 100) * canvas.width;
         const sysY = (sys.y / 100) * canvas.height;
         const rangeRadius = sys.system.range * 0.1 * (canvas.width / 100);
@@ -1152,7 +1602,8 @@ export default function SimulationPage() {
 
   const finalAttackerCostCalculated = firedWeaponsCost + lostAircraftCost;
 
-  const destroyedBatteriesCostCalculated = defenderProcured.reduce((sum, item) => {
+  const activePlacementsForCost = (phase === 'simulate' || phase === 'report') ? defenderProcuredRef.current : defenderProcured;
+  const destroyedBatteriesCostCalculated = activePlacementsForCost.reduce((sum, item) => {
     return sum + (item.isDestroyed ? item.system.batteryCost : 0);
   }, 0);
 
@@ -1200,6 +1651,17 @@ export default function SimulationPage() {
           ))}
         </div>
       </div>
+
+      {/* Warning Banner */}
+      {warning && (
+        <div className="card p-4 border-[#ef4444]/30 bg-[#ef4444]/5 text-[#ef4444] text-sm font-mono flex items-center gap-3 animate-pulse">
+          <span className="text-lg">⚠️</span>
+          <div>
+            <p className="font-bold text-[#ef4444]">Wrong entry of equipment</p>
+            <p className="text-xs text-[#9ca3af]">{warning}</p>
+          </div>
+        </div>
+      )}
 
       {/* CONFIGURATION PHASE */}
       {phase === 'config' && (
@@ -1323,7 +1785,42 @@ export default function SimulationPage() {
                         </div>
                         <div className="flex items-center gap-2">
                           <button onClick={() => decreaseThreatQuantity(item.id)} className="w-5 h-5 rounded bg-white/10 flex items-center justify-center">-</button>
-                          <span className="font-bold text-white w-4 text-center">{item.count}</span>
+                          <input
+                            type="number"
+                            min="0"
+                            value={item.count}
+                            onChange={e => {
+                              const raw = e.target.value;
+                              if (raw === '') {
+                                setAttackerProcured(prev => prev.map(x => x.id === item.id ? { ...x, count: '' as any } : x));
+                                return;
+                              }
+                              const val = parseInt(raw);
+                              if (!isNaN(val)) {
+                                if (val < 0) return;
+                                setAttackerProcured(prev => {
+                                  const otherSpent = prev.reduce((sum, x) => {
+                                    if (x.id === item.id) return sum;
+                                    const loadoutCost = Object.entries(x.loadout).reduce((lSum, [wName, q]) => {
+                                      const weapon = x.threat.weaponsCatalog?.find(w => w.name === wName);
+                                      return lSum + (weapon ? weapon.cost * (Number(q) || 0) : 0);
+                                    }, 0);
+                                    return sum + (x.threat.cost + loadoutCost) * (Number(x.count) || 0);
+                                  }, 0);
+                                  
+                                  const thisLoadoutCost = Object.entries(item.loadout).reduce((lSum, [wName, q]) => {
+                                    const weapon = item.threat.weaponsCatalog?.find(w => w.name === wName);
+                                    return lSum + (weapon ? weapon.cost * (Number(q) || 0) : 0);
+                                  }, 0);
+                                  const thisUnitCost = item.threat.cost + thisLoadoutCost;
+                                  const prospectiveTotal = otherSpent + thisUnitCost * val;
+                                  if (prospectiveTotal > attackerBudget) return prev;
+                                  return prev.map(x => x.id === item.id ? { ...x, count: val } : x);
+                                });
+                              }
+                            }}
+                            className="w-10 text-center bg-transparent text-white text-xs font-mono font-bold outline-none border-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                          />
                           <button onClick={() => increaseThreatQuantity(item.id)} className="w-5 h-5 rounded bg-white/10 flex items-center justify-center">+</button>
                         </div>
                       </div>
@@ -1372,7 +1869,24 @@ export default function SimulationPage() {
                                         >
                                           -
                                         </button>
-                                        <span className="font-bold font-mono text-white text-center w-4">{qty}</span>
+                                        <input
+                                          type="number"
+                                          min="0"
+                                          max={w.maxQty}
+                                          value={qty}
+                                          onChange={e => {
+                                            const raw = e.target.value;
+                                            if (raw === '') {
+                                              setThreatWeaponQty(item.id, w.name, '');
+                                            } else {
+                                              const val = parseInt(raw);
+                                              if (!isNaN(val)) {
+                                                setThreatWeaponQty(item.id, w.name, val);
+                                              }
+                                            }
+                                          }}
+                                          className="w-8 text-center bg-transparent text-white text-xs font-mono font-bold outline-none border-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        />
                                         <button
                                           type="button"
                                           disabled={qty >= w.maxQty || isRaadCM400Conflict}
@@ -1417,7 +1931,24 @@ export default function SimulationPage() {
                                         >
                                           -
                                         </button>
-                                        <span className="font-bold font-mono text-white text-center w-4">{qty}</span>
+                                        <input
+                                          type="number"
+                                          min="0"
+                                          max={w.maxQty}
+                                          value={qty}
+                                          onChange={e => {
+                                            const raw = e.target.value;
+                                            if (raw === '') {
+                                              setThreatWeaponQty(item.id, w.name, '');
+                                            } else {
+                                              const val = parseInt(raw);
+                                              if (!isNaN(val)) {
+                                                setThreatWeaponQty(item.id, w.name, val);
+                                              }
+                                            }
+                                          }}
+                                          className="w-8 text-center bg-transparent text-white text-xs font-mono font-bold outline-none border-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                        />
                                         <button
                                           type="button"
                                           disabled={qty >= w.maxQty || isRaadCM400Conflict}
@@ -1442,8 +1973,8 @@ export default function SimulationPage() {
             </div>
 
             <button
-              onClick={() => setPhase('procure_defender')}
-              disabled={attackerProcured.length === 0}
+              onClick={handleConfirmAttacker}
+              disabled={attackerProcured.length === 0 || warning !== null}
               className="w-full btn-primary disabled:opacity-40 disabled:pointer-events-none"
             >
               Confirm Attacker Setup →
@@ -1554,11 +2085,18 @@ export default function SimulationPage() {
                           <input
                             type="number"
                             min="0"
-                            value={currentQty}
+                            value={groupQuantities[systemId] !== undefined ? groupQuantities[systemId] : currentQty}
                             onChange={e => {
-                              const val = parseInt(e.target.value);
-                              if (!isNaN(val) && val >= 0) {
-                                adjustGroupQuantity(systemId, val);
+                              const raw = e.target.value;
+                              if (raw === '') {
+                                setGroupQuantities(g => ({ ...g, [systemId]: '' }));
+                                adjustGroupQuantity(systemId, 0, false);
+                              } else {
+                                const val = parseInt(raw);
+                                if (!isNaN(val) && val >= 0) {
+                                  setGroupQuantities(g => ({ ...g, [systemId]: val }));
+                                  adjustGroupQuantity(systemId, val, false);
+                                }
                               }
                             }}
                             className="w-10 text-center bg-transparent text-white text-xs font-mono font-bold outline-none border-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
@@ -1587,7 +2125,7 @@ export default function SimulationPage() {
                             {system.category !== 'RADAR' && (
                               <div className="flex justify-between font-mono text-[#00ff88] pt-1 border-t border-white/[0.04]">
                                 <span>Total Launch Ready:</span>
-                                <span className="font-bold">{batteries.reduce((sum, b) => sum + b.missilesPurchased, 0)} missiles</span>
+                                <span className="font-bold">{batteries.reduce((sum, b) => sum + (Number(b.missilesPurchased) || 0), 0)} missiles</span>
                               </div>
                             )}
                           </div>
@@ -1632,7 +2170,23 @@ export default function SimulationPage() {
                                   >
                                     -2
                                   </button>
-                                  <span className="font-mono text-white text-center w-5 font-bold">{battery.missilesPurchased}</span>
+                                  <input
+                                    type="number"
+                                    min="0"
+                                    value={battery.missilesPurchased}
+                                    onChange={e => {
+                                      const raw = e.target.value;
+                                      if (raw === '') {
+                                        setBatteryAmmo(battery.id, '');
+                                      } else {
+                                        const val = parseInt(raw);
+                                        if (!isNaN(val) && val >= 0) {
+                                          setBatteryAmmo(battery.id, val);
+                                        }
+                                      }
+                                    }}
+                                    className="w-8 text-center bg-transparent text-white text-xs font-mono font-bold outline-none border-none p-0 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                  />
                                   <button
                                     type="button"
                                     onClick={() => adjustBatteryAmmo(battery.id, 2)}
@@ -1685,8 +2239,8 @@ export default function SimulationPage() {
             <div className="flex gap-2">
               <button onClick={() => setPhase('procure_attacker')} className="btn-secondary w-1/3">← Back</button>
               <button
-                onClick={initSimulationState}
-                disabled={defenderProcured.length === 0}
+                onClick={handleConfirmDefender}
+                disabled={defenderProcured.length === 0 || warning !== null}
                 className="btn-primary w-2/3 disabled:opacity-40"
               >
                 🚀 Run Simulation
@@ -1796,8 +2350,27 @@ export default function SimulationPage() {
                 </div>
               </div>
 
+              <h4 className="text-xs text-[#9ca3af] uppercase tracking-wider mb-2 font-bold mt-3">System Ammo Status</h4>
+              <div className="space-y-1.5 max-h-[110px] overflow-y-auto p-2 bg-black/30 rounded border border-white/[0.05] text-[10px] font-mono mb-3">
+                {defenderProcuredRef.current.filter(b => b.system.category !== 'RADAR').length === 0 ? (
+                  <div className="text-[#6b7280] text-center">No missile systems active.</div>
+                ) : (
+                  defenderProcuredRef.current.filter(b => b.system.category !== 'RADAR').map((battery, idx) => (
+                    <div key={battery.id} className="flex justify-between items-center">
+                      <span className="text-white flex items-center gap-1.5">
+                        <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: battery.system.color }} />
+                        {battery.system.name.split(' ')[0]} #{idx + 1}
+                      </span>
+                      <span className={battery.isDestroyed ? 'text-[#ef4444] font-bold' : battery.missilesPurchased === 0 ? 'text-[#f97316] font-bold' : 'text-[#00ff88]'}>
+                        {battery.isDestroyed ? 'KIA' : `${battery.missilesPurchased} left`}
+                      </span>
+                    </div>
+                  ))
+                )}
+              </div>
+
               <h4 className="text-xs text-[#9ca3af] uppercase tracking-wider mb-2 font-bold">HQ Signal Log</h4>
-              <div className="space-y-2 h-[260px] overflow-y-auto p-2 bg-black/30 rounded border border-white/[0.05] text-[11px] font-mono">
+              <div className="space-y-2 h-[140px] overflow-y-auto p-2 bg-black/30 rounded border border-white/[0.05] text-[11px] font-mono">
                 {simLogs.map((log, index) => {
                   let colorClass = 'text-[#9ca3af]';
                   if (log.type === 'LAUNCH') colorClass = 'text-[#a855f7]';
@@ -1911,6 +2484,103 @@ export default function SimulationPage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* SAM System Performance Breakdown */}
+          <div className="card p-5 space-y-4">
+            <h3 className="text-sm font-semibold text-[#00ff88] uppercase tracking-wider">SAM System Performance Breakdown</h3>
+            
+            <div className="space-y-6">
+              {(() => {
+                // Find all systems that were deployed
+                const deployedSystems = Array.from(new Set(defenderProcuredRef.current.map(b => b.system.id))).map(id => {
+                  return defenderProcuredRef.current.find(b => b.system.id === id)!.system;
+                });
+
+                if (deployedSystems.length === 0) {
+                  return <div className="text-xs text-[#6b7280] font-mono">No defensive systems deployed.</div>;
+                }
+
+                return deployedSystems.map(system => {
+                  const systemEngagements = engagements.filter(e => e.systemId === system.id);
+                  const overallTotal = systemEngagements.length;
+                  const overallSuccess = systemEngagements.filter(e => e.success).length;
+                  const overallRate = overallTotal > 0 ? (overallSuccess / overallTotal) * 100 : 0;
+                  const overallLeft = defenderProcuredRef.current.filter(b => b.system.id === system.id).reduce((sum, b) => sum + b.missilesPurchased, 0);
+                  const overallMissed = overallTotal - overallSuccess;
+
+                  const threatTypes = ['BALLISTIC', 'CRUISE', 'FIGHTER', 'UAV', 'SWARM', 'HYPERSONIC', 'GLIDE_BOMB', 'ROCKET'];
+                  
+                  return (
+                    <div key={system.id} className="p-4 rounded bg-white/[0.02] border border-white/[0.05] space-y-3">
+                      <div className="flex justify-between items-center border-b border-white/[0.05] pb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: system.color }} />
+                          <h4 className="text-sm font-bold text-white">{system.name}</h4>
+                        </div>
+                        <div className="text-xs font-mono">
+                          Overall Interception Rate: <span className="font-bold text-[#00ff88]">{overallRate.toFixed(1)}%</span>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono text-xs border-b border-white/[0.05] pb-3 mb-2">
+                        <div className="p-2 rounded bg-white/[0.02] border border-white/[0.03]">
+                          <div className="text-[10px] text-[#6b7280] uppercase">Missiles Fired</div>
+                          <div className="text-sm font-bold text-white mt-0.5">{overallTotal}</div>
+                        </div>
+                        <div className="p-2 rounded bg-white/[0.02] border border-white/[0.03]">
+                          <div className="text-[10px] text-[#6b7280] uppercase">Missiles Left</div>
+                          <div className="text-sm font-bold text-[#00ff88] mt-0.5">{overallLeft}</div>
+                        </div>
+                        <div className="p-2 rounded bg-white/[0.02] border border-white/[0.03]">
+                          <div className="text-[10px] text-[#6b7280] uppercase">Intercepted</div>
+                          <div className="text-sm font-bold text-[#00ff88] mt-0.5">{overallSuccess}</div>
+                        </div>
+                        <div className="p-2 rounded bg-white/[0.02] border border-white/[0.03]">
+                          <div className="text-[10px] text-[#6b7280] uppercase">Missed</div>
+                          <div className="text-sm font-bold text-[#ef4444] mt-0.5">{overallMissed}</div>
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                        {threatTypes.map(type => {
+                          const typeEngagements = systemEngagements.filter(e => e.threatType === type);
+                          const total = typeEngagements.length;
+                          const success = typeEngagements.filter(e => e.success).length;
+                          const rate = total > 0 ? (success / total) * 100 : 0;
+
+                          const labelMap: Record<string, string> = {
+                            BALLISTIC: 'Ballistic',
+                            CRUISE: 'Cruise',
+                            FIGHTER: 'Fighter Jets',
+                            UAV: 'UAVs',
+                            SWARM: 'Drone Swarms',
+                            HYPERSONIC: 'Hypersonic',
+                            GLIDE_BOMB: 'Glide Bombs',
+                            ROCKET: 'Rockets'
+                          };
+
+                          if (total === 0) return null;
+
+                          return (
+                            <div key={type} className="p-2 rounded bg-black/30 border border-white/[0.03] text-center font-mono text-[11px]">
+                              <div className="text-[#9ca3af] mb-1">{labelMap[type] || type}</div>
+                              <div className="text-xs font-bold text-[#00ff88]">{rate.toFixed(0)}%</div>
+                              <div className="text-[9px] text-[#4b5563]">{success}/{total} hits</div>
+                            </div>
+                          );
+                        })}
+                        {overallTotal === 0 && (
+                          <div className="col-span-full text-center py-2 text-xs text-[#4b5563] font-mono">
+                            No active kinetic engagements registered for this system.
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                });
+              })()}
             </div>
           </div>
 

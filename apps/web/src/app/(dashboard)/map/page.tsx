@@ -256,39 +256,131 @@ export default function MapPage() {
   const [showCoverage, setShowCoverage] = useState(true);
   const [showZones, setShowZones] = useState(true);
   const [selectedLayer, setSelectedLayer] = useState<string>('all');
+  const [viewMode, setViewMode] = useState<'3d' | 'simulator'>('3d');
+
+  const [hoverCoord, setHoverCoord] = useState<{x: number, y: number, cx: number, cy: number} | null>(null);
+  const hoverTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    setHoverCoord(null);
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.round(((e.clientX - rect.left) / rect.width) * 100);
+    const y = Math.round(((e.clientY - rect.top) / rect.height) * 100);
+
+    hoverTimerRef.current = setTimeout(() => {
+      setHoverCoord({ x, y, cx: e.clientX, cy: e.clientY });
+    }, 2000);
+  };
+
+  const handleMouseLeave = () => {
+    if (hoverTimerRef.current) clearTimeout(hoverTimerRef.current);
+    setHoverCoord(null);
+  };
 
   return (
-    <div className="space-y-4">
-      <div className="card p-6">
-        <h1 className="text-2xl font-bold text-white mb-1">Interactive Strategy Map</h1>
-        <p className="text-sm text-[#6b7280]">3D visualization of air defence coverage — educational approximation</p>
+    <div className="space-y-4 relative">
+      <div className="card p-6 flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold text-white mb-1">Interactive Strategy Map</h1>
+          <p className="text-sm text-[#6b7280]">3D visualization of air defence coverage — educational approximation</p>
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={() => setViewMode('3d')}
+            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+              viewMode === '3d' ? 'bg-[#00ff88] text-[#0a0e17]' : 'bg-white/5 text-[#9ca3af] hover:bg-white/10'
+            }`}
+          >
+            3D Strategy Map
+          </button>
+          <button
+            onClick={() => setViewMode('simulator')}
+            className={`px-4 py-2 rounded-lg text-sm font-bold transition-all ${
+              viewMode === 'simulator' ? 'bg-[#00ff88] text-[#0a0e17]' : 'bg-white/5 text-[#9ca3af] hover:bg-white/10'
+            }`}
+          >
+            2D Simulator Map
+          </button>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
         {/* Map Canvas */}
-        <div className="lg:col-span-3 card overflow-hidden" style={{ height: '600px' }}>
-          <Canvas camera={{ position: [0, 15, 12], fov: 50 }}>
-            <Scene showCoverage={showCoverage} showZones={showZones} />
-          </Canvas>
+        <div className="lg:col-span-3 card overflow-hidden relative" style={{ height: '600px' }}>
+          {viewMode === '3d' ? (
+            <>
+              <Canvas camera={{ position: [0, 15, 12], fov: 50 }}>
+                <Scene showCoverage={showCoverage} showZones={showZones} />
+              </Canvas>
 
-          {/* Map Controls Overlay */}
-          <div className="absolute top-4 left-4 flex flex-col gap-2">
-            <div className="glass rounded-lg p-2 space-y-2">
-              <label className="flex items-center gap-2 text-xs text-[#9ca3af] cursor-pointer">
-                <input type="checkbox" checked={showCoverage} onChange={e => setShowCoverage(e.target.checked)} className="accent-[#00ff88]" />
-                Coverage Layers
-              </label>
-              <label className="flex items-center gap-2 text-xs text-[#9ca3af] cursor-pointer">
-                <input type="checkbox" checked={showZones} onChange={e => setShowZones(e.target.checked)} className="accent-[#00ff88]" />
-                Strategic Zones
-              </label>
+              {/* Map Controls Overlay */}
+              <div className="absolute top-4 left-4 flex flex-col gap-2">
+                <div className="glass rounded-lg p-2 space-y-2">
+                  <label className="flex items-center gap-2 text-xs text-[#9ca3af] cursor-pointer">
+                    <input type="checkbox" checked={showCoverage} onChange={e => setShowCoverage(e.target.checked)} className="accent-[#00ff88]" />
+                    Coverage Layers
+                  </label>
+                  <label className="flex items-center gap-2 text-xs text-[#9ca3af] cursor-pointer">
+                    <input type="checkbox" checked={showZones} onChange={e => setShowZones(e.target.checked)} className="accent-[#00ff88]" />
+                    Strategic Zones
+                  </label>
+                </div>
+              </div>
+
+              {/* Info overlay */}
+              <div className="absolute bottom-4 left-4 glass rounded-lg px-3 py-2">
+                <div className="text-[10px] text-[#4b5563]">Drag to rotate • Scroll to zoom • Right-click to pan</div>
+              </div>
+            </>
+          ) : (
+            <div 
+              className="w-full h-full bg-[#070b12] relative cursor-crosshair overflow-hidden"
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+            >
+              {/* Simulator Grid */}
+              <div className="absolute inset-x-0 top-0 h-4 border-b border-[#00ff88]/30 flex justify-between px-2 text-[10px] text-[#00ff88] font-mono">
+                <span>X: 0</span>
+                <span>X: 50</span>
+                <span>X: 100</span>
+              </div>
+              <div className="absolute inset-y-0 left-0 w-4 border-r border-[#00ff88]/30 flex flex-col justify-between py-2 text-[10px] text-[#00ff88] font-mono items-center" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)' }}>
+                <span>Y: 0</span>
+                <span>Y: 50</span>
+                <span>Y: 100</span>
+              </div>
+              
+              {/* Grid lines */}
+              <div className="absolute inset-0" style={{
+                backgroundImage: 'linear-gradient(to right, rgba(0, 255, 136, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 255, 136, 0.05) 1px, transparent 1px)',
+                backgroundSize: '10% 10%'
+              }} />
+
+              {/* Center HQ */}
+              <div className="absolute top-[80%] left-[50%] w-3 h-3 bg-[#00ff88] rounded-full -translate-x-1/2 -translate-y-1/2 border-2 border-[#0a0e17] shadow-[0_0_10px_#00ff88]" />
+              <div className="absolute top-[80%] left-[50%] -translate-x-1/2 mt-2 text-[10px] font-mono text-[#00ff88]">HQ (50, 80)</div>
+
+              {/* Defender Placements in 2D Map (Approximation for context) */}
+              {DEFENCE_PLACEMENTS.map(sys => {
+                const x = 30 + Math.random() * 40; // Approx spread
+                const y = 40 + Math.random() * 30;
+                return (
+                  <div key={sys.id} className="absolute w-2 h-2 rounded-full -translate-x-1/2 -translate-y-1/2"
+                       style={{ top: `${y}%`, left: `${x}%`, backgroundColor: sys.color }}>
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-1 text-[8px] font-mono whitespace-nowrap opacity-50" style={{ color: sys.color }}>
+                      {sys.name.split(' ')[0]}
+                    </div>
+                  </div>
+                );
+              })}
+
+              <div className="absolute bottom-4 left-6 glass rounded-lg px-3 py-2">
+                <div className="text-[10px] text-[#00ff88] font-mono">2D SIMULATOR COORDINATE SYSTEM ACTIVE</div>
+                <div className="text-[9px] text-[#4b5563]">Hover any point for 2s to extract coordinates.</div>
+              </div>
             </div>
-          </div>
-
-          {/* Info overlay */}
-          <div className="absolute bottom-4 left-4 glass rounded-lg px-3 py-2">
-            <div className="text-[10px] text-[#4b5563]">Drag to rotate • Scroll to zoom • Right-click to pan</div>
-          </div>
+          )}
         </div>
 
         {/* Side Panel */}
@@ -350,6 +442,16 @@ export default function MapPage() {
           </div>
         </div>
       </div>
+      
+      {/* 2s Hover Coordinate Tooltip */}
+      {hoverCoord && (
+        <div 
+          className="fixed z-50 pointer-events-none bg-[#0a0e17] border border-[#00ff88] text-[#00ff88] px-2 py-1 rounded text-xs font-mono shadow-[0_0_10px_rgba(0,255,136,0.3)] animate-fade-in-up"
+          style={{ top: hoverCoord.cy + 15, left: hoverCoord.cx + 15 }}
+        >
+          Coordinates: ({hoverCoord.x}, {hoverCoord.y})
+        </div>
+      )}
     </div>
   );
 }

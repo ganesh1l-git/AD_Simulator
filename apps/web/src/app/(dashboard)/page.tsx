@@ -270,12 +270,13 @@ import { api } from '@/lib/api';
 
 // ---- Main Dashboard Page ----
 export default function DashboardPage() {
-  const [currentTime, setCurrentTime] = useState(new Date());
+  const [currentTime, setCurrentTime] = useState<Date | null>(null);
   const [stats, setStats] = useState<any>(null);
   const [recentSims, setRecentSims] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setCurrentTime(new Date());
     const timer = setInterval(() => setCurrentTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
@@ -330,10 +331,10 @@ export default function DashboardPage() {
           </div>
           <div className="text-right hide-mobile">
             <div className="text-lg font-mono text-[#00ff88] tracking-wider">
-              {currentTime.toLocaleTimeString('en-IN', { hour12: false })}
+              {currentTime ? currentTime.toLocaleTimeString('en-IN', { hour12: false }) : '--:--:--'}
             </div>
             <div className="text-xs text-[#4b5563] font-mono">
-              {currentTime.toLocaleDateString('en-IN', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' })}
+              {currentTime ? currentTime.toLocaleDateString('en-IN', { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' }) : 'Loading...'}
             </div>
             <div className="mt-1 badge badge-green text-[10px]">SIMULATION MODE</div>
           </div>
