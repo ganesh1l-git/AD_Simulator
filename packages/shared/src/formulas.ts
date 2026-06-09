@@ -85,7 +85,7 @@ export const SYSTEM_THREAT_MULTIPLIERS: Record<string, Record<string, number>> =
     HYPERSONIC: 0.35,
   },
   'Barak 8 ER': {
-    BALLISTIC_MISSILE: 0.65, // ER variant has active booster and enhanced ABM tracking
+    BALLISTIC_MISSILE: 0.80, // ER variant has active booster and enhanced ABM tracking
     CRUISE_MISSILE: 0.90,
     UAV: 0.92,
     DRONE_SWARM: 0.65,
@@ -133,8 +133,8 @@ export const SYSTEM_THREAT_MULTIPLIERS: Record<string, Record<string, number>> =
     HYPERSONIC: 0.00,
   },
   'Akash-NG': {
-    BALLISTIC_MISSILE: 0.50, // Active seeker, can intercept short-range ballistic
-    CRUISE_MISSILE: 0.85,
+    BALLISTIC_MISSILE: 0.70, // Active seeker, can intercept short-range ballistic
+    CRUISE_MISSILE: 0.90,
     UAV: 0.90,
     DRONE_SWARM: 0.60,
     FIGHTER_AIRCRAFT: 0.92,
@@ -267,7 +267,7 @@ export function getMissileThreatMultiplier(missileName: string, threatType: stri
     return table[normalizedType] ?? 0.8;
   }
   if (name.includes('barak') && (name.includes('er') || name.includes('extended'))) {
-    const table: Record<string, number> = { BALLISTIC: 0.65, HYPERSONIC: 0.15, FIGHTER: 0.95, UAV: 0.92, SWARM: 0.65, CRUISE: 0.90, GLIDE_BOMB: 0.85, ROCKET: 0.85 };
+    const table: Record<string, number> = { BALLISTIC: 0.80, HYPERSONIC: 0.15, FIGHTER: 0.95, UAV: 0.92, SWARM: 0.65, CRUISE: 0.90, GLIDE_BOMB: 0.85, ROCKET: 0.85 };
     return table[normalizedType] ?? 0.75;
   }
   if (name.includes('barak') || name.includes('mrsam')) {
@@ -352,6 +352,23 @@ export function calculateInterceptionProbability(params: {
     missileName.includes('Akash-NG')
   ));
 
+  const isAdvancedSystem = (systemName && (
+    systemName.includes('S-400') ||
+    systemName.includes('Barak') ||
+    systemName.includes('Akash-NG') ||
+    systemName.includes('SPYDER') ||
+    systemName.includes('QRSAM')
+  )) || (missileName && (
+    missileName.includes('40N6') ||
+    missileName.includes('48N6') ||
+    missileName.includes('9M96') ||
+    missileName.includes('Barak') ||
+    missileName.includes('Akash-NG') ||
+    missileName.includes('Derby') ||
+    missileName.includes('Python') ||
+    missileName.includes('QRSAM')
+  ));
+
   if ((targetType === 'BALLISTIC_MISSILE' || targetType === 'HYPERSONIC' || targetType === 'TACTICAL_MISSILE') && targetAltitude > systemMaxAlt) {
     if (isABMCapable) {
       // Scale adjusted altitude to mid-envelope so it is not penalized for its mid-course apogee
@@ -362,24 +379,38 @@ export function calculateInterceptionProbability(params: {
   if (adjustedTargetAltitude < systemMinAlt || adjustedTargetAltitude > systemMaxAlt) {
     altitudeFactor = 0.05; // Nearly impossible outside envelope
   } else {
-    const altRange = systemMaxAlt - systemMinAlt;
-    const mid = (systemMinAlt + systemMaxAlt) / 2;
-    const deviation = Math.abs(adjustedTargetAltitude - mid) / (altRange / 2);
-    altitudeFactor = 1.0 - deviation * 0.3;
+    // Advanced systems do not suffer midpoint deviation penalty inside their operational design envelope.
+    if (isAdvancedSystem) {
+      altitudeFactor = 1.0;
+    } else {
+      const altRange = systemMaxAlt - systemMinAlt;
+      const mid = (systemMinAlt + systemMaxAlt) / 2;
+      const deviation = Math.abs(adjustedTargetAltitude - mid) / (altRange / 2);
+      altitudeFactor = 1.0 - deviation * 0.3;
+    }
   }
 
   // 2. Speed factor: harder to intercept faster targets
   const speedRatio = interceptorSpeed > 0 ? targetSpeed / interceptorSpeed : 10;
-  const speedFactor = speedRatio <= 0.5 ? 1.0
-    : speedRatio <= 1.0 ? 0.85
-    : speedRatio <= 2.0 ? 0.6
-    : speedRatio <= 5.0 ? 0.3
-    : 0.1;
+  let speedFactor = 1.0;
+  if (isAdvancedSystem) {
+    // Advanced systems are designed to track and hit hypersonic / high-speed targets.
+    speedFactor = speedRatio <= 1.5 ? 1.0
+      : speedRatio <= 3.0 ? 0.95
+      : speedRatio <= 6.0 ? 0.85
+      : 0.70;
+  } else {
+    speedFactor = speedRatio <= 0.5 ? 1.0
+      : speedRatio <= 1.0 ? 0.85
+      : speedRatio <= 2.0 ? 0.6
+      : speedRatio <= 5.0 ? 0.3
+      : 0.1;
+  }
 
   // 3. Range factor: accuracy drops at extreme range
-  const rangeFactor = range <= systemMaxRange * 0.6 ? 1.0
-    : range <= systemMaxRange * 0.8 ? 0.85
-    : range <= systemMaxRange ? 0.65
+  const rangeFactor = range <= systemMaxRange * 0.7 ? 1.0
+    : range <= systemMaxRange * 0.9 ? 0.92
+    : range <= systemMaxRange ? 0.85
     : 0.1;
 
   // 4. Target type difficulty factor / system-specific multiplier
@@ -417,15 +448,24 @@ export function calculateInterceptionProbability(params: {
   }
 
   // 5. RCS factor: easier to hit larger targets
-  const rcsFactor = targetRCS >= 5 ? 1.0
-    : targetRCS >= 1 ? 0.9
-    : targetRCS >= 0.1 ? 0.75
-    : targetRCS >= 0.01 ? 0.5
-    : 0.3;
+  let rcsFactor = 1.0;
+  if (isAdvancedSystem) {
+    // Advanced systems with active/AESA seekers are highly optimized for low-RCS threats.
+    rcsFactor = targetRCS >= 0.1 ? 1.0
+      : targetRCS >= 0.01 ? 0.90
+      : 0.80;
+  } else {
+    rcsFactor = targetRCS >= 5 ? 1.0
+      : targetRCS >= 1 ? 0.9
+      : targetRCS >= 0.1 ? 0.75
+      : targetRCS >= 0.01 ? 0.5
+      : 0.3;
+  }
 
   // 6. Weather & ECM
   const weatherFactor = WEATHER_FACTORS[weather as keyof typeof WEATHER_FACTORS] ?? 1.0;
-  const ecmFactor = 1 - ecmLevel * 0.4;
+  // Advanced guidance systems have advanced ECCM capabilities, making them highly jam-resistant.
+  const ecmFactor = isAdvancedSystem ? (1 - ecmLevel * 0.15) : (1 - ecmLevel * 0.4);
 
   const probability = baseAccuracy * speedFactor * altitudeFactor * rangeFactor * targetFactor * rcsFactor * weatherFactor * ecmFactor;
 

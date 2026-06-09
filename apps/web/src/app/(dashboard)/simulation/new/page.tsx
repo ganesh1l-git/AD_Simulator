@@ -129,11 +129,11 @@ interface DefenceItem {
 
 const LOCAL_SYSTEM_THREAT_MULTIPLIERS: Record<string, Record<string, number>> = {
   'S-400': { BALLISTIC: 0.90, CRUISE: 0.95, UAV: 0.95, SWARM: 0.70, FIGHTER: 0.98, BOMBER: 0.98, ATTACK_HELICOPTER: 0.95, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.95, HYPERSONIC: 0.35, GLIDE_BOMB: 0.80, ROCKET: 0.80 },
-  'Barak 8 ER': { BALLISTIC: 0.65, CRUISE: 0.90, UAV: 0.92, SWARM: 0.65, FIGHTER: 0.95, BOMBER: 0.95, ATTACK_HELICOPTER: 0.92, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.85, HYPERSONIC: 0.15, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
+  'Barak 8 ER': { BALLISTIC: 0.80, CRUISE: 0.90, UAV: 0.92, SWARM: 0.65, FIGHTER: 0.95, BOMBER: 0.95, ATTACK_HELICOPTER: 0.92, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.85, HYPERSONIC: 0.15, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
   'Barak 8': { BALLISTIC: 0.40, CRUISE: 0.85, UAV: 0.90, SWARM: 0.60, FIGHTER: 0.92, BOMBER: 0.92, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.75, HYPERSONIC: 0.05, GLIDE_BOMB: 0.80, ROCKET: 0.80 },
   'SPYDER': { BALLISTIC: 0.00, CRUISE: 0.85, UAV: 0.95, SWARM: 0.75, FIGHTER: 0.90, BOMBER: 0.90, ATTACK_HELICOPTER: 0.95, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.40, HYPERSONIC: 0.00, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
   'Pechora': { BALLISTIC: 0.00, CRUISE: 0.55, UAV: 0.65, SWARM: 0.30, FIGHTER: 0.75, BOMBER: 0.80, ATTACK_HELICOPTER: 0.75, LOITERING_MUNITION: 0.40, TACTICAL_MISSILE: 0.20, HYPERSONIC: 0.00, GLIDE_BOMB: 0.40, ROCKET: 0.40 },
-  'Akash-NG': { BALLISTIC: 0.50, CRUISE: 0.85, UAV: 0.90, SWARM: 0.60, FIGHTER: 0.92, BOMBER: 0.92, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.70, HYPERSONIC: 0.05, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
+  'Akash-NG': { BALLISTIC: 0.70, CRUISE: 0.90, UAV: 0.90, SWARM: 0.60, FIGHTER: 0.92, BOMBER: 0.92, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.70, HYPERSONIC: 0.05, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
   'Akash': { BALLISTIC: 0.00, CRUISE: 0.70, UAV: 0.80, SWARM: 0.40, FIGHTER: 0.85, BOMBER: 0.85, ATTACK_HELICOPTER: 0.80, LOITERING_MUNITION: 0.70, TACTICAL_MISSILE: 0.30, HYPERSONIC: 0.00, GLIDE_BOMB: 0.70, ROCKET: 0.70 },
   'QRSAM': { BALLISTIC: 0.00, CRUISE: 0.80, UAV: 0.90, SWARM: 0.70, FIGHTER: 0.88, BOMBER: 0.80, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.40, HYPERSONIC: 0.00, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
   'VSHORAD': { BALLISTIC: 0.00, CRUISE: 0.78, UAV: 0.94, SWARM: 0.78, FIGHTER: 0.88, BOMBER: 0.88, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.30, HYPERSONIC: 0.00, GLIDE_BOMB: 0.82, ROCKET: 0.82 },
@@ -1277,8 +1277,26 @@ export default function SimulationPage() {
             interceptAccuracy = placed.selectedMissile.accuracy * coefficient;
           }
 
-          if (ecm === 'LOW') interceptAccuracy -= 0.08;
-          if (ecm === 'HIGH') interceptAccuracy -= 0.18;
+          const isAdvanced = placed.system.name.includes('S-400') ||
+                             placed.system.name.includes('Barak') ||
+                             placed.system.name.includes('Akash-NG') ||
+                             placed.system.name.includes('SPYDER') ||
+                             placed.system.name.includes('QRSAM') ||
+                             placed.selectedMissile.name.includes('40N6') ||
+                             placed.selectedMissile.name.includes('48N6') ||
+                             placed.selectedMissile.name.includes('9M96') ||
+                             placed.selectedMissile.name.includes('Barak') ||
+                             placed.selectedMissile.name.includes('Akash-NG') ||
+                             placed.selectedMissile.name.includes('Derby') ||
+                             placed.selectedMissile.name.includes('Python') ||
+                             placed.selectedMissile.name.includes('QRSAM');
+
+          if (ecm === 'LOW') {
+            interceptAccuracy -= isAdvanced ? 0.03 : 0.10;
+          }
+          if (ecm === 'HIGH') {
+            interceptAccuracy -= isAdvanced ? 0.08 : 0.22;
+          }
 
           activeInterceptors.push({
             id: `int-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,

@@ -256,7 +256,7 @@ export async function runSimulation(simulationId: string): Promise<void> {
                   data: { threatId: threat.id, type: threat.type, speed: threat.speed, altitude: threat.altitude },
                 });
 
-                // STEP 3: ASSIGN INTERCEPTOR (Only capable systems)
+                // STEP 3: ASSIGN INTERCEPTOR (Only capable systems within range)
                 const availableSystem = simSystems.find(s => {
                   if (s.category === 'RADAR' || s.currentTargets >= s.maxTargets || s.readyAt > simTime || s.accuracy <= 0) {
                     return false;
@@ -265,6 +265,12 @@ export async function runSimulation(simulationId: string): Promise<void> {
                   if (systemKey && SYSTEM_THREAT_MULTIPLIERS[systemKey]) {
                     const multiplier = SYSTEM_THREAT_MULTIPLIERS[systemKey][threat.type];
                     if (multiplier === 0.0) return false; // Not capable against this threat type
+                  }
+                  // Ensure target is within the system's operational max range at engagement stage
+                  const distance = calculateDistance(s.lat, s.lng, threat.launchLat, threat.launchLng);
+                  const engagementRange = distance * 0.6;
+                  if (engagementRange > s.maxRange) {
+                    return false; // Out of range for this system
                   }
                   return true;
                 });
