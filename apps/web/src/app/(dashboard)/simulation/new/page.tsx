@@ -1246,6 +1246,10 @@ export default function SimulationPage() {
           const alreadyEngagedByThisBattery = activeInterceptors.some(i => !i.isDead && i.targetId === t.id && i.batteryId === placed.id);
           if (alreadyEngagedByThisBattery) continue;
 
+          // Limit active engagements to at most 2 concurrent interceptors per threat across all systems (Aegis WCS-style coordination)
+          const activeEngagementsCount = activeInterceptors.filter(i => !i.isDead && i.targetId === t.id).length;
+          if (activeEngagementsCount >= 2) continue;
+
           const distance = Math.sqrt(Math.pow(placed.x - t.x, 2) + Math.pow(placed.y - t.y, 2));
           if (distance <= minDistancePct) {
             minDistancePct = distance;
