@@ -40,16 +40,16 @@ const mockReplays: ReplayItem[] = [
     events: [
       { id: 'e1', timestamp: 2, type: 'DETECTION', title: 'RCS Anomaly Detected', description: 'Arudhra Radar identified incoming projectile at 240km, altitude 18,000m, Speed Mach 4.2', threat: 'Shaheen-I (Ballistic)', status: 'INFO' },
       { id: 'e2', timestamp: 8, type: 'CLASSIFICATION', title: 'Target Classified', description: 'Threat identified as Short Range Ballistic Missile (SRBM)', threat: 'Shaheen-I (Ballistic)', status: 'INFO' },
-      { id: 'e3', timestamp: 12, type: 'ASSIGNMENT', title: 'Weapons Assignment', description: 'Command & Control assigned S-400 Triumf Battery Alpha', system: 'S-400 Triumf', threat: 'Shaheen-I (Ballistic)', status: 'SUCCESS' },
-      { id: 'e4', timestamp: 15, type: 'LAUNCH', title: '48N6DM Interceptor Fired', description: 'S-400 Battery Alpha launched two interceptor missiles', system: 'S-400 Triumf', status: 'SUCCESS' },
+      { id: 'e3', timestamp: 12, type: 'ASSIGNMENT', title: 'Weapons Assignment', description: 'Command & Control assigned S-400 Triumf Regiment Alpha', system: 'S-400 Triumf', threat: 'Shaheen-I (Ballistic)', status: 'SUCCESS' },
+      { id: 'e4', timestamp: 15, type: 'LAUNCH', title: '48N6DM Interceptor Fired', description: 'S-400 Regiment Alpha launched two interceptor missiles', system: 'S-400 Triumf', status: 'SUCCESS' },
       { id: 'e5', timestamp: 35, type: 'TRACKING', title: 'Midcourse Tracking Lock', description: 'Dual tracking active. Probability of Intercept calculated at 92%', system: 'S-400 Triumf', threat: 'Shaheen-I (Ballistic)', status: 'INFO' },
       { id: 'e6', timestamp: 54, type: 'INTERCEPTION', title: 'KINETIC KILL SECURED', description: 'Interceptor 1 successfully engaged and destroyed Shaheen-I at 64km altitude (exo-atmospheric)', system: 'S-400 Triumf', threat: 'Shaheen-I (Ballistic)', status: 'SUCCESS' },
       { id: 'e7', timestamp: 60, type: 'DETECTION', title: 'Low RCS Threat Detected', description: 'Rohini Radar detected low altitude signature at 85km, altitude 150m, Speed Mach 0.8', threat: 'Babur-2 (Cruise)', status: 'INFO' },
       { id: 'e8', timestamp: 65, type: 'CLASSIFICATION', title: 'Target Classified', description: 'Subsonic Land Attack Cruise Missile (LACM)', threat: 'Babur-2 (Cruise)', status: 'INFO' },
-      { id: 'e9', timestamp: 70, type: 'ASSIGNMENT', title: 'Weapons Assignment', description: 'Assigned MRSAM (Barak-8) Battery Gamma', system: 'MRSAM (Barak-8)', threat: 'Babur-2 (Cruise)', status: 'SUCCESS' },
+      { id: 'e9', timestamp: 70, type: 'ASSIGNMENT', title: 'Weapons Assignment', description: 'Assigned MRSAM (Barak-8) Regiment Gamma', system: 'MRSAM (Barak-8)', threat: 'Babur-2 (Cruise)', status: 'SUCCESS' },
       { id: 'e10', timestamp: 73, type: 'LAUNCH', title: 'Barak-8 Missile Launched', description: 'Single interceptor launched from Vertical Launch System', system: 'MRSAM (Barak-8)', status: 'SUCCESS' },
       { id: 'e11', timestamp: 92, type: 'INTERCEPTION', title: 'Interception Failure', description: 'Countermeasure deployment resulted in interceptor guidance loss', system: 'MRSAM (Barak-8)', threat: 'Babur-2 (Cruise)', status: 'FAILED' },
-      { id: 'e12', timestamp: 98, type: 'ASSIGNMENT', title: 'Emergency Assignment', description: 'QRSAM Battery Delta assigned for terminal defence engagement', system: 'QRSAM', threat: 'Babur-2 (Cruise)', status: 'SUCCESS' },
+      { id: 'e12', timestamp: 98, type: 'ASSIGNMENT', title: 'Emergency Assignment', description: 'QRSAM Regiment Delta assigned for terminal defence engagement', system: 'QRSAM', threat: 'Babur-2 (Cruise)', status: 'SUCCESS' },
       { id: 'e13', timestamp: 100, type: 'LAUNCH', title: 'QRSAM Quick-Reaction Missile Fired', description: 'Dual salvo launched', system: 'QRSAM', status: 'SUCCESS' },
       { id: 'e14', timestamp: 112, type: 'INTERCEPTION', title: 'TERMINAL ENGAGEMENT SUCCESS', description: 'QRSAM destroyed Babur-2 cruise missile at 8.2km range, altitude 80m', system: 'QRSAM', threat: 'Babur-2 (Cruise)', status: 'SUCCESS' },
       { id: 'e15', timestamp: 120, type: 'SUMMARY', title: 'Simulation Wave Terminated', description: 'All threats resolved. 4/5 targets intercepted. Total defensive expenditure $14.2M', status: 'SUCCESS' }
@@ -67,7 +67,7 @@ const mockReplays: ReplayItem[] = [
     events: [
       { id: 'e2-1', timestamp: 5, type: 'DETECTION', title: 'Aerial Intruder Spotted', description: 'Rohini Radar detected fighter class contact at 150km, altitude 8,000m, Speed Mach 1.6', threat: 'JF-17 (Fighter)', status: 'INFO' },
       { id: 'e2-2', timestamp: 12, type: 'CLASSIFICATION', title: 'Target Classified', description: 'JF-17 Thunder multi-role fighter aircraft', threat: 'JF-17 (Fighter)', status: 'INFO' },
-      { id: 'e2-3', timestamp: 18, type: 'ASSIGNMENT', title: 'Combat Air Patrol / SAM Assignment', description: 'MRSAM Battery Alpha assigned to hold lock. Su-30MKI CAP directed to intercept vector', system: 'MRSAM (Barak-8)', threat: 'JF-17 (Fighter)', status: 'SUCCESS' },
+      { id: 'e2-3', timestamp: 18, type: 'ASSIGNMENT', title: 'Combat Air Patrol / SAM Assignment', description: 'MRSAM Regiment Alpha assigned to hold lock. Su-30MKI CAP directed to intercept vector', system: 'MRSAM (Barak-8)', threat: 'JF-17 (Fighter)', status: 'SUCCESS' },
       { id: 'e2-4', timestamp: 25, type: 'LAUNCH', title: 'MRSAM Salvo Fired', description: 'Salvo of two Barak-8 missiles launched', system: 'MRSAM (Barak-8)', status: 'SUCCESS' },
       { id: 'e2-5', timestamp: 55, type: 'INTERCEPTION', title: 'INTERCEPTION CONFIRMED', description: 'JF-17 signature disappeared. Remote optical feed confirms interception at 68km range', system: 'MRSAM (Barak-8)', threat: 'JF-17 (Fighter)', status: 'SUCCESS' }
     ]
@@ -255,7 +255,7 @@ export default function ReplayPage() {
     let defenceSystems: { name: string, x: number, y: number, color: string }[] = [];
     if (selectedReplay.id === 'rep-001') {
       defenceSystems = [
-        { name: 'S-400 Battery Alpha', x: 40, y: 72, color: '#ef4444' },
+        { name: 'S-400 Regiment Alpha', x: 40, y: 72, color: '#ef4444' },
         { name: 'MRSAM Gamma', x: 60, y: 70, color: '#f59e0b' },
         { name: 'QRSAM Delta', x: 54, y: 73, color: '#00ff88' }
       ];
@@ -265,7 +265,7 @@ export default function ReplayPage() {
       ];
     } else if (selectedReplay.id === 'rep-003') {
       defenceSystems = [
-        { name: 'Akash Battery', x: 50, y: 70, color: '#00ff88' }
+        { name: 'Akash SAM Regiment', x: 50, y: 70, color: '#00ff88' }
       ];
     } else {
       const configDefenders = selectedReplay.config?.defenderProcured || [];

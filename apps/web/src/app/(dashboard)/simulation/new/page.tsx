@@ -163,12 +163,12 @@ const DEFENCE_CATALOG: DefenceItem[] = [
     id: 'd1',
     name: 'S-400 Triumf Regiment',
     category: 'LONG_RANGE',
-    batteryCost: 1000.0,
+    batteryCost: 1090.0,
     missileCost: 2.5,
     missileName: '48N6DM',
     range: 400,
     radarRange: 600,
-    defaultAmmo: 32,
+    defaultAmmo: 64,
     minAlt: 10,
     maxAlt: 30000,
     accuracy: 0.92,
@@ -183,19 +183,19 @@ const DEFENCE_CATALOG: DefenceItem[] = [
       { name: '55K6E Combat Management Post', type: 'C2 Vehicle', qty: 1 },
       { name: '91N6E Acquisition Radar (S-band)', type: 'Surveillance Radar', qty: 1 },
       { name: '92N6E Grave Stone Radar (X-band)', type: 'Fire Control Radar', qty: 2 },
-      { name: '5P85TE2 Self-Propelled Launcher', type: 'TEL Launcher (4 canisters)', qty: 8 }
+      { name: '5P85TE2 Self-Propelled Launcher', type: 'TEL Launcher (4 canisters)', qty: 16 }
     ]
   },
   {
     id: 'd2b',
-    name: 'Barak 8 ER SAM Battery',
+    name: 'Barak 8 ER SAM Regiment',
     category: 'MEDIUM_RANGE',
-    batteryCost: 180.0,
+    batteryCost: 650.0,
     missileCost: 1.2,
     missileName: 'Barak-8 ER',
     range: 150,
     radarRange: 200,
-    defaultAmmo: 24,
+    defaultAmmo: 96,
     minAlt: 15,
     maxAlt: 30000,
     accuracy: 0.88,
@@ -203,20 +203,21 @@ const DEFENCE_CATALOG: DefenceItem[] = [
     speed: 3.0,
     composition: [
       { name: 'Mobile Command & Control (MCP)', type: 'C2 Station', qty: 1 },
-      { name: 'MF-STAR AESA Radar', type: 'Active AESA Radar', qty: 1 },
-      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: 3 }
+      { name: 'Firing Unit / Battery', type: 'Firing Unit', qty: 4 },
+      { name: 'MF-STAR AESA Radar', type: 'Active AESA Radar', qty: 4 },
+      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: 12 }
     ]
   },
   {
     id: 'd2',
-    name: 'MRSAM / Barak-8 Battery',
+    name: 'MRSAM / Barak-8 Regiment',
     category: 'MEDIUM_RANGE',
-    batteryCost: 150.0,
+    batteryCost: 500.0,
     missileCost: 1.2,
     missileName: 'Barak-8',
     range: 70,
     radarRange: 120,
-    defaultAmmo: 24,
+    defaultAmmo: 96,
     minAlt: 15,
     maxAlt: 16000,
     accuracy: 0.85,
@@ -227,33 +228,58 @@ const DEFENCE_CATALOG: DefenceItem[] = [
     ],
     composition: [
       { name: 'Mobile Command & Control (MCP)', type: 'C2 Station', qty: 1 },
-      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar', qty: 1 },
-      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: 3 }
+      { name: 'Firing Unit / Battery', type: 'Firing Unit', qty: 4 },
+      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar', qty: 4 },
+      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: 12 }
     ]
   },
   {
     id: 'd3',
-    name: 'Akash-NG Battery',
+    name: 'Akash-NG Regiment',
     category: 'MEDIUM_RANGE',
-    batteryCost: 50.0,
+    batteryCost: 480.0,
     missileCost: 0.3,
     missileName: 'Akash-NG',
     range: 80,
     radarRange: 120,
-    defaultAmmo: 12,
+    defaultAmmo: 72,
     minAlt: 30,
     maxAlt: 20000,
     accuracy: 0.85,
     color: '#eab308',
     speed: 3.0,
     missileOptions: [
-      { name: 'Akash-NG Active Seeker', range: 80, speed: 3.5, cost: 0.3, accuracy: 0.85, minAlt: 30, maxAlt: 20000, description: 'Active RF terminal seeker.' },
-      { name: 'Akash Standard Command', range: 30, speed: 2.5, cost: 0.2, accuracy: 0.75, minAlt: 30, maxAlt: 15000, description: 'PESA command guided legacy variant.' }
+      { name: 'Akash-NG Active Seeker', range: 80, speed: 3.5, cost: 0.3, accuracy: 0.85, minAlt: 30, maxAlt: 20000, description: 'Active RF terminal seeker.' }
     ],
     composition: [
-      { name: 'Battery Command Post (BCP)', type: 'Tactical BCP', qty: 1 },
-      { name: '3D Active Electronically Scanned Radar', type: 'PESA/AESA Radar', qty: 1 },
-      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Trailer (3 cells)', qty: 4 }
+      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: 3 },
+      { name: 'AESA Fire Control Radar', type: 'Fire Control Radar', qty: 3 },
+      { name: 'Surveillance Radar', type: 'Surveillance Radar', qty: 1 },
+      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Launcher (6 cells)', qty: 12 }
+    ]
+  },
+  {
+    id: 'd3a',
+    name: 'Akash SAM Regiment',
+    category: 'MEDIUM_RANGE',
+    batteryCost: 350.0,
+    missileCost: 0.2,
+    missileName: 'Akash SAM',
+    range: 30,
+    radarRange: 150,
+    defaultAmmo: 48,
+    minAlt: 30,
+    maxAlt: 18000,
+    accuracy: 0.75,
+    color: '#f59e0b',
+    speed: 2.5,
+    missileOptions: [
+      { name: 'Akash Standard Command', range: 30, speed: 2.5, cost: 0.2, accuracy: 0.75, minAlt: 30, maxAlt: 15000, description: 'PESA command-guided legacy variant.' }
+    ],
+    composition: [
+      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: 4 },
+      { name: 'Rajendra Radar', type: 'Fire Control Radar', qty: 4 },
+      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Launcher (3 cells)', qty: 16 }
     ]
   },
   {
@@ -280,12 +306,12 @@ const DEFENCE_CATALOG: DefenceItem[] = [
     id: 'd4b',
     name: 'SPYDER SAM Battery',
     category: 'SHORT_RANGE',
-    batteryCost: 80.0,
+    batteryCost: 50.0,
     missileCost: 0.5,
     missileName: 'Derby',
     range: 50,
     radarRange: 80,
-    defaultAmmo: 16,
+    defaultAmmo: 24,
     minAlt: 20,
     maxAlt: 16000,
     accuracy: 0.82,
@@ -298,28 +324,29 @@ const DEFENCE_CATALOG: DefenceItem[] = [
     composition: [
       { name: 'Mobile Command Post (MCP)', type: 'Tactical C2', qty: 1 },
       { name: 'EL/M-2106 ATAR 3D Radar', type: 'Surveillance Radar', qty: 1 },
-      { name: 'SPYDER Mobile Launcher', type: 'TEL Launcher (4 rails)', qty: 4 }
+      { name: 'SPYDER Mobile Launcher', type: 'TEL Launcher (4 rails)', qty: 6 }
     ]
   },
   {
     id: 'd4',
-    name: 'QRSAM Battery',
+    name: 'QRSAM Regiment',
     category: 'SHORT_RANGE',
-    batteryCost: 20.0,
+    batteryCost: 600.0,
     missileCost: 0.15,
     missileName: 'QRSAM',
     range: 30,
     radarRange: 50,
-    defaultAmmo: 18,
+    defaultAmmo: 72,
     minAlt: 30,
     maxAlt: 6000,
     accuracy: 0.82,
     color: '#00ff88',
     speed: 3.0,
     composition: [
-      { name: 'Battery Surveillance Radar (BSR)', type: '3D AESA Radar', qty: 1 },
-      { name: 'Battery Multifunction Radar (BMR)', type: 'Fire Control Radar', qty: 1 },
-      { name: 'Quick Reaction Launcher (QRL)', type: 'TEL Launcher (6 cells)', qty: 3 }
+      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: 3 },
+      { name: 'AESA Radar', type: 'Engagement Radar', qty: 3 },
+      { name: 'Surveillance Radar', type: 'Surveillance Radar', qty: 1 },
+      { name: 'Quick Reaction Launcher (QRL)', type: 'TEL Launcher (6 cells)', qty: 12 }
     ]
   },
   {
@@ -481,7 +508,7 @@ export default function SimulationPage() {
 
   // Attacker list of selected weapons
   const [attackerProcured, setAttackerProcured] = useState<SelectedThreat[]>([]);
-  // Defender list of placed defense batteries
+  // Defender list of placed defense units
   const [defenderProcured, setDefenderProcured] = useState<SelectedDefence[]>([]);
 
   // Validation warning state
@@ -519,7 +546,7 @@ export default function SimulationPage() {
     return sum + (item.threat.cost + loadoutCost) * countVal;
   }, 0);
 
-  // Defender Procurement Cost Calculation (Battery costs + Initial ammo purchases based on selected missile type)
+  // Defender Procurement Cost Calculation (unit costs + initial ammo purchases based on selected missile type)
   const defenderTotalSpent = defenderProcured.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * (Number(item.missilesPurchased) || 0)), 0);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -527,6 +554,14 @@ export default function SimulationPage() {
   const visualInterceptorsRef = useRef<VisualInterceptor[]>([]);
   const simTimeRef = useRef(0);
   const defenderProcuredRef = useRef<SelectedDefence[]>([]);
+  // Radar sweep tracking: radarId -> current sweep angle (radians)
+  const radarSweepAnglesRef = useRef<Record<string, number>>({});
+  // Radar cueing bonus active: radarId -> threatId -> sim-time when bonus expires
+  const radarBonusActiveRef = useRef<Record<string, Record<string, number>>>({});
+  // Radar cued kills tracking: radarId -> { radarName, assistedSAMs: Set<string>, cuedKills, cueEvents }
+  const radarCuedKillsRef = useRef<Record<string, { radarName: string; assistedSAMs: Set<string>; cuedKills: number; cueEvents: number }>>({});
+  // Per interceptor: was it launched under active radar cue? interceptorId -> radarId
+  const interceptorRadarCueRef = useRef<Record<string, string>>({});
   
   // Audio context placeholders for kinetic sound cues
   useEffect(() => {
@@ -914,6 +949,10 @@ export default function SimulationPage() {
     setHitCount(0);
     setSpentDefenderMissilesCost(0);
     setEngagements([]);
+    radarSweepAnglesRef.current = {};
+    radarBonusActiveRef.current = {};
+    radarCuedKillsRef.current = {};
+    interceptorRadarCueRef.current = {};
 
     const defenderListToUse = (overrideDefenderList || defenderProcured).map(battery => ({
       ...battery,
@@ -985,6 +1024,15 @@ export default function SimulationPage() {
       const activeThreats = visualThreatsRef.current;
       const activeInterceptors = visualInterceptorsRef.current;
       const currentPlacements = defenderProcuredRef.current;
+
+      // Advance radar sweep angles each tick (6 RPM = full rotation every 10 sim-seconds)
+      const rotPeriodSec = 10;
+      currentPlacements.forEach(p => {
+        if (p.system.category === 'RADAR' && !p.isDestroyed) {
+          const prev = radarSweepAnglesRef.current[p.id] ?? 0;
+          radarSweepAnglesRef.current[p.id] = (prev + (2 * Math.PI / rotPeriodSec) * simSpeed) % (2 * Math.PI);
+        }
+      });
 
       // Attacker speed multipliers
       let speedModifier = 1.0;
@@ -1117,7 +1165,7 @@ export default function SimulationPage() {
             if (hitBattery) {
               hitBattery.isDestroyed = true;
             }
-            const batteryName = hitBattery ? hitBattery.system.name : 'Defender Battery';
+            const batteryName = hitBattery ? hitBattery.system.name : 'Defender Unit';
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
               message: `💥 DIRECT HIT: Anti-radiation missile destroyed ${batteryName}!`,
@@ -1167,119 +1215,156 @@ export default function SimulationPage() {
         let targetThreat: VisualThreat | null = null;
         let minDistancePct = placed.selectedMissile.range / 2.5;
 
-        for (const t of activeThreats) {
-          if (!t.detected || t.isDead || t.isLeaked) continue;
+          // ── Shared engagement rule: doctrine salvo + maxSAMs by threat class ────────
+          const isModernSAM = placed.system.name.includes('S-400') ||
+                              placed.system.name.includes('Barak 8 ER') ||
+                              placed.system.name.includes('Barak 8') ||
+                              placed.system.name.includes('Barak-8') ||
+                              placed.system.name.includes('Akash-NG') ||
+                              placed.system.name.includes('QRSAM') ||
+                              placed.system.name.includes('SPYDER');
 
-          // Check if system/missile is capable of targeting this threat type
-          let capability = getMissileThreatMultiplier(placed.selectedMissile.name, t.threat.type);
-          if (capability === undefined) {
-            const sysKey = localFindSystemKey(placed.system.name);
-            if (sysKey && LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
-              capability = LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey][t.threat.type];
+          const getDoctrineSalvo = (threatType: string, threatSpeed: number): { salvoPerSAM: number; maxSAMs: number } => {
+            if (!isModernSAM) return { salvoPerSAM: 1, maxSAMs: 2 };
+            switch (threatType) {
+              case 'UAV': case 'SWARM': case 'ROCKET':
+              case 'LOITERING_MUNITION': case 'GLIDE_BOMB':
+                return { salvoPerSAM: 1, maxSAMs: 2 };
+              case 'FIGHTER': case 'BOMBER': case 'ATTACK_HELICOPTER':
+                return { salvoPerSAM: 2, maxSAMs: 2 };
+              case 'CRUISE': case 'TACTICAL':
+                return threatSpeed >= 3.0
+                  ? { salvoPerSAM: 2, maxSAMs: 3 }  // supersonic
+                  : { salvoPerSAM: 2, maxSAMs: 2 };  // subsonic
+              case 'BALLISTIC':
+                // User cap: max 2 per SAM. Large MRBMs still get 2 but from 3 SAMs.
+                return threatSpeed >= 7.0
+                  ? { salvoPerSAM: 2, maxSAMs: 3 }
+                  : { salvoPerSAM: 2, maxSAMs: 2 };
+              case 'HYPERSONIC':
+                return { salvoPerSAM: threatSpeed >= 12 ? 4 : 3, maxSAMs: 3 };
+              default:
+                return { salvoPerSAM: 1, maxSAMs: 2 };
             }
-          }
-          if (capability === 0.0) continue; // Not capable against this threat type
+          };
 
-          // Special layered defense logic: S-400 and Barak 8 ER should avoid firing at drone swarms (SWARM)
-          // if other active complementary SAMs are present, unless in the final stage and not targeted by anyone else.
-          const isS400OrBarak8ER = placed.system.name.includes('S-400') || placed.system.name.includes('Barak 8 ER') || placed.system.name.includes('Barak-8 ER');
-          const isDroneSwarm = t.threat.type === 'SWARM';
-          if (isS400OrBarak8ER && isDroneSwarm) {
-            const otherSAMsActive = currentPlacements.some(p => {
-              if (p.id === placed.id) return false;
-              const name = p.system.name;
-              const isOtherS400OrBarak8ER = name.includes('S-400') || name.includes('Barak 8 ER') || name.includes('Barak-8 ER');
-              return !isOtherS400OrBarak8ER && p.system.category !== 'RADAR' && !p.isDestroyed && p.missilesPurchased > 0;
-            });
-            if (otherSAMsActive) {
-              const isFinalStage = t.distanceToTarget !== undefined && t.distanceToTarget <= 45;
-              const noOneFiring = !activeInterceptors.some(i => !i.isDead && i.targetId === t.id);
-              if (!(isFinalStage && noOneFiring)) {
-                continue;
+          // ── Ammo Conservation (computed once per battery, before the target loop) ───
+          // Same metrics used in both gate-check and fire-block so they always agree.
+          const _activeSAMCount = currentPlacements.filter(p =>
+            !p.isDestroyed && p.missilesPurchased > 0 && p.system.category !== 'RADAR'
+          ).length;
+          const _totalMissiles = currentPlacements
+            .filter(p => !p.isDestroyed && p.system.category !== 'RADAR')
+            .reduce((sum, p) => sum + (Number(p.missilesPurchased) || 0), 0);
+          const _activeThreats = activeThreats.filter(t =>
+            !t.isDead && !t.isLeaked && t.detected
+          ).length;
+          const _ammoRatio = _activeThreats > 0 ? _totalMissiles / _activeThreats : 99;
+
+          // 0=Normal, 1=Cautious (≤3 SAMs or ratio≤3), 2=Critical (ratio≤1.5)
+          const _consLevel = _ammoRatio <= 1.5 ? 2 : (_activeSAMCount <= 3 || _ammoRatio <= 3.0 ? 1 : 0);
+
+          const getEffectiveSalvo = (threatType: string, threatSpeed: number): number => {
+            const { salvoPerSAM } = getDoctrineSalvo(threatType, threatSpeed);
+            if (_consLevel === 2) {
+              // Critical: 1 for easy, 2 max for high-priority
+              const hiPri = threatType === 'BALLISTIC' || threatType === 'HYPERSONIC' ||
+                            (threatType === 'CRUISE' && threatSpeed >= 3.0);
+              return hiPri ? Math.min(2, salvoPerSAM) : 1;
+            }
+            if (_consLevel === 1) return Math.max(1, salvoPerSAM - 1); // trim by 1
+            return salvoPerSAM; // normal
+          };
+
+          for (const t of activeThreats) {
+            if (!t.detected || t.isDead || t.isLeaked) continue;
+
+            let capability = getMissileThreatMultiplier(placed.selectedMissile.name, t.threat.type);
+            if (capability === undefined) {
+              const sysKey = localFindSystemKey(placed.system.name);
+              if (sysKey && LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
+                capability = LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey][t.threat.type];
               }
             }
-          }
+            if (capability === 0.0) continue;
 
-          // Special layered ballistic defense logic: Akash and Pechora should limit engagements against ballistic threats
-          // to at most 10% of their initial inventory when teamed with S-400, Barak-8 ER, or Barak-8.
-          if (t.threat.type === 'BALLISTIC') {
-            const isAkashOrPechora = placed.system.name.includes('Akash') || placed.system.name.includes('Pechora');
-            if (isAkashOrPechora) {
-              const teamedWithABM = currentPlacements.some(p => {
+            const isS400OrBarak8ER = placed.system.name.includes('S-400') || placed.system.name.includes('Barak 8 ER') || placed.system.name.includes('Barak-8 ER');
+            const isDroneSwarm = t.threat.type === 'SWARM';
+            if (isS400OrBarak8ER && isDroneSwarm) {
+              const otherSAMsActive = currentPlacements.some(p => {
                 if (p.id === placed.id) return false;
                 const name = p.system.name;
-                const isABMSystem = name.includes('S-400') || name.includes('Barak 8') || name.includes('Barak-8');
-                return isABMSystem && !p.isDestroyed && p.missilesPurchased > 0;
+                const isOtherS400OrBarak8ER = name.includes('S-400') || name.includes('Barak 8 ER') || name.includes('Barak-8 ER');
+                return !isOtherS400OrBarak8ER && p.system.category !== 'RADAR' && !p.isDestroyed && p.missilesPurchased > 0;
               });
-              if (teamedWithABM) {
-                const limit = Math.ceil((placed.initialMissilesPurchased ?? 0) * 0.1);
-                if ((placed.ballisticFiredCount ?? 0) >= limit) {
-                  continue; // Exceeded 10% limit for ballistic missiles, reserve the rest for other threats
+              if (otherSAMsActive) {
+                const isFinalStage = t.distanceToTarget !== undefined && t.distanceToTarget <= 45;
+                const noOneFiring = !activeInterceptors.some(i => !i.isDead && i.targetId === t.id);
+                if (!(isFinalStage && noOneFiring)) continue;
+              }
+            }
+
+            if (t.threat.type === 'BALLISTIC') {
+              const isAkashOrPechora = placed.system.name.includes('Akash') || placed.system.name.includes('Pechora');
+              if (isAkashOrPechora) {
+                const teamedWithABM = currentPlacements.some(p => {
+                  if (p.id === placed.id) return false;
+                  const name = p.system.name;
+                  const isABMSystem = name.includes('S-400') || name.includes('Barak 8') || name.includes('Barak-8');
+                  return isABMSystem && !p.isDestroyed && p.missilesPurchased > 0;
+                });
+                if (teamedWithABM) {
+                  const limit = Math.ceil((placed.initialMissilesPurchased ?? 0) * 0.1);
+                  if ((placed.ballisticFiredCount ?? 0) >= limit) continue;
                 }
               }
             }
-          }
 
-          const currentDistance = t.distanceToTarget ?? 200.0;
-          let currentAlt = t.threat.type === 'BALLISTIC' || t.threat.type === 'HYPERSONIC' 
-            ? t.threat.altitude * Math.max((currentDistance / 200.0), 0.05)
-            : t.threat.altitude;
-          
-          // Check if system or missile is ABM-capable to adjust apogee altitude checks
-          const isABM = placed.system.name.includes('S-400') ||
-                        placed.system.name.includes('Barak-8') ||
-                        placed.system.name.includes('Barak 8') ||
-                        placed.system.name.includes('Akash-NG') ||
-                        placed.selectedMissile.name.includes('40N6') ||
-                        placed.selectedMissile.name.includes('48N6') ||
-                        placed.selectedMissile.name.includes('Barak-8') ||
-                        placed.selectedMissile.name.includes('Barak 8') ||
-                        placed.selectedMissile.name.includes('Akash-NG');
-                        
-          if (t.threat.type === 'BALLISTIC' && currentAlt > placed.selectedMissile.maxAlt && isABM) {
-            // Scale adjusted altitude to mid-envelope so it is not penalized for its mid-course apogee
-            currentAlt = (placed.selectedMissile.minAlt + placed.selectedMissile.maxAlt) / 2;
-          }
-          
-          if (currentAlt < placed.selectedMissile.minAlt || currentAlt > placed.selectedMissile.maxAlt) continue;
-          
-          const alreadyEngagedByThisBattery = activeInterceptors.some(i => !i.isDead && i.targetId === t.id && i.batteryId === placed.id);
-          if (alreadyEngagedByThisBattery) continue;
+            const currentDistance = t.distanceToTarget ?? 200.0;
+            let currentAlt = t.threat.type === 'BALLISTIC' || t.threat.type === 'HYPERSONIC'
+              ? t.threat.altitude * Math.max((currentDistance / 200.0), 0.05)
+              : t.threat.altitude;
 
-          // Limit active engagements to at most 2 concurrent interceptors per threat across all systems (Aegis WCS-style coordination)
-          const activeEngagementsCount = activeInterceptors.filter(i => !i.isDead && i.targetId === t.id).length;
-          if (activeEngagementsCount >= 2) continue;
+            const isABM = placed.system.name.includes('S-400') ||
+                          placed.system.name.includes('Barak-8') ||
+                          placed.system.name.includes('Barak 8 ER') ||
+                          placed.system.name.includes('Barak 8') ||
+                          placed.system.name.includes('Akash-NG') ||
+                          placed.selectedMissile.name.includes('40N6') ||
+                          placed.selectedMissile.name.includes('48N6') ||
+                          placed.selectedMissile.name.includes('Barak-8') ||
+                          placed.selectedMissile.name.includes('Barak 8 ER') ||
+                          placed.selectedMissile.name.includes('Barak 8') ||
+                          placed.selectedMissile.name.includes('Akash-NG');
 
-          const distance = Math.sqrt(Math.pow(placed.x - t.x, 2) + Math.pow(placed.y - t.y, 2));
-          if (distance <= minDistancePct) {
-            minDistancePct = distance;
-            targetThreat = t;
+            if (t.threat.type === 'BALLISTIC' && currentAlt > placed.selectedMissile.maxAlt && isABM) {
+              currentAlt = (placed.selectedMissile.minAlt + placed.selectedMissile.maxAlt) / 2;
+            }
+            if (currentAlt < placed.selectedMissile.minAlt || currentAlt > placed.selectedMissile.maxAlt) continue;
+
+            // Gate: use conserved salvo size so gate and fire block always agree
+            const effectiveSalvoForGate = getEffectiveSalvo(t.threat.type, t.threat.speed);
+            const activeSalvoCount = activeInterceptors.filter(i => !i.isDead && i.targetId === t.id && i.batteryId === placed.id).length;
+            if (activeSalvoCount >= effectiveSalvoForGate) continue;
+
+            const { maxSAMs } = getDoctrineSalvo(t.threat.type, t.threat.speed);
+            const activeBatteryEngagements = new Set(
+              activeInterceptors.filter(i => !i.isDead && i.targetId === t.id).map(i => i.batteryId)
+            ).size;
+            if (activeBatteryEngagements >= maxSAMs) continue;
+
+            const distance = Math.sqrt(Math.pow(placed.x - t.x, 2) + Math.pow(placed.y - t.y, 2));
+            if (distance <= minDistancePct) {
+              minDistancePct = distance;
+              targetThreat = t;
+            }
           }
-        }
 
         if (targetThreat) {
-          placed.missilesPurchased--;
-          setSpentDefenderMissilesCost(prev => prev + placed.selectedMissile.cost);
-          
-          if (targetThreat.threat.type === 'BALLISTIC') {
-            if (placed.ballisticFiredCount !== undefined) {
-              placed.ballisticFiredCount++;
-            }
-          }
-          
-          let interceptAccuracy = placed.selectedMissile.accuracy;
-          
-          // Apply system/missile threat capability coefficient to match real-world success rates
-          let coefficient = getMissileThreatMultiplier(placed.selectedMissile.name, targetThreat.threat.type);
-          if (coefficient === undefined) {
-            const sysKey = localFindSystemKey(placed.system.name);
-            if (sysKey && LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
-              coefficient = LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey][targetThreat.threat.type];
-            }
-          }
-          if (coefficient !== undefined) {
-            interceptAccuracy = placed.selectedMissile.accuracy * coefficient;
-          }
+          // Use the SAME getEffectiveSalvo helper (already computed above) for consistency
+          const salvoCount = getEffectiveSalvo(targetThreat.threat.type, targetThreat.threat.speed);
+          const missilesToFire = Math.min(salvoCount, placed.missilesPurchased);
+          if (missilesToFire <= 0) return;
 
           const isAdvanced = placed.system.name.includes('S-400') ||
                              placed.system.name.includes('Barak') ||
@@ -1295,37 +1380,148 @@ export default function SimulationPage() {
                              placed.selectedMissile.name.includes('Python') ||
                              placed.selectedMissile.name.includes('QRSAM');
 
-          if (ecm === 'LOW') {
-            interceptAccuracy -= isAdvanced ? 0.03 : 0.10;
-          }
-          if (ecm === 'HIGH') {
-            interceptAccuracy -= isAdvanced ? 0.08 : 0.22;
+          // --- Radar Cueing Bonus ---
+          // Check if any active RADAR is illuminating this threat (sweep beam facing it)
+          let radarBonus = 0;
+          let radarCount = 0;
+          const radarBonusByType: Record<string, number> = {
+            UAV: 0.20, SWARM: 0.20, LOITERING_MUNITION: 0.20,
+            FIGHTER: 0.15, BOMBER: 0.15, CRUISE: 0.15, TACTICAL: 0.15, GLIDE_BOMB: 0.15, ROCKET: 0.15,
+            BALLISTIC: 0.07,
+            HYPERSONIC: 0.04,
+          };
+          const baseRadarBonus = radarBonusByType[targetThreat.threat.type] ?? 0.10;
+
+          if (isAdvanced) {
+            const now = simTimeRef.current;
+            currentPlacements.forEach(radarPlaced => {
+              if (radarPlaced.system.category !== 'RADAR' || radarPlaced.isDestroyed) return;
+              radarCount++;
+              // Get/update sweep angle for this radar (6 RPM = 1 rotation per 10s sim-time)
+              const rotPeriod = 10; // seconds per full rotation
+              const prevAngle = radarSweepAnglesRef.current[radarPlaced.id] ?? 0;
+              // Compute bearing from radar to threat (in canvas %-coords)
+              const dx = targetThreat.x - radarPlaced.x;
+              const dy = targetThreat.y - radarPlaced.y;
+              const bearing = Math.atan2(dy, dx); // -π to π
+              // Normalize angle diff
+              let angleDiff = bearing - prevAngle;
+              while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
+              while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
+              const beamWidth = Math.PI / 12; // ±15 degrees
+              // Check if bonus is currently active for this radar+threat combo
+              const bonusExpiry = radarBonusActiveRef.current[radarPlaced.id]?.[targetThreat.id] ?? 0;
+              if (now <= bonusExpiry) {
+                // Bonus still active from previous sweep pass
+                radarBonus += baseRadarBonus;
+              } else if (Math.abs(angleDiff) <= beamWidth) {
+                // Beam is facing the threat right now — activate bonus for 1.5s
+                if (!radarBonusActiveRef.current[radarPlaced.id]) {
+                  radarBonusActiveRef.current[radarPlaced.id] = {};
+                }
+                radarBonusActiveRef.current[radarPlaced.id][targetThreat.id] = now + 1.5;
+                radarBonus += baseRadarBonus;
+                // Track cue event for this radar
+                if (!radarCuedKillsRef.current[radarPlaced.id]) {
+                  radarCuedKillsRef.current[radarPlaced.id] = { radarName: radarPlaced.system.name, assistedSAMs: new Set(), cuedKills: 0, cueEvents: 0 };
+                }
+                radarCuedKillsRef.current[radarPlaced.id].cueEvents++;
+                setSimLogs(prev => [...prev, {
+                  time: now,
+                  message: `📡 RADAR CUE: ${radarPlaced.system.name} sweep illuminated ${targetThreat.threat.name} → +${(baseRadarBonus * 100).toFixed(0)}% accuracy boost!`,
+                  type: 'DETECTION'
+                }]);
+              }
+            });
+            // Additional radar stacking bonus (+4% per extra radar beyond first, cap at +20%)
+            if (radarCount > 1) {
+              radarBonus += Math.min(0.20, (radarCount - 1) * 0.04);
+            }
           }
 
-          activeInterceptors.push({
-            id: `int-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`,
-            batteryId: placed.id,
-            startX: placed.x,
-            startY: placed.y,
-            x: placed.x,
-            y: placed.y,
-            targetId: targetThreat.id,
-            progress: 0,
-            accuracy: interceptAccuracy,
-            isDead: false,
-            color: placed.system.color,
-            speed: placed.selectedMissile.speed,
-          });
+          // Launch salvo
+          placed.missilesPurchased -= missilesToFire;
+          setSpentDefenderMissilesCost(prev => prev + placed.selectedMissile.cost * missilesToFire);
+
+          if (targetThreat.threat.type === 'BALLISTIC' && placed.ballisticFiredCount !== undefined) {
+            placed.ballisticFiredCount += missilesToFire;
+          }
 
           const currentDistance = targetThreat.distanceToTarget ?? 200.0;
-          const currentAlt = Math.round(targetThreat.threat.type === 'BALLISTIC' || targetThreat.threat.type === 'HYPERSONIC' 
+          const currentAlt = Math.round(targetThreat.threat.type === 'BALLISTIC' || targetThreat.threat.type === 'HYPERSONIC'
             ? targetThreat.threat.altitude * Math.max((currentDistance / 200.0), 0.05)
             : targetThreat.threat.altitude);
-          setSimLogs(prev => [...prev, {
-            time: simTimeRef.current,
-            message: `🚀 LAUNCH: ${placed.system.name} launched ${placed.selectedMissile.name} interceptor. Target Alt: ${currentAlt}m, Range: ${currentDistance.toFixed(0)}km`,
-            type: 'LAUNCH'
-          }]);
+
+          // Record which SAM systems this radar is assisting
+          if (radarBonus > 0) {
+            currentPlacements.forEach(radarPlaced => {
+              if (radarPlaced.system.category !== 'RADAR' || radarPlaced.isDestroyed) return;
+              if (radarCuedKillsRef.current[radarPlaced.id]) {
+                radarCuedKillsRef.current[radarPlaced.id].assistedSAMs.add(placed.system.name);
+              }
+            });
+          }
+
+          for (let s = 0; s < missilesToFire; s++) {
+            let interceptAccuracy = placed.selectedMissile.accuracy;
+
+            // Apply system/missile threat capability coefficient
+            let coefficient = getMissileThreatMultiplier(placed.selectedMissile.name, targetThreat.threat.type);
+            if (coefficient === undefined) {
+              const sysKey = localFindSystemKey(placed.system.name);
+              if (sysKey && LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
+                coefficient = LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey][targetThreat.threat.type];
+              }
+            }
+            if (coefficient !== undefined) {
+              interceptAccuracy = placed.selectedMissile.accuracy * coefficient;
+            }
+
+            // Apply ECM degradation
+            if (ecm === 'LOW') interceptAccuracy -= isAdvanced ? 0.03 : 0.10;
+            if (ecm === 'HIGH') interceptAccuracy -= isAdvanced ? 0.08 : 0.22;
+
+            // Apply radar cueing bonus (capped at 0.99)
+            interceptAccuracy = Math.min(0.99, Math.max(0, interceptAccuracy + radarBonus));
+
+            // Small per-missile variance for realism (±2%)
+            interceptAccuracy = Math.min(0.99, Math.max(0, interceptAccuracy + (Math.random() - 0.5) * 0.04));
+
+            const intId = `int-${Date.now()}-${s}-${Math.random().toString(36).substr(2, 4)}`;
+            // Tag interceptor with active radar cue if bonus > 0
+            if (radarBonus > 0) {
+              const cuingRadarId = Object.keys(radarCuedKillsRef.current)[0];
+              if (cuingRadarId) interceptorRadarCueRef.current[intId] = cuingRadarId;
+            }
+            activeInterceptors.push({
+              id: intId,
+              batteryId: placed.id,
+              startX: placed.x,
+              startY: placed.y,
+              x: placed.x,
+              y: placed.y,
+              targetId: targetThreat.id,
+              progress: 0,
+              accuracy: interceptAccuracy,
+              isDead: false,
+              color: placed.system.color,
+              speed: placed.selectedMissile.speed,
+            });
+          }
+
+          if (missilesToFire > 1) {
+            setSimLogs(prev => [...prev, {
+              time: simTimeRef.current,
+              message: `🚀 SALVO LAUNCH: ${placed.system.name} fired ${missilesToFire}× ${placed.selectedMissile.name}. Target Alt: ${currentAlt}m, Range: ${currentDistance.toFixed(0)}km${radarBonus > 0 ? ` [Radar cueing +${(radarBonus * 100).toFixed(0)}%]` : ''}`,
+              type: 'LAUNCH'
+            }]);
+          } else {
+            setSimLogs(prev => [...prev, {
+              time: simTimeRef.current,
+              message: `🚀 LAUNCH: ${placed.system.name} launched ${placed.selectedMissile.name}. Target Alt: ${currentAlt}m, Range: ${currentDistance.toFixed(0)}km${radarBonus > 0 ? ` [Radar cueing +${(radarBonus * 100).toFixed(0)}%]` : ''}`,
+              type: 'LAUNCH'
+            }]);
+          }
         }
       });
 
@@ -1381,6 +1577,12 @@ export default function SimulationPage() {
           if (hits) {
             target.isDead = true;
             setHitCount(prev => prev + 1);
+            // Credit cued kill to the radar that assisted this interceptor
+            const cuingRadarId = interceptorRadarCueRef.current[interceptor.id];
+            if (cuingRadarId && radarCuedKillsRef.current[cuingRadarId]) {
+              radarCuedKillsRef.current[cuingRadarId].cuedKills++;
+            }
+            delete interceptorRadarCueRef.current[interceptor.id];
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
               message: `⚡ INTERCEPT SUCCESS: Target ${target.threat.name} neutralized!`,
@@ -1713,7 +1915,7 @@ export default function SimulationPage() {
                   ${defenderBudget} Million ($2.0 Billion equivalents)
                 </div>
                 <p className="text-[10px] text-[#4b5563] mt-1.5 leading-relaxed">
-                  Defending assets (like S-400 battalions, active AESA radar rigs, and high-performance medium-range interceptors) require significant capital.
+                  Defending assets (like S-400 regiments, active AESA radar rigs, and high-performance medium-range interceptors) require significant capital.
                 </p>
               </div>
             </div>
@@ -2046,10 +2248,10 @@ export default function SimulationPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 animate-fade-in-up">
           {/* Cart & Placed Batteries (Left) */}
           <div className="card p-5 space-y-4 h-fit">
-            <h3 className="text-sm font-semibold text-[#00ff88] uppercase tracking-wider">Defender Battery Inventory</h3>
+            <h3 className="text-sm font-semibold text-[#00ff88] uppercase tracking-wider">Defender Unit Inventory</h3>
             
             <div className="bg-black/40 p-4 rounded border border-white/[0.05]">
-              <div className="text-xs text-[#6b7280] mb-1">Procured Battery Cost:</div>
+              <div className="text-xs text-[#6b7280] mb-1">Procured Unit Cost:</div>
               <div className={`text-2xl font-mono font-bold ${defenderTotalSpent > defenderBudget ? 'text-[#ef4444]' : 'text-white'}`}>
                 ${defenderTotalSpent.toFixed(1)}M / ${defenderBudget}M
               </div>
@@ -2073,7 +2275,7 @@ export default function SimulationPage() {
                 });
 
                 if (Object.keys(groupedDefender).length === 0) {
-                  return <div className="text-xs text-[#4b5563] text-center py-6 font-mono">No batteries purchased. Select from catalog.</div>;
+                  return <div className="text-xs text-[#4b5563] text-center py-6 font-mono">No units purchased. Select from catalog.</div>;
                 }
 
                 return Object.entries(groupedDefender).map(([systemId, batteries]) => {
@@ -2290,7 +2492,7 @@ export default function SimulationPage() {
                       Max Range: <strong>{sys.range}km</strong> • Envelope: <strong>{sys.minAlt}m-{sys.maxAlt}m</strong> • Accuracy: <strong>{(sys.accuracy*100).toFixed(0)}%</strong>
                     </p>
                     <div className="flex justify-between text-xs font-mono">
-                      <span className="text-[#00ff88]">Battery: ${sys.batteryCost}M</span>
+                      <span className="text-[#00ff88]">Unit: ${sys.batteryCost}M</span>
                       {sys.missileCost > 0 && <span className="text-[#00b4d8]">Missile: ${sys.missileCost}M</span>}
                     </div>
                   </div>
@@ -2302,7 +2504,7 @@ export default function SimulationPage() {
                     }}
                     className="w-full py-1.5 rounded bg-[#00ff88]/10 text-[#00ff88] hover:bg-[#00ff88]/20 border border-[#00ff88]/20 text-xs font-bold transition-all"
                   >
-                    Deploy Battery
+                    Deploy Unit
                   </button>
                 </div>
               ))}
@@ -2496,7 +2698,7 @@ export default function SimulationPage() {
                   </div>
                   {destroyedBatteriesCostCalculated > 0 && (
                     <div className="flex justify-between">
-                      <span>Destroyed SAM Batteries:</span>
+                      <span>Destroyed SAM Units:</span>
                       <span className="text-white">${destroyedBatteriesCostCalculated.toFixed(1)}M</span>
                     </div>
                   )}
@@ -2515,13 +2717,13 @@ export default function SimulationPage() {
             
             <div className="space-y-6">
               {(() => {
-                // Find all systems that were deployed
+                // Find all NON-RADAR systems that were deployed
                 const deployedSystems = Array.from(new Set(defenderProcuredRef.current.map(b => b.system.id))).map(id => {
                   return defenderProcuredRef.current.find(b => b.system.id === id)!.system;
-                });
+                }).filter(system => system.category !== 'RADAR');
 
                 if (deployedSystems.length === 0) {
-                  return <div className="text-xs text-[#6b7280] font-mono">No defensive systems deployed.</div>;
+                  return <div className="text-xs text-[#6b7280] font-mono">No SAM systems deployed.</div>;
                 }
 
                 return deployedSystems.map(system => {
@@ -2606,6 +2808,133 @@ export default function SimulationPage() {
             </div>
           </div>
 
+          {/* Radar Intelligence Support Breakdown — only shown if RADAR systems were deployed */}
+          {defenderProcuredRef.current.some(b => b.system.category === 'RADAR') && (
+            <div className="card p-5 space-y-4 border-[#6366f1]/20">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">📡</span>
+                <h3 className="text-sm font-semibold text-[#6366f1] uppercase tracking-wider">Radar Intelligence Support Report</h3>
+              </div>
+              <p className="text-[11px] text-[#6b7280] leading-relaxed">
+                Radar stations provide rotating AESA sweep cueing — when the beam illuminates a target, linked modern SAM systems receive a real-time accuracy boost for 1.5 seconds per sweep pass.
+              </p>
+
+              <div className="space-y-4">
+                {(() => {
+                  const radarBatteries = defenderProcuredRef.current.filter(b => b.system.category === 'RADAR');
+                  const radarGroups: Record<string, { system: typeof radarBatteries[0]['system']; count: number }> = {};
+                  radarBatteries.forEach(b => {
+                    if (!radarGroups[b.system.id]) radarGroups[b.system.id] = { system: b.system, count: 0 };
+                    radarGroups[b.system.id].count++;
+                  });
+
+                  // Aggregate cueing stats across all radar instances
+                  const totalCueEvents = Object.values(radarCuedKillsRef.current).reduce((s, r) => s + r.cueEvents, 0);
+                  const totalCuedKills = Object.values(radarCuedKillsRef.current).reduce((s, r) => s + r.cuedKills, 0);
+                  const allAssistedSAMs = new Set<string>();
+                  Object.values(radarCuedKillsRef.current).forEach(r => r.assistedSAMs.forEach(n => allAssistedSAMs.add(n)));
+
+                  // Overall summary stats
+                  const totalSAMs = defenderProcuredRef.current.filter(b => b.system.category !== 'RADAR').length;
+                  const radarCount = radarBatteries.length;
+
+                  return (
+                    <>
+                      {/* Summary stats row */}
+                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center font-mono text-xs">
+                        <div className="p-3 rounded bg-[#6366f1]/10 border border-[#6366f1]/20">
+                          <div className="text-[10px] text-[#6366f1] uppercase">Radar Units Active</div>
+                          <div className="text-lg font-black text-white mt-1">{radarCount}</div>
+                          <div className="text-[9px] text-[#4b5563]">deployed stations</div>
+                        </div>
+                        <div className="p-3 rounded bg-[#6366f1]/10 border border-[#6366f1]/20">
+                          <div className="text-[10px] text-[#6366f1] uppercase">SAMs Assisted</div>
+                          <div className="text-lg font-black text-[#00ff88] mt-1">{allAssistedSAMs.size} / {totalSAMs}</div>
+                          <div className="text-[9px] text-[#4b5563]">unique units cued</div>
+                        </div>
+                        <div className="p-3 rounded bg-[#6366f1]/10 border border-[#6366f1]/20">
+                          <div className="text-[10px] text-[#6366f1] uppercase">Kills Under Cue</div>
+                          <div className="text-lg font-black text-[#00ff88] mt-1">{totalCuedKills}</div>
+                          <div className="text-[9px] text-[#4b5563]">radar-assisted neutralizations</div>
+                        </div>
+                        <div className="p-3 rounded bg-[#6366f1]/10 border border-[#6366f1]/20">
+                          <div className="text-[10px] text-[#6366f1] uppercase">Sweep Cue Events</div>
+                          <div className="text-lg font-black text-white mt-1">{totalCueEvents}</div>
+                          <div className="text-[9px] text-[#4b5563]">beam illuminations fired</div>
+                        </div>
+                      </div>
+
+                      {/* Per-radar breakdown */}
+                      {Object.entries(radarGroups).map(([sysId, { system, count }]) => {
+                        const instanceIds = radarBatteries.filter(b => b.system.id === sysId).map(b => b.id);
+                        const instanceCueData = Object.entries(radarCuedKillsRef.current)
+                          .filter(([, v]) => v.radarName === system.name);
+                        const instanceCueEvents = instanceCueData.reduce((s, [, v]) => s + v.cueEvents, 0);
+                        const instanceCuedKills = instanceCueData.reduce((s, [, v]) => s + v.cuedKills, 0);
+                        const instanceAssistedSAMs = new Set<string>();
+                        instanceCueData.forEach(([, v]) => v.assistedSAMs.forEach(n => instanceAssistedSAMs.add(n)));
+
+                        return (
+                          <div key={sysId} className="p-3 rounded bg-white/[0.02] border border-[#6366f1]/15 space-y-2">
+                            <div className="flex justify-between items-start">
+                              <div className="flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-[#6366f1]" />
+                                <div>
+                                  <div className="text-sm font-bold text-white">{system.name}</div>
+                                  <div className="text-[10px] text-[#6b7280]">{count} unit{count > 1 ? 's' : ''} deployed • Detection range: {system.range}km • Rotation: 6 RPM</div>
+                                </div>
+                              </div>
+                              <span className="badge text-[9px] font-mono" style={{ backgroundColor: '#6366f120', color: '#6366f1', border: '1px solid #6366f144' }}>AESA RADAR</span>
+                            </div>
+
+                            {instanceCueEvents > 0 ? (
+                              <div className="space-y-2">
+                                <div className="grid grid-cols-3 gap-2 text-center text-[10px] font-mono">
+                                  <div className="p-2 rounded bg-black/30">
+                                    <div className="text-[#6b7280] uppercase mb-0.5">Cue Events</div>
+                                    <div className="font-bold text-[#6366f1]">{instanceCueEvents}</div>
+                                  </div>
+                                  <div className="p-2 rounded bg-black/30">
+                                    <div className="text-[#6b7280] uppercase mb-0.5">Cued Kills</div>
+                                    <div className="font-bold text-[#00ff88]">{instanceCuedKills}</div>
+                                  </div>
+                                  <div className="p-2 rounded bg-black/30">
+                                    <div className="text-[#6b7280] uppercase mb-0.5">Cue Kill Rate</div>
+                                    <div className="font-bold text-[#00ff88]">{instanceCueEvents > 0 ? ((instanceCuedKills / instanceCueEvents) * 100).toFixed(0) : 0}%</div>
+                                  </div>
+                                </div>
+                                {instanceAssistedSAMs.size > 0 && (
+                                  <div className="text-[10px] font-mono">
+                                    <span className="text-[#6b7280]">Assisted SAM Units: </span>
+                                    <span className="text-[#00b4d8]">{Array.from(instanceAssistedSAMs).join(', ')}</span>
+                                  </div>
+                                )}
+                              </div>
+                            ) : (
+                              <div className="text-[10px] text-[#4b5563] font-mono bg-black/20 rounded p-2">
+                                ⚠️ No sweep cue events triggered during this engagement. Radar was rotating but beam did not align with active threat vectors during SAM launch windows. Consider repositioning closer to threat axis.
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+
+                      {/* Assisted SAM names summary */}
+                      {allAssistedSAMs.size > 0 && (
+                        <div className="p-3 rounded bg-[#00ff88]/5 border border-[#00ff88]/15 text-[11px] font-mono">
+                          <div className="text-[#00ff88] font-semibold mb-1">📊 Radar-Assisted Kill Summary</div>
+                          <div className="text-[#9ca3af]">
+                            <span className="text-white font-bold">{totalCuedKills}</span> out of <span className="text-white font-bold">{hitCount}</span> total kills were achieved under active radar sweep illumination ({hitCount > 0 ? ((totalCuedKills / hitCount) * 100).toFixed(0) : 0}% of all neutralizations were radar-cued).
+                          </div>
+                        </div>
+                      )}
+                    </>
+                  );
+                })()}
+              </div>
+            </div>
+          )}
+
           {/* Actions */}
           <div className="flex gap-3">
             <button
@@ -2644,7 +2973,7 @@ export default function SimulationPage() {
           <div>
             <p className="text-xs text-[#f59e0b] font-medium mb-1">Educational Platform Disclaimer</p>
             <p className="text-[11px] text-[#6b7280] leading-relaxed">
-              This simulator highlights the asymmetric cost structures between threat delivery vehicles (like tactical glide units) and defensive platforms (like S-400 battalions). Missile costs represent approximated declassified figures.
+              This simulator highlights the asymmetric cost structures between threat delivery vehicles (like tactical glide units) and defensive platforms (like S-400 regiments). Missile costs represent approximated declassified figures.
             </p>
           </div>
         </div>

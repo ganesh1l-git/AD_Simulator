@@ -292,8 +292,10 @@ export default function DashboardPage() {
         if (simsRes && simsRes.success) {
           setRecentSims(simsRes.data);
         }
-      } catch (err) {
-        console.error('Failed to load live dashboard stats:', err);
+      } catch {
+        // The dashboard has local fallback data, so an unavailable API should not
+        // trigger the Next.js development error overlay.
+        console.warn('Live dashboard stats are unavailable; showing local fallback data.');
       } finally {
         setLoading(false);
       }

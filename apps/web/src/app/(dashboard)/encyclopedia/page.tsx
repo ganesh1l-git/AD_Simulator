@@ -52,14 +52,14 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
     name: 'S-400 Triumf Regiment',
     category: 'LONG_RANGE',
     country: 'Russia/India',
-    cost: '$1.0 Billion (Regiment Cost)',
+    cost: '$1.09 Billion (Regiment Cost)',
     isIndian: true,
-    description: 'Premier mobile long-range surface-to-air missile system. In Indian service, configured as a layered regiment consisting of 2 Battalions (Batteries). Each Battalion operates its own independent surveillance, fire control, and launch vehicle assets to intercept aircraft, cruise missiles, and ballistic targets.',
+    description: 'Premier mobile long-range surface-to-air missile system. In this Indian regiment model, one regiment fields 2 batteries, 16 launchers, 64 ready missiles, 2 engagement radars, and 1 surveillance radar.',
     composition: [
       { name: '55K6E Command & Control Post', type: 'C2 Vehicle', qty: '1 per Regiment (Central control)', description: 'Central combat management station that coordinates radar feeds and battery assignments.' },
       { name: '91N6E Acquisition Radar (S-band)', type: 'Surveillance Radar', qty: '1 per Regiment', description: 'Panoramic 3D radar with 600km range, tracks up to 300 targets simultaneously.' },
       { name: '92N6E Grave Stone Radar (X-band)', type: 'Fire Control Radar', qty: '2 per Regiment (1 per Battalion)', description: 'Target acquisition and engagement radar with 400km range, guides up to 12 missiles against 6 targets simultaneously.' },
-      { name: '5P85TE2 Self-Propelled Launcher', type: 'TEL Vehicle', qty: '8 per Regiment (4 per Battalion / 4 missiles each)', description: 'Launcher trucks, each equipped with 4 ready-to-fire launch canisters containing interceptors.' }
+      { name: '5P85TE2 Self-Propelled Launcher', type: 'TEL Vehicle', qty: '16 per Regiment (4 missiles each)', description: 'Launcher trucks, each equipped with 4 ready-to-fire launch canisters, for 64 ready missiles per regiment.' }
     ],
     missiles: [
       {
@@ -99,16 +99,16 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
   },
   {
     id: 'def-barak8er',
-    name: 'Barak 8 ER SAM Battery',
+    name: 'Barak 8 ER SAM Regiment',
     category: 'MEDIUM_RANGE',
     country: 'India/Israel',
-    cost: '$180 Million (Battery Cost)',
+    cost: '$650 Million (Regiment Cost)',
     isIndian: true,
-    description: 'Extended Range version of the MRSAM system. Incorporates an active booster stage to extend range to 150km, specifically enhanced for anti-ballistic and high-altitude standoff threat neutralization.',
+    description: 'Extended Range version of the MRSAM system. This regiment model contains 4 firing units, 12 launchers, 96 ready missiles, and 4 radars. Each launcher carries 8 canisterized missiles.',
     composition: [
-      { name: 'Mobile Command & Control (MCP)', type: 'C2 Station', qty: '1 per Battery', description: 'Coordinates weapon deployments and tracks target allocations.' },
-      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar (S-band)', qty: '1 per Battery', description: 'Advanced AESA radar capable of tracking low-altitude targets and cruise missiles up to 150km.' },
-      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: '3 per Battery', description: '8-cell vertical launcher canisters, allowing rapid 360-degree firing of up to 24 missiles.' }
+      { name: 'Firing Unit / Battery', type: 'Firing Unit', qty: '4 per Regiment', description: 'Distributed firing units that coordinate launcher and radar activity.' },
+      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar (S-band)', qty: '4 per Regiment', description: 'Advanced AESA radars for low-altitude targets and cruise missile tracking.' },
+      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: '12 per Regiment', description: '8-cell vertical launchers, totaling 96 ready canisterized missiles.' }
     ],
     missiles: [
       {
@@ -126,16 +126,16 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
   },
   {
     id: 'def-mrsam',
-    name: 'MRSAM / Barak-8 Battery',
+    name: 'MRSAM / Barak-8 Regiment',
     category: 'MEDIUM_RANGE',
     country: 'India/Israel',
-    cost: '$150 Million (Battery Cost)',
+    cost: '$500 Million (Regiment Cost)',
     isIndian: true,
-    description: 'Jointly developed by DRDO (India) and IAI (Israel), the Medium Range Surface-to-Air Missile system provides advanced 360-degree defense for ground forces, naval ships, and cities.',
+    description: 'Jointly developed by DRDO (India) and IAI (Israel), this regiment model contains 4 firing units, 12 launchers, 96 ready missiles, and 4 radars. Each launcher carries 8 canisterized missiles.',
     composition: [
-      { name: 'Mobile Command & Control (MCP)', type: 'C2 Station', qty: '1 per Battery', description: 'Coordinates weapon deployments and tracks target allocations.' },
-      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar (S-band)', qty: '1 per Battery', description: 'Advanced AESA radar capable of tracking low-altitude targets and cruise missiles up to 150km.' },
-      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: '3 per Battery', description: '8-cell vertical launcher canisters, allowing rapid 360-degree firing of up to 24 missiles.' }
+      { name: 'Firing Unit / Battery', type: 'Firing Unit', qty: '4 per Regiment', description: 'Distributed firing units that coordinate launcher and radar activity.' },
+      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar (S-band)', qty: '4 per Regiment', description: 'Advanced AESA radars for low-altitude targets and cruise missile tracking.' },
+      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: '12 per Regiment', description: '8-cell vertical launchers, totaling 96 ready canisterized missiles.' }
     ],
     missiles: [
       {
@@ -153,16 +153,17 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
   },
   {
     id: 'def-akashng',
-    name: 'Akash-NG / Akash Battery',
+    name: 'Akash-NG Regiment',
     category: 'MEDIUM_RANGE',
     country: 'India',
-    cost: '$50 Million (Battery Cost)',
+    cost: '$480 Million (Estimated Regiment Cost)',
     isIndian: true,
-    description: 'Indigenous surface-to-air defense network. The next-generation (NG) version features active radio frequency seekers and solid propellant rocket motors.',
+    description: 'Estimated future Akash-NG regiment structure with 3 batteries, 12 launchers, 72 ready missiles, 3 AESA fire-control radars, and 1 surveillance radar.',
     composition: [
-      { name: 'Battery Command Post (BCP)', type: 'Tactical C2', qty: '1 per Battery', description: 'Manages fire zones and launcher parameters.' },
-      { name: '3D Active Electronically Scanned Radar', type: 'PESA/AESA Radar (120km range)', qty: '1 per Battery', description: 'Tracks targets up to 120km and guides missiles simultaneously.' },
-      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Trailer (3 cells)', qty: '4 per Battery', description: 'Carries 3 ready-to-fire missiles in containers, total 12 missiles per battery.' }
+      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: '3 per Regiment', description: 'Future regiment-level firing units.' },
+      { name: 'AESA Fire Control Radar', type: 'Fire Control Radar', qty: '3 per Regiment', description: 'Fire-control radar allocation for the three firing units.' },
+      { name: 'Surveillance Radar', type: 'Surveillance Radar', qty: '1 per Regiment', description: 'Regiment-level early warning and target surveillance radar.' },
+      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Launcher (6 cells)', qty: '12 per Regiment', description: 'Launchers with 6 ready missiles each, totaling 72 ready missiles.' }
     ],
     missiles: [
       {
@@ -175,7 +176,23 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
         accuracy: '85%',
         warhead: '25 kg Pre-fragmented HE',
         description: 'Next-generation solid fuel interceptor with terminal active RF seeker.'
-      },
+      }
+    ]
+  },
+  {
+    id: 'def-akash',
+    name: 'Akash SAM Regiment',
+    category: 'MEDIUM_RANGE',
+    country: 'India',
+    cost: '$350 Million (Regiment Cost)',
+    isIndian: true,
+    description: 'Indigenous Akash surface-to-air missile regiment with 4 batteries, 16 launchers, 48 ready missiles, and 4 Rajendra radars.',
+    composition: [
+      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: '4 per Regiment', description: 'Regiment-level Akash firing units.' },
+      { name: 'Rajendra Radar', type: 'Fire Control Radar', qty: '4 per Regiment', description: 'Battery-level Rajendra radar for target tracking and missile guidance.' },
+      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Launcher (3 cells)', qty: '16 per Regiment', description: 'Launchers with 3 ready missiles each, totaling 48 ready missiles.' }
+    ],
+    missiles: [
       {
         name: 'Akash Standard',
         type: 'Command Guided',
@@ -185,7 +202,7 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
         guidance: 'Command guidance via fire control radar',
         accuracy: '75%',
         warhead: '60 kg HE-Frag',
-        description: 'DRDO legacy standard interceptor featuring ramjet propulsion and command tracking.'
+        description: 'DRDO standard interceptor featuring ramjet propulsion and command tracking.'
       }
     ]
   },
@@ -217,16 +234,17 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
   },
   {
     id: 'def-qrsam',
-    name: 'QRSAM Battery',
+    name: 'QRSAM Regiment',
     category: 'SHORT_RANGE',
     country: 'India',
-    cost: '$20 Million (Battery Cost)',
+    cost: '$600 Million (Estimated Regiment Cost)',
     isIndian: true,
-    description: 'Quick Reaction Surface-to-Air Missile system designed to defend tactical armor columns on the move.',
+    description: 'Estimated QRSAM regiment structure with 3 batteries, 12 launchers, 72 ready missiles, 3 AESA radars, and 1 surveillance radar.',
     composition: [
-      { name: 'Battery Surveillance Radar (BSR)', type: '3D AESA Radar (50km range)', qty: '1 per Battery', description: 'Track-on-the-move surveillance system.' },
-      { name: 'Battery Multifunction Radar (BMR)', type: 'Engagement Radar (30km range)', qty: '1 per Battery', description: 'Lock-on target radar for engagement guidance.' },
-      { name: 'Quick Reaction Launcher (QRL)', type: 'TEL Vehicle (6 cells)', qty: '3 per Battery', description: 'Launcher truck equipped with 6 canister-based quick-launch missiles, total 18 missiles.' }
+      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: '3 per Regiment', description: 'Quick-reaction firing units for mobile air defence.' },
+      { name: 'AESA Radar', type: 'Engagement Radar', qty: '3 per Regiment', description: 'Battery-level AESA radar allocation.' },
+      { name: 'Surveillance Radar', type: 'Surveillance Radar', qty: '1 per Regiment', description: 'Regiment-level surveillance radar.' },
+      { name: 'Quick Reaction Launcher (QRL)', type: 'TEL Vehicle (6 cells)', qty: '12 per Regiment', description: 'Launchers with 6 canister-based quick-launch missiles, totaling 72 ready missiles.' }
     ],
     missiles: [
       {
@@ -247,13 +265,13 @@ const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
     name: 'SPYDER SAM Battery',
     category: 'SHORT_RANGE',
     country: 'Israel/India',
-    cost: '$80 Million (Battery Cost)',
+    cost: '$50 Million (Battery Cost)',
     isIndian: true,
     description: 'Surface-to-air Python and Derby (SPYDER) mobile air defence battery. Operating highly agile infrared Python-5 and active radar Derby missiles for quick-reaction point defence against cruise missiles, fighter jets, and low-altitude UAVs.',
     composition: [
       { name: 'Mobile Command & Control Post (MCP)', type: 'Tactical C2', qty: '1 per Battery', description: 'Receives air surveillance data and handles weapon assignments.' },
       { name: 'EL/M-2106 ATAR 3D Surveillance Radar', type: 'Surveillance Radar', qty: '1 per Battery', description: 'Tracks up to 60 targets simultaneously at ranges up to 180km.' },
-      { name: 'SPYDER Mobile Launcher (Derby/Python-5)', type: 'TEL Launcher (4 rails)', qty: '4 per Battery', description: 'Launcher trucks equipped with 4 ready-to-fire quick launching interceptors.' }
+      { name: 'SPYDER Mobile Launcher (Derby/Python-5)', type: 'TEL Launcher (4 rails)', qty: '6 per Battery', description: 'Launcher trucks equipped with 4 ready-to-fire interceptors each, totaling 24 ready missiles.' }
     ],
     missiles: [
       {

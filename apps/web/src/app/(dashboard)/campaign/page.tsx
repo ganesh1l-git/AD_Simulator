@@ -23,10 +23,10 @@ const DEMO_CAMPAIGN: CampaignDay[] = [
 ];
 
 const OWNED_SYSTEMS = [
-  { name: 'S-400 Triumf', health: 100, ammo: 28, maxAmmo: 32, status: 'READY' },
-  { name: 'MRSAM / Barak-8', health: 85, ammo: 14, maxAmmo: 24, status: 'READY' },
-  { name: 'Akash', health: 92, ammo: 8, maxAmmo: 12, status: 'READY' },
-  { name: 'QRSAM', health: 70, ammo: 4, maxAmmo: 8, status: 'REPAIRING' },
+  { name: 'S-400 Triumf Regiment', health: 100, ammo: 56, maxAmmo: 64, status: 'READY' },
+  { name: 'MRSAM / Barak-8 Regiment', health: 85, ammo: 80, maxAmmo: 96, status: 'READY' },
+  { name: 'Akash SAM Regiment', health: 92, ammo: 40, maxAmmo: 48, status: 'READY' },
+  { name: 'QRSAM Regiment', health: 70, ammo: 24, maxAmmo: 72, status: 'REPAIRING' },
   { name: 'Igla-S Squad', health: 100, ammo: 18, maxAmmo: 24, status: 'READY' },
 ];
 
