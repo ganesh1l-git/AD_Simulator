@@ -387,6 +387,61 @@ const ATTACKER_SYSTEMS: EncyclopediaItem[] = [
     ]
   },
   {
+    id: 'att-f16',
+    name: 'F-16 Block 52+ Fighter',
+    category: 'FIGHTER',
+    country: 'USA/Pakistan',
+    cost: '$40.0 Million (Unit Cost)',
+    isIndian: false,
+    description: 'Highly agile multirole fighter aircraft, equipped with AN/APG-68(V)9 radar and conformal fuel tanks. Acts as a premier air superiority and stand-off attack platform.',
+    speed: 'Mach 2.0',
+    altitude: '15,240 meters',
+    range: '1,500 km combat radius',
+    payloadCapacity: '7,700 kg payload on 9 hardpoints',
+    payloadCarriage: [
+      'AIM-120C AMRAAM (Active radar air-to-air, Range 105km) — Up to 4 units',
+      'AGM-84 Harpoon (Subsonic land-attack/anti-ship cruise, Range 124km) — Up to 2 units',
+      'AGM-88 HARM (Supersonic anti-radiation targeting radars, Range 150km) — Up to 2 units',
+      'GBU-31 JDAM (GPS guided precision bomb, Range 28km) — Up to 4 units'
+    ]
+  },
+  {
+    id: 'att-mirage3',
+    name: 'Mirage III Fighter Jet',
+    category: 'FIGHTER',
+    country: 'France/Pakistan',
+    cost: '$15.0 Million (Unit Cost)',
+    isIndian: false,
+    description: 'Delta-wing supersonic multirole fighter aircraft, upgraded with modern retrofitted avionics. Frequently configured to carry stand-off nuclear/conventional cruise missiles like Ra\'ad.',
+    speed: 'Mach 2.2',
+    altitude: '17,000 meters',
+    range: '1,200 km combat radius',
+    payloadCapacity: '4,000 kg payload on 5 hardpoints',
+    payloadCarriage: [
+      'Ra\'ad ALCM (Stand-off cruise missile, Range 350km) — Up to 1 unit',
+      'R.550 Magic II SRAAM (Infrared guided point defence, Range 15km) — Up to 2 units',
+      'GBU-12 Paveway II (Laser-guided precision bomb, Range 15km) — Up to 2 units'
+    ]
+  },
+  {
+    id: 'att-mirage5',
+    name: 'Mirage 5 Fighter Jet',
+    category: 'FIGHTER',
+    country: 'France/Pakistan',
+    cost: '$18.0 Million (Unit Cost)',
+    isIndian: false,
+    description: 'Supersonic ground-attack variant of the Mirage delta-wing line. Extensively upgraded under the ROSE program for night-strike and standoff precision guidance weapon carriage.',
+    speed: 'Mach 2.2',
+    altitude: '16,000 meters',
+    range: '1,300 km combat radius',
+    payloadCapacity: '4,000 kg payload on 7 hardpoints',
+    payloadCarriage: [
+      'Ra\'ad-II ALCM (Extended-range stand-off cruise, Range 600km) — Up to 1 unit',
+      'H-2 SOW (Precision guided standoff glide bomb, Range 60km) — Up to 2 units',
+      'H-4 SOW (Precision guided standoff glide bomb, Range 120km) — Up to 2 units'
+    ]
+  },
+  {
     id: 'att-wingloong',
     name: 'Wing Loong II UAV',
     category: 'UAV',
@@ -405,6 +460,38 @@ const ATTACKER_SYSTEMS: EncyclopediaItem[] = [
     ]
   },
   {
+    id: 'att-shahpar2',
+    name: 'Shahpar-2 UAV',
+    category: 'UAV',
+    country: 'Pakistan',
+    cost: '$2.0 Million (Unit Cost)',
+    isIndian: false,
+    description: 'Indigenous MALE drone developed by GIDS. Used for military-grade reconnaissance, surveillance, and tactical precision ground-strike missions.',
+    speed: 'Mach 0.18 (220 km/h)',
+    altitude: '6,000 meters',
+    range: '1,000 km range (14-hour endurance)',
+    payloadCapacity: '120 kg payload on 4 hardpoints',
+    payloadCarriage: [
+      'Barq Laser Guided Missile (Semi-active laser guided anti-armor, Range 8km) — Up to 4 units'
+    ]
+  },
+  {
+    id: 'att-burraq',
+    name: 'Burraq UAV',
+    category: 'UAV',
+    country: 'Pakistan',
+    cost: '$1.5 Million (Unit Cost)',
+    isIndian: false,
+    description: 'Tactical armed drone system capable of flying in all weather conditions to execute precision strikes against ground-level point assets.',
+    speed: 'Mach 0.18 (220 km/h)',
+    altitude: '7,500 meters',
+    range: '1,000 km range (10-hour endurance)',
+    payloadCapacity: '100 kg payload on 2 hardpoints',
+    payloadCarriage: [
+      'Barq Laser Guided Missile (Semi-active laser guided, Range 8km) — Up to 2 units'
+    ]
+  },
+  {
     id: 'att-shaheen3',
     name: 'Shaheen-III MRBM',
     category: 'BALLISTIC',
@@ -417,6 +504,34 @@ const ATTACKER_SYSTEMS: EncyclopediaItem[] = [
     range: '2,750 km',
     guidance: 'Inertial Guidance + GPS/BeiDou satellite navigation',
     warhead: '1,000 kg HE conventional HE-Frag'
+  },
+  {
+    id: 'att-ababeel',
+    name: 'Ababeel MIRV MRBM',
+    category: 'BALLISTIC',
+    country: 'Pakistan',
+    cost: '$12.0 Million (Est. Unit Cost)',
+    isIndian: false,
+    description: 'Solid-fueled Medium-Range Ballistic Missile (MRBM) equipped with Multiple Independently Targetable Reentry Vehicles (MIRVs) designed to defeat enemy ballistic missile defences.',
+    speed: 'Mach 15.0 terminal',
+    altitude: 'Apogee up to 180,000 meters (exo-atmospheric)',
+    range: '2,200 km',
+    guidance: 'Inertial Guidance + Satellite-aided flight computer',
+    warhead: 'MIRV payload carrying up to 3 individual warheads and decoys'
+  },
+  {
+    id: 'att-ghaznavi',
+    name: 'Ghaznavi SRBM',
+    category: 'BALLISTIC',
+    country: 'Pakistan',
+    cost: '$4.0 Million (Est. Unit Cost)',
+    isIndian: false,
+    description: 'Short-range solid-fueled ballistic missile. Designed for quick-launch battlefield deployment with high maneuverability.',
+    speed: 'Mach 6.0 terminal',
+    altitude: 'Apogee up to 80,000 meters',
+    range: '290 km',
+    guidance: 'Inertial navigation with terminal updates',
+    warhead: '700 kg conventional HE warhead'
   },
   {
     id: 'att-babur3',
@@ -433,6 +548,34 @@ const ATTACKER_SYSTEMS: EncyclopediaItem[] = [
     warhead: '450 kg HE conventional'
   },
   {
+    id: 'att-cm302',
+    name: 'CM-302 Supersonic Cruise Missile',
+    category: 'CRUISE',
+    country: 'China/Pakistan',
+    cost: '$3.0 Million',
+    isIndian: false,
+    description: 'High-speed supersonic cruise missile. Flies at extremely low sea-skimming altitudes at Mach 3, presenting a serious target interception reaction challenge.',
+    speed: 'Mach 3.0',
+    altitude: '20 - 50 meters (Sea-skimming)',
+    range: '290 km',
+    guidance: 'Inertial + Active Radar terminal homing',
+    warhead: '250 kg HE conventional armor-piercing'
+  },
+  {
+    id: 'att-harbah',
+    name: 'Harbah LACM',
+    category: 'CRUISE',
+    country: 'Pakistan',
+    cost: '$1.8 Million',
+    isIndian: false,
+    description: 'Indigenous subsonic land-attack and anti-ship cruise missile, launched from naval platforms. Capable of extreme low-altitude terrain hugging flight.',
+    speed: 'Mach 0.8',
+    altitude: '20 - 50 meters',
+    range: '750 km',
+    guidance: 'GPS + INS + DSMAC correlation guidance',
+    warhead: '300 kg HE conventional'
+  },
+  {
     id: 'att-hgv',
     name: 'Hypersonic Glide Vehicle (HGV)',
     category: 'HYPERSONIC',
@@ -445,6 +588,20 @@ const ATTACKER_SYSTEMS: EncyclopediaItem[] = [
     range: '1,500 km',
     guidance: 'Satellite-aided inertial + Active radar terminal homing seeker',
     warhead: '500 kg HE conventional armor-penetrating'
+  },
+  {
+    id: 'att-ch901',
+    name: 'CH-901 Loitering Munition',
+    category: 'LOITERING_MUNITION' as any,
+    country: 'China/Pakistan',
+    cost: '$0.1 Million',
+    isIndian: false,
+    description: 'Miniature kamikaze drone. Fired from portable tubes to loiter over strategic targets, diving down for a precision kinetic impact upon lock.',
+    speed: 'Mach 0.12 (150 km/h)',
+    altitude: '100 - 1,500 meters',
+    range: '15 km (2-hour endurance)',
+    guidance: 'Electro-optical / Infrared homing tracker',
+    warhead: '3.5 kg HE fragmenting warhead'
   }
 ];
 
@@ -467,7 +624,16 @@ const MUNITIONS: MissileVariant[] = [
   { name: 'GB-250 Dumb Bomb', type: 'Unguided Gravity Bomb (Jet Payload)', range: '2 km', speed: 'Mach 0.8', cost: '$0.05 Million', guidance: 'None (Ballistic drop)', accuracy: '50%', warhead: '250 kg HE', description: 'Unguided free-fall heavy gravity bomb.' },
   { name: 'AR-1 Tactical Rocket', type: 'Laser Guided Rocket (UAV Payload)', range: '8 km', speed: 'Mach 1.1', cost: '$0.2 Million', guidance: 'Semi-active Laser', accuracy: '90%', warhead: '10 kg HE-penetrating', description: 'Precision weapon fired by drones from safe distances.' },
   { name: 'FT-9 Precision Bomb', type: 'GPS Guided Tactical Bomb (UAV Payload)', range: '5 km', speed: 'Mach 0.8', cost: '$0.1 Million', guidance: 'GPS/INS', accuracy: '85%', warhead: '50 kg HE', description: 'Satellite guided tactical bomb carried by UAVs.' },
-  { name: 'GB-25 Dumb Bomb', type: 'Unguided Tactical Bomb (UAV Payload)', range: '2 km', speed: 'Mach 0.6', cost: '$0.05 Million', guidance: 'None (Ballistic drop)', accuracy: '50%', warhead: '250 kg HE', description: 'Lightweight unguided gravity bomb for tactical drone release.' }
+  { name: 'GB-25 Dumb Bomb', type: 'Unguided Tactical Bomb (UAV Payload)', range: '2 km', speed: 'Mach 0.6', cost: '$0.05 Million', guidance: 'None (Ballistic drop)', accuracy: '50%', warhead: '250 kg HE', description: 'Lightweight unguided gravity bomb for tactical drone release.' },
+  { name: 'AGM-84 Harpoon Cruise', type: 'Subsonic Cruise Missile (Jet Payload)', range: '124 km', speed: 'Mach 0.8', cost: '$1.2 Million', guidance: 'Inertial + Active Radar Homing', accuracy: '82%', warhead: '220 kg HE-Frag', description: 'Subsonic long-range land attack/anti-ship missile.' },
+  { name: 'AGM-88 HARM Anti-Radiation', type: 'Anti-Radiation Missile (Jet Payload)', range: '150 km', speed: 'Mach 2.0', cost: '$0.8 Million', guidance: 'Radar Passive Homing', accuracy: '85%', warhead: '66 kg HE-Frag', description: 'Supersonic weapon targeting active air defence radar systems.' },
+  { name: 'AIM-120C AMRAAM', type: 'Beyond-Visual-Range Missile (Jet Payload)', range: '105 km', speed: 'Mach 4.0', cost: '$1.0 Million', guidance: 'Active Radar Homing', accuracy: '88%', warhead: '22 kg HE-Frag', description: 'Radar-guided high-speed air-to-air missile.' },
+  { name: 'AIM-9X Sidewinder', type: 'Short-Range Infrared Missile (Jet Payload)', range: '22 km', speed: 'Mach 2.5', cost: '$0.4 Million', guidance: 'Passive Infrared Homing', accuracy: '88%', warhead: '9.4 kg HE-Frag', description: 'Highly maneuverable heat-seeking point interceptor.' },
+  { name: 'GBU-31 JDAM Bomb', type: 'Precision Guided Bomb (Jet Payload)', range: '28 km', speed: 'Mach 0.9', cost: '$0.3 Million', guidance: 'INS + GPS receiver', accuracy: '85%', warhead: '900 kg HE', description: 'GPS-guided heavy conversion kit bomb.' },
+  { name: 'GBU-12 Paveway Bomb', type: 'Laser Guided Bomb (Jet Payload)', range: '15 km', speed: 'Mach 0.9', cost: '$0.25 Million', guidance: 'Semi-Active Laser terminal', accuracy: '85%', warhead: '230 kg HE', description: 'Laser-guided precision gravity drop bomb.' },
+  { name: 'H-2 SOW Glide Bomb', type: 'Standoff Glide Bomb (Jet Payload)', range: '60 km', speed: 'Mach 0.9', cost: '$0.5 Million', guidance: 'Inertial + GPS + terminal target seeker', accuracy: '85%', warhead: '250 kg HE-Frag', description: 'Standoff precision guidance glide weapon.' },
+  { name: 'H-4 SOW Glide Bomb', type: 'Standoff Glide Bomb (Jet Payload)', range: '120 km', speed: 'Mach 0.9', cost: '$0.8 Million', guidance: 'Inertial + GPS + terminal optical lock', accuracy: '85%', warhead: '250 kg HE-Frag', description: 'Extended range standoff precision glide bomb.' },
+  { name: 'Barq Laser Guided Missile', type: 'Tactical Guided Missile (UAV Payload)', range: '8 km', speed: 'Mach 1.0', cost: '$0.15 Million', guidance: 'Semi-active Laser homing', accuracy: '90%', warhead: '10 kg HE anti-armor', description: 'Tactical laser-guided anti-tank missile deployed by drones.' }
 ];
 
 export default function EncyclopediaPage() {

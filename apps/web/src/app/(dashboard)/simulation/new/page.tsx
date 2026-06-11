@@ -21,7 +21,7 @@ interface WeaponItem {
 interface ThreatItem {
   id: string;
   name: string;
-  type: 'BALLISTIC' | 'CRUISE' | 'FIGHTER' | 'UAV' | 'SWARM' | 'HYPERSONIC' | 'GLIDE_BOMB' | 'ROCKET';
+  type: 'BALLISTIC' | 'CRUISE' | 'FIGHTER' | 'UAV' | 'SWARM' | 'HYPERSONIC' | 'GLIDE_BOMB' | 'ROCKET' | 'LOITERING_MUNITION' | 'TACTICAL_MISSILE';
   speed: number; // Mach
   altitude: number; // meters
   rcs: number; // m²
@@ -76,6 +76,59 @@ const THREAT_CATALOG: ThreatItem[] = [
     ]
   },
   {
+    id: 't3c',
+    name: 'F-16 Block 52+',
+    type: 'FIGHTER',
+    speed: 2.0,
+    altitude: 15240,
+    rcs: 1.2,
+    threatScore: 72,
+    cost: 40.0,
+    color: '#60a5fa',
+    maxSlots: 9,
+    weaponsCatalog: [
+      { name: 'AGM-84 Harpoon Cruise', type: 'CRUISE', speed: 0.8, range: 124, rcs: 0.08, altitude: 50, cost: 1.2, maxQty: 2, weightSlots: 3, set: 1 },
+      { name: 'AGM-88 HARM Anti-Radiation', type: 'CRUISE', speed: 2.0, range: 150, rcs: 0.1, altitude: 100, cost: 0.8, maxQty: 2, weightSlots: 2, set: 1 },
+      { name: 'AIM-120C AMRAAM', type: 'CRUISE', speed: 4.0, range: 105, rcs: 0.05, altitude: 100, cost: 1.0, maxQty: 4, weightSlots: 1, set: 2 },
+      { name: 'AIM-9X Sidewinder', type: 'CRUISE', speed: 2.5, range: 22, rcs: 0.04, altitude: 100, cost: 0.4, maxQty: 2, weightSlots: 1, set: 2 },
+      { name: 'GBU-31 JDAM Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 28, rcs: 0.15, altitude: 200, cost: 0.3, maxQty: 4, weightSlots: 1, set: 1 }
+    ]
+  },
+  {
+    id: 't3d',
+    name: 'Mirage III Fighter',
+    type: 'FIGHTER',
+    speed: 2.2,
+    altitude: 17000,
+    rcs: 3.5,
+    threatScore: 60,
+    cost: 15.0,
+    color: '#818cf8',
+    maxSlots: 5,
+    weaponsCatalog: [
+      { name: "Ra'ad ALCM", type: 'CRUISE', speed: 0.8, range: 350, rcs: 0.08, altitude: 100, cost: 1.5, maxQty: 1, weightSlots: 3, set: 1 },
+      { name: 'R.550 Magic II SRAAM', type: 'CRUISE', speed: 2.7, range: 15, rcs: 0.05, altitude: 100, cost: 0.3, maxQty: 2, weightSlots: 1, set: 2 },
+      { name: 'GBU-12 Paveway Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 15, rcs: 0.12, altitude: 150, cost: 0.25, maxQty: 2, weightSlots: 1, set: 1 }
+    ]
+  },
+  {
+    id: 't3e',
+    name: 'Mirage 5 Fighter',
+    type: 'FIGHTER',
+    speed: 2.2,
+    altitude: 16000,
+    rcs: 3.2,
+    threatScore: 62,
+    cost: 18.0,
+    color: '#a78bfa',
+    maxSlots: 7,
+    weaponsCatalog: [
+      { name: "Ra'ad-II ALCM", type: 'CRUISE', speed: 0.8, range: 600, rcs: 0.08, altitude: 100, cost: 1.8, maxQty: 1, weightSlots: 3, set: 1 },
+      { name: 'H-2 SOW Glide Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 60, rcs: 0.12, altitude: 150, cost: 0.5, maxQty: 2, weightSlots: 2, set: 1 },
+      { name: 'H-4 SOW Glide Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 120, rcs: 0.12, altitude: 150, cost: 0.8, maxQty: 2, weightSlots: 2, set: 1 }
+    ]
+  },
+  {
     id: 't4',
     name: 'Wing Loong II UAV',
     type: 'UAV',
@@ -93,8 +146,44 @@ const THREAT_CATALOG: ThreatItem[] = [
       { name: 'FT-9 Glide Bomb', type: 'GLIDE_BOMB', speed: 0.8, range: 5, rcs: 0.08, altitude: 100, cost: 0.1, maxQty: 6, weightSlots: 1, set: 1 }
     ]
   },
+  {
+    id: 't4b',
+    name: 'Shahpar-2 UAV',
+    type: 'UAV',
+    speed: 0.18,
+    altitude: 6000,
+    rcs: 0.4,
+    threatScore: 45,
+    cost: 2.0,
+    color: '#facc15',
+    maxSlots: 4,
+    weaponsCatalog: [
+      { name: 'Barq Laser Guided Missile', type: 'ROCKET', speed: 1.0, range: 8, rcs: 0.02, altitude: 80, cost: 0.15, maxQty: 4, weightSlots: 1, set: 2 }
+    ]
+  },
+  {
+    id: 't4c',
+    name: 'Burraq UAV',
+    type: 'UAV',
+    speed: 0.18,
+    altitude: 7500,
+    rcs: 0.5,
+    threatScore: 42,
+    cost: 1.5,
+    color: '#eab308',
+    maxSlots: 2,
+    weaponsCatalog: [
+      { name: 'Barq Laser Guided Missile', type: 'ROCKET', speed: 1.0, range: 8, rcs: 0.02, altitude: 80, cost: 0.15, maxQty: 2, weightSlots: 1, set: 2 }
+    ]
+  },
   { id: 't5', name: 'Coordinated Drone Swarm', type: 'SWARM', speed: 0.15, altitude: 200, rcs: 0.01, threatScore: 70, cost: 1.0, color: '#a3e635' },
   { id: 't6', name: 'Hypersonic Glide Vehicle', type: 'HYPERSONIC', speed: 8.0, altitude: 35000, rcs: 0.1, threatScore: 98, cost: 15.0, color: '#ff0055' },
+  { id: 't7', name: 'Ababeel MIRV MRBM', type: 'BALLISTIC', speed: 15.0, altitude: 180000, rcs: 1.5, threatScore: 99, cost: 12.0, color: '#dc2626' },
+  { id: 't8', name: 'Ghaznavi SRBM', type: 'BALLISTIC', speed: 6.0, altitude: 80000, rcs: 0.8, threatScore: 80, cost: 4.0, color: '#ef4444' },
+  { id: 't9', name: 'CM-302 Supersonic Missile', type: 'CRUISE', speed: 3.0, altitude: 50, rcs: 0.08, threatScore: 85, cost: 3.0, color: '#ea580c' },
+  { id: 't10', name: 'Harbah LACM', type: 'CRUISE', speed: 0.8, altitude: 30, rcs: 0.04, threatScore: 78, cost: 1.8, color: '#f97316' },
+  { id: 't11', name: 'CH-901 Loitering Munition', type: 'LOITERING_MUNITION', speed: 0.12, altitude: 1500, rcs: 0.02, threatScore: 52, cost: 0.1, color: '#10b981' },
+  { id: 't12', name: 'Nasr Tactical Missile', type: 'TACTICAL_MISSILE', speed: 3.0, altitude: 15000, rcs: 0.5, threatScore: 75, cost: 0.5, color: '#ec4899' },
 ];
 
 interface MissileOption {
@@ -547,7 +636,7 @@ export default function SimulationPage() {
   }, 0);
 
   // Defender Procurement Cost Calculation (unit costs + initial ammo purchases based on selected missile type)
-  const defenderTotalSpent = defenderProcured.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * (Number(item.missilesPurchased) || 0)), 0);
+  const defenderTotalSpent = defenderProcured.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * Math.max(0, (Number(item.missilesPurchased) || 0) - (item.system.defaultAmmo || 0))), 0);
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const visualThreatsRef = useRef<VisualThreat[]>([]);
@@ -725,12 +814,12 @@ export default function SimulationPage() {
 
       if (targetQty > currentQty) {
         const newItems = [...prev];
-        let tempSpent = prev.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * (Number(item.missilesPurchased) || 0)), 0);
+        let tempSpent = prev.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * Math.max(0, (Number(item.missilesPurchased) || 0) - (item.system.defaultAmmo || 0))), 0);
         const selectedMissile = currentItems[0]?.selectedMissile || getBatteryDefaultMissile(system);
         const initialAmmo = system.category === 'RADAR' ? 0 : (system.defaultAmmo ?? 8);
 
         for (let i = currentQty; i < targetQty; i++) {
-          const unitCost = system.batteryCost + (system.category === 'RADAR' ? 0 : initialAmmo * selectedMissile.cost);
+          const unitCost = system.batteryCost + (system.category === 'RADAR' ? 0 : Math.max(0, initialAmmo - (system.defaultAmmo ?? 8)) * selectedMissile.cost);
           if (tempSpent + unitCost > defenderBudget) break;
 
           tempSpent += unitCost;
@@ -772,7 +861,7 @@ export default function SimulationPage() {
 
     const selectedMissile = getBatteryDefaultMissile(system);
     const initialAmmo = system.category === 'RADAR' ? 0 : (system.defaultAmmo ?? 8);
-    const unitCost = system.batteryCost + (system.category === 'RADAR' ? 0 : initialAmmo * selectedMissile.cost);
+    const unitCost = system.batteryCost + (system.category === 'RADAR' ? 0 : Math.max(0, initialAmmo - (system.defaultAmmo ?? 8)) * selectedMissile.cost);
     if (defenderTotalSpent + unitCost > defenderBudget) return;
 
     const newBattery: SelectedDefence = {
@@ -791,7 +880,8 @@ export default function SimulationPage() {
     setDefenderProcured(prev => prev.map(battery => {
       if (battery.id !== id) return battery;
       const numericVal = val === '' ? 0 : Number(val);
-      const costDiff = (numericVal - (Number(battery.missilesPurchased) || 0)) * battery.selectedMissile.cost;
+      const currentAmmo = Number(battery.missilesPurchased) || 0;
+      const costDiff = (Math.max(0, numericVal - (battery.system.defaultAmmo || 0)) - Math.max(0, currentAmmo - (battery.system.defaultAmmo || 0))) * battery.selectedMissile.cost;
       if (defenderTotalSpent + costDiff > defenderBudget) return battery;
       return { ...battery, missilesPurchased: val as any };
     }));
@@ -802,7 +892,7 @@ export default function SimulationPage() {
       if (battery.id !== id) return battery;
       const currentAmmo = Number(battery.missilesPurchased) || 0;
       const nextAmmo = Math.max(0, currentAmmo + delta);
-      const costDiff = (nextAmmo - currentAmmo) * battery.selectedMissile.cost;
+      const costDiff = (Math.max(0, nextAmmo - (battery.system.defaultAmmo || 0)) - Math.max(0, currentAmmo - (battery.system.defaultAmmo || 0))) * battery.selectedMissile.cost;
       if (defenderTotalSpent + costDiff > defenderBudget) return battery;
       return { ...battery, missilesPurchased: nextAmmo };
     }));
@@ -820,7 +910,7 @@ export default function SimulationPage() {
         return { ...item, selectedMissile: opt };
       });
 
-      const nextTotalSpent = nextProcured.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * (Number(item.missilesPurchased) || 0)), 0);
+      const nextTotalSpent = nextProcured.reduce((sum, item) => sum + item.system.batteryCost + (item.selectedMissile.cost * Math.max(0, (Number(item.missilesPurchased) || 0) - (item.system.defaultAmmo || 0))), 0);
       if (nextTotalSpent > defenderBudget) return prev;
       return nextProcured;
     });
