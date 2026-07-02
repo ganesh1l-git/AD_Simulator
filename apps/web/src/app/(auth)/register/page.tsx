@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { api } from '@/lib/api';
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -13,19 +14,18 @@ export default function RegisterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError('');
 
-    setTimeout(() => {
-      if (name && email && password) {
-        router.push('/login');
-      } else {
-        setError('Enlistment rejected. Please verify form integrity.');
-        setLoading(false);
-      }
-    }, 800);
+    try {
+      await api.auth.register({ name, email, password });
+      router.push('/login');
+    } catch (err: any) {
+      setError(err?.message || 'Enlistment rejected. Please verify form integrity.');
+      setLoading(false);
+    }
   };
 
   return (

@@ -85,7 +85,7 @@ export const SYSTEM_THREAT_MULTIPLIERS: Record<string, Record<string, number>> =
     HYPERSONIC: 0.35,
   },
   'Barak 8 ER': {
-    BALLISTIC_MISSILE: 0.80, // ER variant has active booster and enhanced ABM tracking
+    BALLISTIC_MISSILE: 0.45, // ER variant has active booster and enhanced ABM tracking
     CRUISE_MISSILE: 0.90,
     UAV: 0.92,
     DRONE_SWARM: 0.65,
@@ -215,12 +215,416 @@ export const SYSTEM_THREAT_MULTIPLIERS: Record<string, Record<string, number>> =
     LOITERING_MUNITION: 0.90,
     TACTICAL_MISSILE: 0.00,
     HYPERSONIC: 0.00,
-  }
+  },
+  'HQ-9P': {
+    BALLISTIC_MISSILE: 0.40,
+    CRUISE_MISSILE: 0.85,
+    UAV: 0.90,
+    DRONE_SWARM: 0.65,
+    FIGHTER_AIRCRAFT: 0.95,
+    BOMBER_AIRCRAFT: 0.95,
+    ATTACK_HELICOPTER: 0.90,
+    LOITERING_MUNITION: 0.85,
+    TACTICAL_MISSILE: 0.75,
+    HYPERSONIC: 0.05,
+  },
+  'LY-80': {
+    BALLISTIC_MISSILE: 0.10,
+    CRUISE_MISSILE: 0.80,
+    UAV: 0.85,
+    DRONE_SWARM: 0.55,
+    FIGHTER_AIRCRAFT: 0.90,
+    BOMBER_AIRCRAFT: 0.90,
+    ATTACK_HELICOPTER: 0.85,
+    LOITERING_MUNITION: 0.80,
+    TACTICAL_MISSILE: 0.70,
+    HYPERSONIC: 0.00,
+  },
+  'HQ-17AE': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.80,
+    UAV: 0.90,
+    DRONE_SWARM: 0.75,
+    FIGHTER_AIRCRAFT: 0.85,
+    BOMBER_AIRCRAFT: 0.80,
+    ATTACK_HELICOPTER: 0.90,
+    LOITERING_MUNITION: 0.85,
+    TACTICAL_MISSILE: 0.30,
+    HYPERSONIC: 0.00,
+  },
+  'Spada 2000': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.75,
+    UAV: 0.85,
+    DRONE_SWARM: 0.65,
+    FIGHTER_AIRCRAFT: 0.85,
+    BOMBER_AIRCRAFT: 0.85,
+    ATTACK_HELICOPTER: 0.85,
+    LOITERING_MUNITION: 0.80,
+    TACTICAL_MISSILE: 0.30,
+    HYPERSONIC: 0.00,
+  },
+  'FM-90': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.65,
+    UAV: 0.75,
+    DRONE_SWARM: 0.45,
+    FIGHTER_AIRCRAFT: 0.80,
+    BOMBER_AIRCRAFT: 0.80,
+    ATTACK_HELICOPTER: 0.80,
+    LOITERING_MUNITION: 0.65,
+    TACTICAL_MISSILE: 0.20,
+    HYPERSONIC: 0.00,
+  },
+  'Anza': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.30,
+    UAV: 0.70,
+    DRONE_SWARM: 0.30,
+    FIGHTER_AIRCRAFT: 0.60,
+    BOMBER_AIRCRAFT: 0.55,
+    ATTACK_HELICOPTER: 0.75,
+    LOITERING_MUNITION: 0.65,
+    TACTICAL_MISSILE: 0.05,
+    HYPERSONIC: 0.00,
+  },
+  'SM-3 Block IIA': {
+    BALLISTIC_MISSILE: 0.96,
+    CRUISE_MISSILE: 0.00,
+    UAV: 0.00,
+    DRONE_SWARM: 0.00,
+    FIGHTER_AIRCRAFT: 0.10,
+    BOMBER_AIRCRAFT: 0.20,
+    ATTACK_HELICOPTER: 0.00,
+    LOITERING_MUNITION: 0.00,
+    TACTICAL_MISSILE: 0.85,
+    HYPERSONIC: 0.85,
+  },
+  'Centurion LPWS': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.40,
+    UAV: 0.88,
+    DRONE_SWARM: 0.85,
+    FIGHTER_AIRCRAFT: 0.15,
+    BOMBER_AIRCRAFT: 0.10,
+    ATTACK_HELICOPTER: 0.40,
+    LOITERING_MUNITION: 0.90,
+    TACTICAL_MISSILE: 0.10,
+    HYPERSONIC: 0.00,
+  },
+  'HQ-19': {
+    BALLISTIC_MISSILE: 0.95,
+    CRUISE_MISSILE: 0.00,
+    UAV: 0.00,
+    DRONE_SWARM: 0.00,
+    FIGHTER_AIRCRAFT: 0.10,
+    BOMBER_AIRCRAFT: 0.15,
+    ATTACK_HELICOPTER: 0.00,
+    LOITERING_MUNITION: 0.00,
+    TACTICAL_MISSILE: 0.80,
+    HYPERSONIC: 0.80,
+  },
+  'LD-2000': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.45,
+    UAV: 0.85,
+    DRONE_SWARM: 0.82,
+    FIGHTER_AIRCRAFT: 0.15,
+    BOMBER_AIRCRAFT: 0.10,
+    ATTACK_HELICOPTER: 0.40,
+    LOITERING_MUNITION: 0.88,
+    TACTICAL_MISSILE: 0.10,
+    HYPERSONIC: 0.00,
+  },
+  'Sosna-R': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.75,
+    UAV: 0.88,
+    DRONE_SWARM: 0.80,
+    FIGHTER_AIRCRAFT: 0.85,
+    BOMBER_AIRCRAFT: 0.80,
+    ATTACK_HELICOPTER: 0.85,
+    LOITERING_MUNITION: 0.85,
+    TACTICAL_MISSILE: 0.40,
+    HYPERSONIC: 0.05,
+  },
+  'Gibka-S': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.50,
+    UAV: 0.80,
+    DRONE_SWARM: 0.75,
+    FIGHTER_AIRCRAFT: 0.70,
+    BOMBER_AIRCRAFT: 0.65,
+    ATTACK_HELICOPTER: 0.80,
+    LOITERING_MUNITION: 0.80,
+    TACTICAL_MISSILE: 0.10,
+    HYPERSONIC: 0.00,
+  },
+  'Type-03 Kai': {
+    BALLISTIC_MISSILE: 0.30,
+    CRUISE_MISSILE: 0.88,
+    UAV: 0.90,
+    DRONE_SWARM: 0.85,
+    FIGHTER_AIRCRAFT: 0.92,
+    BOMBER_AIRCRAFT: 0.92,
+    ATTACK_HELICOPTER: 0.90,
+    LOITERING_MUNITION: 0.85,
+    TACTICAL_MISSILE: 0.75,
+    HYPERSONIC: 0.20,
+  },
+  'Type-81C': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.70,
+    UAV: 0.85,
+    DRONE_SWARM: 0.80,
+    FIGHTER_AIRCRAFT: 0.82,
+    BOMBER_AIRCRAFT: 0.80,
+    ATTACK_HELICOPTER: 0.85,
+    LOITERING_MUNITION: 0.80,
+    TACTICAL_MISSILE: 0.30,
+    HYPERSONIC: 0.00,
+  },
+  'L-SAM': {
+    BALLISTIC_MISSILE: 0.90,
+    CRUISE_MISSILE: 0.80,
+    UAV: 0.85,
+    DRONE_SWARM: 0.70,
+    FIGHTER_AIRCRAFT: 0.92,
+    BOMBER_AIRCRAFT: 0.92,
+    ATTACK_HELICOPTER: 0.85,
+    LOITERING_MUNITION: 0.70,
+    TACTICAL_MISSILE: 0.80,
+    HYPERSONIC: 0.65,
+  },
+  'LAMD': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.72,
+    UAV: 0.88,
+    DRONE_SWARM: 0.85,
+    FIGHTER_AIRCRAFT: 0.30,
+    BOMBER_AIRCRAFT: 0.20,
+    ATTACK_HELICOPTER: 0.40,
+    LOITERING_MUNITION: 0.90,
+    TACTICAL_MISSILE: 0.30,
+    HYPERSONIC: 0.00,
+  },
+  'SM-6 Dual II': {
+    BALLISTIC_MISSILE: 0.60,
+    CRUISE_MISSILE: 0.92,
+    UAV: 0.90,
+    DRONE_SWARM: 0.88,
+    FIGHTER_AIRCRAFT: 0.95,
+    BOMBER_AIRCRAFT: 0.95,
+    ATTACK_HELICOPTER: 0.90,
+    LOITERING_MUNITION: 0.88,
+    TACTICAL_MISSILE: 0.85,
+    HYPERSONIC: 0.50,
+  },
+  'MICA NG': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.88,
+    UAV: 0.90,
+    DRONE_SWARM: 0.88,
+    FIGHTER_AIRCRAFT: 0.92,
+    BOMBER_AIRCRAFT: 0.90,
+    ATTACK_HELICOPTER: 0.90,
+    LOITERING_MUNITION: 0.88,
+    TACTICAL_MISSILE: 0.50,
+    HYPERSONIC: 0.05,
+  },
+  'Arrow 3': {
+    BALLISTIC_MISSILE: 0.97,
+    CRUISE_MISSILE: 0.00,
+    UAV: 0.00,
+    DRONE_SWARM: 0.00,
+    FIGHTER_AIRCRAFT: 0.00,
+    BOMBER_AIRCRAFT: 0.00,
+    ATTACK_HELICOPTER: 0.00,
+    LOITERING_MUNITION: 0.00,
+    TACTICAL_MISSILE: 0.88,
+    HYPERSONIC: 0.88,
+  },
+  'Mantis': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.40,
+    UAV: 0.88,
+    DRONE_SWARM: 0.85,
+    FIGHTER_AIRCRAFT: 0.15,
+    BOMBER_AIRCRAFT: 0.10,
+    ATTACK_HELICOPTER: 0.40,
+    LOITERING_MUNITION: 0.90,
+    TACTICAL_MISSILE: 0.10,
+    HYPERSONIC: 0.00,
+  },
+  // ---- Russia ----
+  'S-300PMU2': {
+    BALLISTIC_MISSILE: 0.70, // Limited ABM vs short-range ballistics
+    CRUISE_MISSILE: 0.88,
+    UAV: 0.90,
+    DRONE_SWARM: 0.60,
+    FIGHTER_AIRCRAFT: 0.95,
+    BOMBER_AIRCRAFT: 0.96,
+    ATTACK_HELICOPTER: 0.90,
+    LOITERING_MUNITION: 0.82,
+    TACTICAL_MISSILE: 0.80,
+    HYPERSONIC: 0.25,
+  },
+  'Tor-M2': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.82,
+    UAV: 0.90,
+    DRONE_SWARM: 0.78,
+    FIGHTER_AIRCRAFT: 0.80,
+    BOMBER_AIRCRAFT: 0.75,
+    ATTACK_HELICOPTER: 0.85,
+    LOITERING_MUNITION: 0.88,
+    TACTICAL_MISSILE: 0.35,
+    HYPERSONIC: 0.00,
+  },
+  'Buk-M3': {
+    BALLISTIC_MISSILE: 0.20,
+    CRUISE_MISSILE: 0.85,
+    UAV: 0.88,
+    DRONE_SWARM: 0.65,
+    FIGHTER_AIRCRAFT: 0.92,
+    BOMBER_AIRCRAFT: 0.92,
+    ATTACK_HELICOPTER: 0.88,
+    LOITERING_MUNITION: 0.84,
+    TACTICAL_MISSILE: 0.75,
+    HYPERSONIC: 0.10,
+  },
+  'Pantsir-S2': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.78,
+    UAV: 0.88,
+    DRONE_SWARM: 0.80,
+    FIGHTER_AIRCRAFT: 0.82,
+    BOMBER_AIRCRAFT: 0.78,
+    ATTACK_HELICOPTER: 0.85,
+    LOITERING_MUNITION: 0.88,
+    TACTICAL_MISSILE: 0.30,
+    HYPERSONIC: 0.00,
+  },
+  // ---- China ----
+  'HQ-9C': {
+    BALLISTIC_MISSILE: 0.50,
+    CRUISE_MISSILE: 0.90,
+    UAV: 0.92,
+    DRONE_SWARM: 0.68,
+    FIGHTER_AIRCRAFT: 0.97,
+    BOMBER_AIRCRAFT: 0.97,
+    ATTACK_HELICOPTER: 0.92,
+    LOITERING_MUNITION: 0.86,
+    TACTICAL_MISSILE: 0.80,
+    HYPERSONIC: 0.10,
+  },
+  'HQ-11': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.78,
+    UAV: 0.88,
+    DRONE_SWARM: 0.72,
+    FIGHTER_AIRCRAFT: 0.82,
+    BOMBER_AIRCRAFT: 0.78,
+    ATTACK_HELICOPTER: 0.85,
+    LOITERING_MUNITION: 0.84,
+    TACTICAL_MISSILE: 0.32,
+    HYPERSONIC: 0.00,
+  },
+  'HQ-16B': {
+    BALLISTIC_MISSILE: 0.15,
+    CRUISE_MISSILE: 0.85,
+    UAV: 0.88,
+    DRONE_SWARM: 0.60,
+    FIGHTER_AIRCRAFT: 0.92,
+    BOMBER_AIRCRAFT: 0.92,
+    ATTACK_HELICOPTER: 0.88,
+    LOITERING_MUNITION: 0.82,
+    TACTICAL_MISSILE: 0.75,
+    HYPERSONIC: 0.05,
+  },
+  // ---- USA ----
+  'Patriot PAC-3': {
+    BALLISTIC_MISSILE: 0.85,
+    CRUISE_MISSILE: 0.92,
+    UAV: 0.90,
+    DRONE_SWARM: 0.72,
+    FIGHTER_AIRCRAFT: 0.95,
+    BOMBER_AIRCRAFT: 0.95,
+    ATTACK_HELICOPTER: 0.90,
+    LOITERING_MUNITION: 0.85,
+    TACTICAL_MISSILE: 0.90,
+    HYPERSONIC: 0.45,
+  },
+  'NASAMS 3': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.90,
+    UAV: 0.92,
+    DRONE_SWARM: 0.85,
+    FIGHTER_AIRCRAFT: 0.92,
+    BOMBER_AIRCRAFT: 0.90,
+    ATTACK_HELICOPTER: 0.92,
+    LOITERING_MUNITION: 0.88,
+    TACTICAL_MISSILE: 0.55,
+    HYPERSONIC: 0.05,
+  },
+  // ---- UK ----
+  'Sky Sabre': {
+    BALLISTIC_MISSILE: 0.00,
+    CRUISE_MISSILE: 0.86,
+    UAV: 0.90,
+    DRONE_SWARM: 0.85,
+    FIGHTER_AIRCRAFT: 0.90,
+    BOMBER_AIRCRAFT: 0.88,
+    ATTACK_HELICOPTER: 0.90,
+    LOITERING_MUNITION: 0.88,
+    TACTICAL_MISSILE: 0.45,
+    HYPERSONIC: 0.05,
+  },
+  // ---- Germany ----
+  'IRIS-T SLM': {
+    BALLISTIC_MISSILE: 0.30,
+    CRUISE_MISSILE: 0.90,
+    UAV: 0.92,
+    DRONE_SWARM: 0.86,
+    FIGHTER_AIRCRAFT: 0.92,
+    BOMBER_AIRCRAFT: 0.90,
+    ATTACK_HELICOPTER: 0.92,
+    LOITERING_MUNITION: 0.90,
+    TACTICAL_MISSILE: 0.55,
+    HYPERSONIC: 0.10,
+  },
+  // ---- South Korea ----
+  'Cheongung-II': {
+    BALLISTIC_MISSILE: 0.45,
+    CRUISE_MISSILE: 0.88,
+    UAV: 0.90,
+    DRONE_SWARM: 0.75,
+    FIGHTER_AIRCRAFT: 0.90,
+    BOMBER_AIRCRAFT: 0.90,
+    ATTACK_HELICOPTER: 0.88,
+    LOITERING_MUNITION: 0.84,
+    TACTICAL_MISSILE: 0.78,
+    HYPERSONIC: 0.15,
+  },
+  'Cheongung': {
+    BALLISTIC_MISSILE: 0.20,
+    CRUISE_MISSILE: 0.85,
+    UAV: 0.88,
+    DRONE_SWARM: 0.70,
+    FIGHTER_AIRCRAFT: 0.88,
+    BOMBER_AIRCRAFT: 0.88,
+    ATTACK_HELICOPTER: 0.85,
+    LOITERING_MUNITION: 0.80,
+    TACTICAL_MISSILE: 0.72,
+    HYPERSONIC: 0.10,
+  },
 };
 
 export function findSystemKey(systemName: string): string | undefined {
   const name = systemName.toLowerCase();
+  // S-400 / S-300 must be checked before generic 's-3' check
   if (name.includes('s-400') || name.includes('s400')) return 'S-400';
+  if (name.includes('s-300pmu2') || name.includes('s300pmu2') || name.includes('favorit')) return 'S-300PMU2';
   if (name.includes('barak 8 er') || name.includes('barak-8 er')) return 'Barak 8 ER';
   if (name.includes('barak-8') || name.includes('barak 8') || name.includes('mrsam')) return 'Barak 8';
   if (name.includes('spyder') || name.includes('syder')) return 'SPYDER';
@@ -231,8 +635,40 @@ export function findSystemKey(systemName: string): string | undefined {
   if (name.includes('vshorad manpad') || name.includes('vshorad (mistral)')) return 'VSHORAD';
   if (name.includes('vshorad') || name.includes('mistral')) return 'VSHORAD';
   if (name.includes('igla')) return 'Igla-S';
+  if (name.includes('anza')) return 'Anza';
+  if (name.includes('hq-9c') || name.includes('hq9c')) return 'HQ-9C';
+  if (name.includes('hq-9p') || name.includes('hq9p')) return 'HQ-9P';
+  if (name.includes('hq-16b') || name.includes('hq16b')) return 'HQ-16B';
+  if (name.includes('ly-80') || name.includes('ly80') || name.includes('hq-16') || name.includes('hq16')) return 'LY-80';
+  if (name.includes('hq-17ae') || name.includes('hq17ae') || name.includes('hq-17') || name.includes('hq17')) return 'HQ-17AE';
+  if (name.includes('hq-11') || name.includes('hq11') || name.includes('red flag-11')) return 'HQ-11';
+  if (name.includes('spada 2000') || name.includes('spada')) return 'Spada 2000';
+  if (name.includes('fm-90') || name.includes('fm90') || name.includes('hq-7') || name.includes('hq7')) return 'FM-90';
   if (name.includes('rbs')) return 'RBS-70';
   if (name.includes('anti-drone') || name.includes('smash')) return 'Anti-Drone';
+  if (name.includes('sm-3') || name.includes('sm3')) return 'SM-3 Block IIA';
+  if (name.includes('centurion') || name.includes('lpws') || name.includes('c-ram')) return 'Centurion LPWS';
+  if (name.includes('hq-19') || name.includes('hq19')) return 'HQ-19';
+  if (name.includes('ld-2000') || name.includes('ld2000')) return 'LD-2000';
+  if (name.includes('gibka')) return 'Gibka-S';
+  if (name.includes('sosna')) return 'Sosna-R';
+  if (name.includes('tor-m2') || name.includes('torm2') || name.includes('sa-15') || name.includes('gauntlet')) return 'Tor-M2';
+  if (name.includes('buk-m3') || name.includes('bukm3') || name.includes('viking') || name.includes('sa-17') || name.includes('buk')) return 'Buk-M3';
+  if (name.includes('pantsir-s2') || name.includes('pantsir') || name.includes('sa-22')) return 'Pantsir-S2';
+  if (name.includes('type-03') || name.includes('chū-sam') || name.includes('chu-sam')) return 'Type-03 Kai';
+  if (name.includes('type-81')) return 'Type-81C';
+  if (name.includes('l-sam') || name.includes('lsam')) return 'L-SAM';
+  if (name.includes('lamd')) return 'LAMD';
+  if (name.includes('sm-6') || name.includes('sm6') || name.includes('type-45')) return 'SM-6 Dual II';
+  if (name.includes('mica ng') || name.includes('micang')) return 'MICA NG';
+  if (name.includes('arrow-3') || name.includes('arrow 3')) return 'Arrow 3';
+  if (name.includes('mantis')) return 'Mantis';
+  if (name.includes('patriot pac-3') || name.includes('pac-3') || name.includes('patriot')) return 'Patriot PAC-3';
+  if (name.includes('nasams 3') || name.includes('nasams')) return 'NASAMS 3';
+  if (name.includes('sky sabre') || name.includes('land ceptor') || name.includes('camm')) return 'Sky Sabre';
+  if (name.includes('iris-t slm') || name.includes('iris-t')) return 'IRIS-T SLM';
+  if (name.includes('cheongung-ii') || name.includes('km-sam mk.ii') || name.includes('m-sam mk.ii')) return 'Cheongung-II';
+  if (name.includes('cheongung') || name.includes('km-sam')) return 'Cheongung';
   return undefined;
 }
 
@@ -248,7 +684,7 @@ export function getMissileThreatMultiplier(missileName: string, threatType: stri
   else if (type.startsWith('CRUISE')) normalizedType = 'CRUISE';
   else if (type.startsWith('FIGHTER')) normalizedType = 'FIGHTER';
   else if (type.startsWith('BOMBER')) normalizedType = 'FIGHTER';
-  else if (type.startsWith('UAV')) normalizedType = 'UAV';
+  else if (type.startsWith('UAV') || type.startsWith('LOITERING') || type.includes('LOITERING')) normalizedType = 'UAV';
   else if (type.startsWith('SWARM') || type.includes('SWARM')) normalizedType = 'SWARM';
   else if (type.startsWith('HYPERSONIC')) normalizedType = 'HYPERSONIC';
   else if (type.startsWith('GLIDE') || type.includes('GLIDE')) normalizedType = 'GLIDE_BOMB';
@@ -267,7 +703,7 @@ export function getMissileThreatMultiplier(missileName: string, threatType: stri
     return table[normalizedType] ?? 0.8;
   }
   if (name.includes('barak') && (name.includes('er') || name.includes('extended'))) {
-    const table: Record<string, number> = { BALLISTIC: 0.80, HYPERSONIC: 0.15, FIGHTER: 0.95, UAV: 0.92, SWARM: 0.65, CRUISE: 0.90, GLIDE_BOMB: 0.85, ROCKET: 0.85 };
+    const table: Record<string, number> = { BALLISTIC: 0.45, HYPERSONIC: 0.15, FIGHTER: 0.95, UAV: 0.92, SWARM: 0.65, CRUISE: 0.90, GLIDE_BOMB: 0.85, ROCKET: 0.85 };
     return table[normalizedType] ?? 0.75;
   }
   if (name.includes('barak') || name.includes('mrsam')) {
@@ -293,6 +729,58 @@ export function getMissileThreatMultiplier(missileName: string, threatType: stri
   if (name.includes('igla')) {
     const table: Record<string, number> = { BALLISTIC: 0.00, HYPERSONIC: 0.00, FIGHTER: 0.82, UAV: 0.88, SWARM: 0.72, CRUISE: 0.72, GLIDE_BOMB: 0.78, ROCKET: 0.78 };
     return table[normalizedType] ?? 0.4;
+  }
+  if (name.includes('hq-9p') || name.includes('hq9p')) {
+    const table: Record<string, number> = { BALLISTIC: 0.40, HYPERSONIC: 0.05, FIGHTER: 0.95, UAV: 0.90, SWARM: 0.65, CRUISE: 0.85, GLIDE_BOMB: 0.80, ROCKET: 0.80 };
+    return table[normalizedType] ?? 0.75;
+  }
+  if (name.includes('hq-16') || name.includes('ly-80') || name.includes('ly80')) {
+    const table: Record<string, number> = { BALLISTIC: 0.10, HYPERSONIC: 0.00, FIGHTER: 0.90, UAV: 0.85, SWARM: 0.55, CRUISE: 0.80, GLIDE_BOMB: 0.75, ROCKET: 0.75 };
+    return table[normalizedType] ?? 0.7;
+  }
+  if (name.includes('hq-17') || name.includes('hq17')) {
+    const table: Record<string, number> = { BALLISTIC: 0.00, HYPERSONIC: 0.00, FIGHTER: 0.85, UAV: 0.90, SWARM: 0.75, CRUISE: 0.80, GLIDE_BOMB: 0.80, ROCKET: 0.80 };
+    return table[normalizedType] ?? 0.75;
+  }
+  if (name.includes('aspide') || name.includes('spada')) {
+    const table: Record<string, number> = { BALLISTIC: 0.00, HYPERSONIC: 0.00, FIGHTER: 0.85, UAV: 0.85, SWARM: 0.65, CRUISE: 0.75, GLIDE_BOMB: 0.75, ROCKET: 0.75 };
+    return table[normalizedType] ?? 0.7;
+  }
+  if (name.includes('fm-90') || name.includes('fm90') || name.includes('hq-7') || name.includes('hq7')) {
+    const table: Record<string, number> = { BALLISTIC: 0.00, HYPERSONIC: 0.00, FIGHTER: 0.80, UAV: 0.75, SWARM: 0.45, CRUISE: 0.65, GLIDE_BOMB: 0.60, ROCKET: 0.60 };
+    return table[normalizedType] ?? 0.6;
+  }
+  if (name.includes('anza')) {
+    const table: Record<string, number> = { BALLISTIC: 0.00, HYPERSONIC: 0.00, FIGHTER: 0.60, UAV: 0.70, SWARM: 0.30, CRUISE: 0.30, GLIDE_BOMB: 0.30, ROCKET: 0.30 };
+    return table[normalizedType] ?? 0.4;
+  }
+  if (name.includes('sm-3') || name.includes('sm3')) {
+    const table: Record<string, number> = { BALLISTIC: 0.96, HYPERSONIC: 0.85, FIGHTER: 0.10, UAV: 0.00, SWARM: 0.00, CRUISE: 0.00, GLIDE_BOMB: 0.00, ROCKET: 0.85 };
+    return table[normalizedType] ?? 0.1;
+  }
+  if (name.includes('sm-6') || name.includes('sm6')) {
+    const table: Record<string, number> = { BALLISTIC: 0.60, HYPERSONIC: 0.50, FIGHTER: 0.95, UAV: 0.90, SWARM: 0.88, CRUISE: 0.92, GLIDE_BOMB: 0.90, ROCKET: 0.90 };
+    return table[normalizedType] ?? 0.8;
+  }
+  if (name.includes('arrow-3') || name.includes('arrow 3')) {
+    const table: Record<string, number> = { BALLISTIC: 0.97, HYPERSONIC: 0.88, FIGHTER: 0.00, UAV: 0.00, SWARM: 0.00, CRUISE: 0.00, GLIDE_BOMB: 0.00, ROCKET: 0.88 };
+    return table[normalizedType] ?? 0.1;
+  }
+  if (name.includes('l-sam') || name.includes('lsam')) {
+    const table: Record<string, number> = { BALLISTIC: 0.90, HYPERSONIC: 0.65, FIGHTER: 0.92, UAV: 0.85, SWARM: 0.70, CRUISE: 0.80, GLIDE_BOMB: 0.80, ROCKET: 0.80 };
+    return table[normalizedType] ?? 0.75;
+  }
+  if (name.includes('hq-19') || name.includes('hq19')) {
+    const table: Record<string, number> = { BALLISTIC: 0.95, HYPERSONIC: 0.80, FIGHTER: 0.10, UAV: 0.00, SWARM: 0.00, CRUISE: 0.00, GLIDE_BOMB: 0.00, ROCKET: 0.80 };
+    return table[normalizedType] ?? 0.1;
+  }
+  if (name.includes('c-ram') || name.includes('centurion') || name.includes('lpws')) {
+    const table: Record<string, number> = { BALLISTIC: 0.00, HYPERSONIC: 0.00, FIGHTER: 0.15, UAV: 0.88, SWARM: 0.85, CRUISE: 0.40, GLIDE_BOMB: 0.60, ROCKET: 0.80 };
+    return table[normalizedType] ?? 0.5;
+  }
+  if (name.includes('ld-2000') || name.includes('ld2000') || name.includes('mantis')) {
+    const table: Record<string, number> = { BALLISTIC: 0.00, HYPERSONIC: 0.00, FIGHTER: 0.15, UAV: 0.88, SWARM: 0.85, CRUISE: 0.40, GLIDE_BOMB: 0.60, ROCKET: 0.80 };
+    return table[normalizedType] ?? 0.5;
   }
   return undefined;
 }
@@ -340,20 +828,58 @@ export function calculateInterceptionProbability(params: {
   // For ballistic/hypersonic/tactical threats, check if the system or missile is ABM-capable.
   // If so, they are intercepted during terminal descent stage inside the system's operational envelope.
   const isABMCapable = (systemName && (
+    systemName.includes('S-500') ||
     systemName.includes('S-400') ||
+    systemName.includes('S-300PMU2') ||
+    systemName.includes('THAAD') ||
+    systemName.includes('Arrow 3') ||
+    systemName.includes('SM-3') ||
+    systemName.includes('SM-6') ||
+    systemName.includes('L-SAM') ||
+    systemName.includes('HQ-19') ||
+    systemName.includes('HQ-9C') ||
+    systemName.includes('Patriot PAC-3') ||
+    systemName.includes('Cheongung-II') ||
+    systemName.includes('IRIS-T SLM') ||
     systemName.includes('Barak-8') ||
     systemName.includes('Barak 8') ||
     systemName.includes('Akash-NG')
   )) || (missileName && (
     missileName.includes('40N6') ||
     missileName.includes('48N6') ||
+    missileName.includes('48N6E2') ||
+    missileName.includes('9M317M') ||
+    missileName.includes('PAC-3 MSE') ||
+    missileName.includes('sm-3') ||
+    missileName.includes('sm-6') ||
+    missileName.includes('arrow-3') ||
+    missileName.includes('l-sam') ||
+    missileName.includes('hq-19') ||
     missileName.includes('Barak-8') ||
     missileName.includes('Barak 8') ||
     missileName.includes('Akash-NG')
   ));
 
   const isAdvancedSystem = (systemName && (
+    systemName.includes('S-500') ||
     systemName.includes('S-400') ||
+    systemName.includes('S-300PMU2') ||
+    systemName.includes('THAAD') ||
+    systemName.includes('Arrow') ||
+    systemName.includes('SM-3') ||
+    systemName.includes('SM-6') ||
+    systemName.includes('L-SAM') ||
+    systemName.includes('HQ-19') ||
+    systemName.includes('HQ-9C') ||
+    systemName.includes('Buk-M3') ||
+    systemName.includes('Patriot PAC-3') ||
+    systemName.includes('NASAMS') ||
+    systemName.includes('Sky Sabre') ||
+    systemName.includes('IRIS-T SLM') ||
+    systemName.includes('Cheongung') ||
+    systemName.includes('Type-03') ||
+    systemName.includes('SAMP/T') ||
+    systemName.includes('MICA NG') ||
     systemName.includes('Barak') ||
     systemName.includes('Akash-NG') ||
     systemName.includes('SPYDER') ||
@@ -361,7 +887,21 @@ export function calculateInterceptionProbability(params: {
   )) || (missileName && (
     missileName.includes('40N6') ||
     missileName.includes('48N6') ||
+    missileName.includes('48N6E2') ||
+    missileName.includes('9M317M') ||
     missileName.includes('9M96') ||
+    missileName.includes('PAC-3 MSE') ||
+    missileName.includes('AIM-120D') ||
+    missileName.includes('CAMM') ||
+    missileName.includes('IRIS-T SLM') ||
+    missileName.includes('Cheongung') ||
+    missileName.includes('sm-3') ||
+    missileName.includes('sm-6') ||
+    missileName.includes('arrow-3') ||
+    missileName.includes('l-sam') ||
+    missileName.includes('hq-19') ||
+    missileName.includes('c-ram') ||
+    missileName.includes('mantis') ||
     missileName.includes('Barak') ||
     missileName.includes('Akash-NG') ||
     missileName.includes('Derby') ||

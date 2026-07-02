@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { api } from '@/lib/api';
-import { getMissileThreatMultiplier } from '@iades/shared';
+import { getMissileThreatMultiplier, SYSTEM_THREAT_MULTIPLIERS, findSystemKey } from '@iades/shared';
+import mergedDefenceCatalog from './merged_defence_catalog.json';
+import mergedThreatCatalog from './merged_threat_catalog.json';
 
 // ---- Data Catalogs ----
 interface WeaponItem {
@@ -16,6 +18,7 @@ interface WeaponItem {
   maxQty: number;
   weightSlots: number;
   set?: 1 | 2;
+  accuracy?: number;
 }
 
 interface ThreatItem {
@@ -30,161 +33,10 @@ interface ThreatItem {
   color: string;
   maxSlots?: number;
   weaponsCatalog?: WeaponItem[];
+  country?: string;
 }
 
-const THREAT_CATALOG: ThreatItem[] = [
-  { id: 't1', name: 'Shaheen-III MRBM', type: 'BALLISTIC', speed: 12.0, altitude: 80000, rcs: 1.0, threatScore: 95, cost: 10.0, color: '#ef4444' },
-  { id: 't2', name: 'Babur-3 LACM', type: 'CRUISE', speed: 0.8, altitude: 50, rcs: 0.05, threatScore: 80, cost: 2.0, color: '#f97316' },
-  {
-    id: 't3',
-    name: 'JF-17 Block III',
-    type: 'FIGHTER',
-    speed: 1.6,
-    altitude: 12000,
-    rcs: 3.0,
-    threatScore: 65,
-    cost: 25.0,
-    color: '#22d3ee',
-    maxSlots: 7,
-    weaponsCatalog: [
-      { name: "Ra'ad ALCM", type: 'CRUISE', speed: 0.8, range: 350, rcs: 0.08, altitude: 100, cost: 1.5, maxQty: 1, weightSlots: 3, set: 1 },
-      { name: 'CM-400AKG Supersonic Missile', type: 'CRUISE', speed: 4.0, range: 240, rcs: 0.1, altitude: 150, cost: 2.0, maxQty: 2, weightSlots: 3, set: 1 },
-      { name: 'PL-15E BVRAAM', type: 'CRUISE', speed: 4.0, range: 145, rcs: 0.05, altitude: 100, cost: 1.0, maxQty: 4, weightSlots: 1, set: 2 },
-      { name: 'PL-12 BVRAAM', type: 'CRUISE', speed: 4.0, range: 100, rcs: 0.05, altitude: 100, cost: 0.6, maxQty: 4, weightSlots: 1, set: 2 },
-      { name: 'PL-10E SRAAM', type: 'CRUISE', speed: 3.0, range: 20, rcs: 0.04, altitude: 100, cost: 0.4, maxQty: 2, weightSlots: 1, set: 2 },
-      { name: 'LS-6 Glide Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 60, rcs: 0.15, altitude: 200, cost: 0.3, maxQty: 4, weightSlots: 1, set: 1 }
-    ]
-  },
-  {
-    id: 't3b',
-    name: 'J-10C Fighter',
-    type: 'FIGHTER',
-    speed: 2.0,
-    altitude: 15000,
-    rcs: 1.5,
-    threatScore: 75,
-    cost: 35.0,
-    color: '#38bdf8',
-    maxSlots: 11,
-    weaponsCatalog: [
-      { name: 'KD-88 ALCM', type: 'CRUISE', speed: 0.85, range: 200, rcs: 0.08, altitude: 100, cost: 1.5, maxQty: 2, weightSlots: 3, set: 1 },
-      { name: 'YJ-91 Anti-Radiation Missile', type: 'CRUISE', speed: 3.0, range: 120, rcs: 0.1, altitude: 120, cost: 1.2, maxQty: 2, weightSlots: 2, set: 1 },
-      { name: 'PL-15E BVRAAM', type: 'CRUISE', speed: 4.0, range: 145, rcs: 0.05, altitude: 100, cost: 1.0, maxQty: 4, weightSlots: 1, set: 2 },
-      { name: 'PL-12 BVRAAM', type: 'CRUISE', speed: 4.0, range: 100, rcs: 0.05, altitude: 100, cost: 0.6, maxQty: 4, weightSlots: 1, set: 2 },
-      { name: 'PL-10E SRAAM', type: 'CRUISE', speed: 3.0, range: 20, rcs: 0.04, altitude: 100, cost: 0.4, maxQty: 4, weightSlots: 1, set: 2 },
-      { name: 'LS-6 Glide Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 60, rcs: 0.15, altitude: 200, cost: 0.3, maxQty: 4, weightSlots: 1, set: 1 }
-    ]
-  },
-  {
-    id: 't3c',
-    name: 'F-16 Block 52+',
-    type: 'FIGHTER',
-    speed: 2.0,
-    altitude: 15240,
-    rcs: 1.2,
-    threatScore: 72,
-    cost: 40.0,
-    color: '#60a5fa',
-    maxSlots: 9,
-    weaponsCatalog: [
-      { name: 'AGM-84 Harpoon Cruise', type: 'CRUISE', speed: 0.8, range: 124, rcs: 0.08, altitude: 50, cost: 1.2, maxQty: 2, weightSlots: 3, set: 1 },
-      { name: 'AGM-88 HARM Anti-Radiation', type: 'CRUISE', speed: 2.0, range: 150, rcs: 0.1, altitude: 100, cost: 0.8, maxQty: 2, weightSlots: 2, set: 1 },
-      { name: 'AIM-120C AMRAAM', type: 'CRUISE', speed: 4.0, range: 105, rcs: 0.05, altitude: 100, cost: 1.0, maxQty: 4, weightSlots: 1, set: 2 },
-      { name: 'AIM-9X Sidewinder', type: 'CRUISE', speed: 2.5, range: 22, rcs: 0.04, altitude: 100, cost: 0.4, maxQty: 2, weightSlots: 1, set: 2 },
-      { name: 'GBU-31 JDAM Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 28, rcs: 0.15, altitude: 200, cost: 0.3, maxQty: 4, weightSlots: 1, set: 1 }
-    ]
-  },
-  {
-    id: 't3d',
-    name: 'Mirage III Fighter',
-    type: 'FIGHTER',
-    speed: 2.2,
-    altitude: 17000,
-    rcs: 3.5,
-    threatScore: 60,
-    cost: 15.0,
-    color: '#818cf8',
-    maxSlots: 5,
-    weaponsCatalog: [
-      { name: "Ra'ad ALCM", type: 'CRUISE', speed: 0.8, range: 350, rcs: 0.08, altitude: 100, cost: 1.5, maxQty: 1, weightSlots: 3, set: 1 },
-      { name: 'R.550 Magic II SRAAM', type: 'CRUISE', speed: 2.7, range: 15, rcs: 0.05, altitude: 100, cost: 0.3, maxQty: 2, weightSlots: 1, set: 2 },
-      { name: 'GBU-12 Paveway Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 15, rcs: 0.12, altitude: 150, cost: 0.25, maxQty: 2, weightSlots: 1, set: 1 }
-    ]
-  },
-  {
-    id: 't3e',
-    name: 'Mirage 5 Fighter',
-    type: 'FIGHTER',
-    speed: 2.2,
-    altitude: 16000,
-    rcs: 3.2,
-    threatScore: 62,
-    cost: 18.0,
-    color: '#a78bfa',
-    maxSlots: 7,
-    weaponsCatalog: [
-      { name: "Ra'ad-II ALCM", type: 'CRUISE', speed: 0.8, range: 600, rcs: 0.08, altitude: 100, cost: 1.8, maxQty: 1, weightSlots: 3, set: 1 },
-      { name: 'H-2 SOW Glide Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 60, rcs: 0.12, altitude: 150, cost: 0.5, maxQty: 2, weightSlots: 2, set: 1 },
-      { name: 'H-4 SOW Glide Bomb', type: 'GLIDE_BOMB', speed: 0.9, range: 120, rcs: 0.12, altitude: 150, cost: 0.8, maxQty: 2, weightSlots: 2, set: 1 }
-    ]
-  },
-  {
-    id: 't4',
-    name: 'Wing Loong II UAV',
-    type: 'UAV',
-    speed: 0.28,
-    altitude: 8000,
-    rcs: 0.8,
-    threatScore: 50,
-    cost: 3.0,
-    color: '#eab308',
-    maxSlots: 8,
-    weaponsCatalog: [
-      { name: 'AR-1 Laser Guided Missile', type: 'ROCKET', speed: 1.1, range: 8, rcs: 0.02, altitude: 80, cost: 0.15, maxQty: 8, weightSlots: 1, set: 2 },
-      { name: 'AR-2 Light Guided Missile', type: 'ROCKET', speed: 1.0, range: 8, rcs: 0.01, altitude: 80, cost: 0.08, maxQty: 16, weightSlots: 0.5, set: 2 },
-      { name: 'BA-7 Blue Arrow Missile', type: 'ROCKET', speed: 1.2, range: 7, rcs: 0.03, altitude: 80, cost: 0.2, maxQty: 6, weightSlots: 1, set: 1 },
-      { name: 'FT-9 Glide Bomb', type: 'GLIDE_BOMB', speed: 0.8, range: 5, rcs: 0.08, altitude: 100, cost: 0.1, maxQty: 6, weightSlots: 1, set: 1 }
-    ]
-  },
-  {
-    id: 't4b',
-    name: 'Shahpar-2 UAV',
-    type: 'UAV',
-    speed: 0.18,
-    altitude: 6000,
-    rcs: 0.4,
-    threatScore: 45,
-    cost: 2.0,
-    color: '#facc15',
-    maxSlots: 4,
-    weaponsCatalog: [
-      { name: 'Barq Laser Guided Missile', type: 'ROCKET', speed: 1.0, range: 8, rcs: 0.02, altitude: 80, cost: 0.15, maxQty: 4, weightSlots: 1, set: 2 }
-    ]
-  },
-  {
-    id: 't4c',
-    name: 'Burraq UAV',
-    type: 'UAV',
-    speed: 0.18,
-    altitude: 7500,
-    rcs: 0.5,
-    threatScore: 42,
-    cost: 1.5,
-    color: '#eab308',
-    maxSlots: 2,
-    weaponsCatalog: [
-      { name: 'Barq Laser Guided Missile', type: 'ROCKET', speed: 1.0, range: 8, rcs: 0.02, altitude: 80, cost: 0.15, maxQty: 2, weightSlots: 1, set: 2 }
-    ]
-  },
-  { id: 't5', name: 'Coordinated Drone Swarm', type: 'SWARM', speed: 0.15, altitude: 200, rcs: 0.01, threatScore: 70, cost: 1.0, color: '#a3e635' },
-  { id: 't6', name: 'Hypersonic Glide Vehicle', type: 'HYPERSONIC', speed: 8.0, altitude: 35000, rcs: 0.1, threatScore: 98, cost: 15.0, color: '#ff0055' },
-  { id: 't7', name: 'Ababeel MIRV MRBM', type: 'BALLISTIC', speed: 15.0, altitude: 180000, rcs: 1.5, threatScore: 99, cost: 12.0, color: '#dc2626' },
-  { id: 't8', name: 'Ghaznavi SRBM', type: 'BALLISTIC', speed: 6.0, altitude: 80000, rcs: 0.8, threatScore: 80, cost: 4.0, color: '#ef4444' },
-  { id: 't9', name: 'CM-302 Supersonic Missile', type: 'CRUISE', speed: 3.0, altitude: 50, rcs: 0.08, threatScore: 85, cost: 3.0, color: '#ea580c' },
-  { id: 't10', name: 'Harbah LACM', type: 'CRUISE', speed: 0.8, altitude: 30, rcs: 0.04, threatScore: 78, cost: 1.8, color: '#f97316' },
-  { id: 't11', name: 'CH-901 Loitering Munition', type: 'LOITERING_MUNITION', speed: 0.12, altitude: 1500, rcs: 0.02, threatScore: 52, cost: 0.1, color: '#10b981' },
-  { id: 't12', name: 'Nasr Tactical Missile', type: 'TACTICAL_MISSILE', speed: 3.0, altitude: 15000, rcs: 0.5, threatScore: 75, cost: 0.5, color: '#ec4899' },
-];
+const THREAT_CATALOG: ThreatItem[] = mergedThreatCatalog as ThreatItem[];
 
 interface MissileOption {
   name: string;
@@ -201,6 +53,7 @@ interface DefenceItem {
   id: string;
   name: string;
   category: 'LONG_RANGE' | 'MEDIUM_RANGE' | 'SHORT_RANGE' | 'VERY_SHORT_RANGE' | 'RADAR';
+  country?: string;
   batteryCost: number; // USD Millions
   missileCost: number; // USD Millions per interceptor
   missileName: string;
@@ -216,289 +69,41 @@ interface DefenceItem {
   composition?: { name: string; type: string; qty: number }[];
 }
 
-const LOCAL_SYSTEM_THREAT_MULTIPLIERS: Record<string, Record<string, number>> = {
-  'S-400': { BALLISTIC: 0.90, CRUISE: 0.95, UAV: 0.95, SWARM: 0.70, FIGHTER: 0.98, BOMBER: 0.98, ATTACK_HELICOPTER: 0.95, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.95, HYPERSONIC: 0.35, GLIDE_BOMB: 0.80, ROCKET: 0.80 },
-  'Barak 8 ER': { BALLISTIC: 0.80, CRUISE: 0.90, UAV: 0.92, SWARM: 0.65, FIGHTER: 0.95, BOMBER: 0.95, ATTACK_HELICOPTER: 0.92, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.85, HYPERSONIC: 0.15, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
-  'Barak 8': { BALLISTIC: 0.40, CRUISE: 0.85, UAV: 0.90, SWARM: 0.60, FIGHTER: 0.92, BOMBER: 0.92, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.75, HYPERSONIC: 0.05, GLIDE_BOMB: 0.80, ROCKET: 0.80 },
-  'SPYDER': { BALLISTIC: 0.00, CRUISE: 0.85, UAV: 0.95, SWARM: 0.75, FIGHTER: 0.90, BOMBER: 0.90, ATTACK_HELICOPTER: 0.95, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.40, HYPERSONIC: 0.00, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
-  'Pechora': { BALLISTIC: 0.00, CRUISE: 0.55, UAV: 0.65, SWARM: 0.30, FIGHTER: 0.75, BOMBER: 0.80, ATTACK_HELICOPTER: 0.75, LOITERING_MUNITION: 0.40, TACTICAL_MISSILE: 0.20, HYPERSONIC: 0.00, GLIDE_BOMB: 0.40, ROCKET: 0.40 },
-  'Akash-NG': { BALLISTIC: 0.70, CRUISE: 0.90, UAV: 0.90, SWARM: 0.60, FIGHTER: 0.92, BOMBER: 0.92, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.70, HYPERSONIC: 0.05, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
-  'Akash': { BALLISTIC: 0.00, CRUISE: 0.70, UAV: 0.80, SWARM: 0.40, FIGHTER: 0.85, BOMBER: 0.85, ATTACK_HELICOPTER: 0.80, LOITERING_MUNITION: 0.70, TACTICAL_MISSILE: 0.30, HYPERSONIC: 0.00, GLIDE_BOMB: 0.70, ROCKET: 0.70 },
-  'QRSAM': { BALLISTIC: 0.00, CRUISE: 0.80, UAV: 0.90, SWARM: 0.70, FIGHTER: 0.88, BOMBER: 0.80, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.40, HYPERSONIC: 0.00, GLIDE_BOMB: 0.85, ROCKET: 0.85 },
-  'VSHORAD': { BALLISTIC: 0.00, CRUISE: 0.78, UAV: 0.94, SWARM: 0.78, FIGHTER: 0.88, BOMBER: 0.88, ATTACK_HELICOPTER: 0.90, LOITERING_MUNITION: 0.85, TACTICAL_MISSILE: 0.30, HYPERSONIC: 0.00, GLIDE_BOMB: 0.82, ROCKET: 0.82 },
-  'Igla-S': { BALLISTIC: 0.00, CRUISE: 0.72, UAV: 0.88, SWARM: 0.72, FIGHTER: 0.82, BOMBER: 0.82, ATTACK_HELICOPTER: 0.85, LOITERING_MUNITION: 0.80, TACTICAL_MISSILE: 0.20, HYPERSONIC: 0.00, GLIDE_BOMB: 0.78, ROCKET: 0.78 },
-  'Anti-Drone': { BALLISTIC: 0.00, CRUISE: 0.00, UAV: 0.90, SWARM: 0.85, FIGHTER: 0.00, BOMBER: 0.00, ATTACK_HELICOPTER: 0.10, LOITERING_MUNITION: 0.90, TACTICAL_MISSILE: 0.00, HYPERSONIC: 0.00, GLIDE_BOMB: 0.90, ROCKET: 0.00 }
+const mapLocalThreatToShared = (type: string): string => {
+  switch (type) {
+    case 'BALLISTIC': return 'BALLISTIC_MISSILE';
+    case 'CRUISE': return 'CRUISE_MISSILE';
+    case 'FIGHTER': return 'FIGHTER_AIRCRAFT';
+    case 'SWARM': return 'DRONE_SWARM';
+    case 'UAV': return 'UAV';
+    case 'HYPERSONIC': return 'HYPERSONIC';
+    case 'LOITERING_MUNITION': return 'LOITERING_MUNITION';
+    case 'TACTICAL_MISSILE': return 'TACTICAL_MISSILE';
+    default: return type;
+  }
 };
 
-const localFindSystemKey = (systemName: string): string | undefined => {
-  const name = systemName.toLowerCase();
-  if (name.includes('s-400') || name.includes('s400')) return 'S-400';
-  if (name.includes('barak 8 er') || name.includes('barak-8 er')) return 'Barak 8 ER';
-  if (name.includes('barak-8') || name.includes('barak 8') || name.includes('mrsam')) return 'Barak 8';
-  if (name.includes('spyder') || name.includes('syder')) return 'SPYDER';
-  if (name.includes('pechora')) return 'Pechora';
-  if (name.includes('akash-ng')) return 'Akash-NG';
-  if (name.includes('akash')) return 'Akash';
-  if (name.includes('qrsam')) return 'QRSAM';
-  if (name.includes('vshorad manpad') || name.includes('vshorad (mistral)')) return 'VSHORAD';
-  if (name.includes('vshorad') || name.includes('mistral')) return 'VSHORAD';
-  if (name.includes('igla')) return 'Igla-S';
-  if (name.includes('anti-drone') || name.includes('smash')) return 'Anti-Drone';
-  return undefined;
+
+const getA2AMissile = (loadoutStatus: any, type: 'BVR' | 'SR') => {
+  if (!loadoutStatus) return null;
+  for (const [wName, status] of Object.entries(loadoutStatus) as any) {
+    if (status.fired < status.total) {
+      const nameLower = wName.toLowerCase();
+      const isBVR = nameLower.includes('amraam') || nameLower.includes('pl-15') || nameLower.includes('r-77') || nameLower.includes('meteor') || nameLower.includes('mica') || nameLower.includes('sd-10');
+      const isSR = nameLower.includes('sidewinder') || nameLower.includes('pl-5') || nameLower.includes('r-73') || nameLower.includes('magic') || nameLower.includes('python');
+      if (type === 'BVR' && (isBVR || status.weapon.range > 30)) {
+        return { name: wName, status };
+      }
+      if (type === 'SR' && (isSR || status.weapon.range <= 30)) {
+        return { name: wName, status };
+      }
+    }
+  }
+  return null;
 };
 
-const DEFENCE_CATALOG: DefenceItem[] = [
-  {
-    id: 'd1',
-    name: 'S-400 Triumf Regiment',
-    category: 'LONG_RANGE',
-    batteryCost: 1090.0,
-    missileCost: 2.5,
-    missileName: '48N6DM',
-    range: 400,
-    radarRange: 600,
-    defaultAmmo: 64,
-    minAlt: 10,
-    maxAlt: 30000,
-    accuracy: 0.92,
-    color: '#ef4444',
-    speed: 6.0,
-    missileOptions: [
-      { name: '40N6E Ultra Long-Range', range: 400, speed: 12.0, cost: 2.5, accuracy: 0.92, minAlt: 10, maxAlt: 30000, description: 'Interceptions up to 400km.' },
-      { name: '48N6DM Long-Range', range: 250, speed: 6.0, cost: 1.5, accuracy: 0.88, minAlt: 10, maxAlt: 25000, description: 'Standard high-altitude target missile.' },
-      { name: '9M96E2 Medium-Range', range: 120, speed: 4.5, cost: 0.8, accuracy: 0.85, minAlt: 10, maxAlt: 20000, description: 'Agile hit-to-kill weapon.' }
-    ],
-    composition: [
-      { name: '55K6E Combat Management Post', type: 'C2 Vehicle', qty: 1 },
-      { name: '91N6E Acquisition Radar (S-band)', type: 'Surveillance Radar', qty: 1 },
-      { name: '92N6E Grave Stone Radar (X-band)', type: 'Fire Control Radar', qty: 2 },
-      { name: '5P85TE2 Self-Propelled Launcher', type: 'TEL Launcher (4 canisters)', qty: 16 }
-    ]
-  },
-  {
-    id: 'd2b',
-    name: 'Barak 8 ER SAM Regiment',
-    category: 'MEDIUM_RANGE',
-    batteryCost: 650.0,
-    missileCost: 1.2,
-    missileName: 'Barak-8 ER',
-    range: 150,
-    radarRange: 200,
-    defaultAmmo: 96,
-    minAlt: 15,
-    maxAlt: 30000,
-    accuracy: 0.88,
-    color: '#f59e0b',
-    speed: 3.0,
-    composition: [
-      { name: 'Mobile Command & Control (MCP)', type: 'C2 Station', qty: 1 },
-      { name: 'Firing Unit / Battery', type: 'Firing Unit', qty: 4 },
-      { name: 'MF-STAR AESA Radar', type: 'Active AESA Radar', qty: 4 },
-      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: 12 }
-    ]
-  },
-  {
-    id: 'd2',
-    name: 'MRSAM / Barak-8 Regiment',
-    category: 'MEDIUM_RANGE',
-    batteryCost: 500.0,
-    missileCost: 1.2,
-    missileName: 'Barak-8',
-    range: 70,
-    radarRange: 120,
-    defaultAmmo: 96,
-    minAlt: 15,
-    maxAlt: 16000,
-    accuracy: 0.85,
-    color: '#f59e0b',
-    speed: 4.0,
-    missileOptions: [
-      { name: 'Barak-8 Standard', range: 70, speed: 2.0, cost: 1.0, accuracy: 0.85, minAlt: 15, maxAlt: 12000, description: 'Local tactical area protection.' }
-    ],
-    composition: [
-      { name: 'Mobile Command & Control (MCP)', type: 'C2 Station', qty: 1 },
-      { name: 'Firing Unit / Battery', type: 'Firing Unit', qty: 4 },
-      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar', qty: 4 },
-      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: 12 }
-    ]
-  },
-  {
-    id: 'd3',
-    name: 'Akash-NG Regiment',
-    category: 'MEDIUM_RANGE',
-    batteryCost: 480.0,
-    missileCost: 0.3,
-    missileName: 'Akash-NG',
-    range: 80,
-    radarRange: 120,
-    defaultAmmo: 72,
-    minAlt: 30,
-    maxAlt: 20000,
-    accuracy: 0.85,
-    color: '#eab308',
-    speed: 3.0,
-    missileOptions: [
-      { name: 'Akash-NG Active Seeker', range: 80, speed: 3.5, cost: 0.3, accuracy: 0.85, minAlt: 30, maxAlt: 20000, description: 'Active RF terminal seeker.' }
-    ],
-    composition: [
-      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: 3 },
-      { name: 'AESA Fire Control Radar', type: 'Fire Control Radar', qty: 3 },
-      { name: 'Surveillance Radar', type: 'Surveillance Radar', qty: 1 },
-      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Launcher (6 cells)', qty: 12 }
-    ]
-  },
-  {
-    id: 'd3a',
-    name: 'Akash SAM Regiment',
-    category: 'MEDIUM_RANGE',
-    batteryCost: 350.0,
-    missileCost: 0.2,
-    missileName: 'Akash SAM',
-    range: 30,
-    radarRange: 150,
-    defaultAmmo: 48,
-    minAlt: 30,
-    maxAlt: 18000,
-    accuracy: 0.75,
-    color: '#f59e0b',
-    speed: 2.5,
-    missileOptions: [
-      { name: 'Akash Standard Command', range: 30, speed: 2.5, cost: 0.2, accuracy: 0.75, minAlt: 30, maxAlt: 15000, description: 'PESA command-guided legacy variant.' }
-    ],
-    composition: [
-      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: 4 },
-      { name: 'Rajendra Radar', type: 'Fire Control Radar', qty: 4 },
-      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Launcher (3 cells)', qty: 16 }
-    ]
-  },
-  {
-    id: 'd3b',
-    name: 'Pechora-2M SAM Battery',
-    category: 'MEDIUM_RANGE',
-    batteryCost: 15.0,
-    missileCost: 0.1,
-    missileName: '5V27DE',
-    range: 35,
-    radarRange: 50,
-    defaultAmmo: 8,
-    minAlt: 20,
-    maxAlt: 20000,
-    accuracy: 0.72,
-    color: '#f59e0b',
-    speed: 3.5,
-    composition: [
-      { name: 'UNV-2M Command Cabin', type: 'Guidance Cabin', qty: 1 },
-      { name: 'Pechora-2M 5P73 TEL Launcher', type: 'TEL Launcher (2 rails)', qty: 4 }
-    ]
-  },
-  {
-    id: 'd4b',
-    name: 'SPYDER SAM Battery',
-    category: 'SHORT_RANGE',
-    batteryCost: 50.0,
-    missileCost: 0.5,
-    missileName: 'Derby',
-    range: 50,
-    radarRange: 80,
-    defaultAmmo: 24,
-    minAlt: 20,
-    maxAlt: 16000,
-    accuracy: 0.82,
-    color: '#00ff88',
-    speed: 4.0,
-    missileOptions: [
-      { name: 'Derby Interceptor', range: 50, speed: 4.0, cost: 0.5, accuracy: 0.82, minAlt: 20, maxAlt: 16000, description: 'Active radar-homing interception.' },
-      { name: 'Python-5 Interceptor', range: 20, speed: 4.0, cost: 0.3, accuracy: 0.82, minAlt: 20, maxAlt: 9000, description: 'Dual-band infrared point defence.' }
-    ],
-    composition: [
-      { name: 'Mobile Command Post (MCP)', type: 'Tactical C2', qty: 1 },
-      { name: 'EL/M-2106 ATAR 3D Radar', type: 'Surveillance Radar', qty: 1 },
-      { name: 'SPYDER Mobile Launcher', type: 'TEL Launcher (4 rails)', qty: 6 }
-    ]
-  },
-  {
-    id: 'd4',
-    name: 'QRSAM Regiment',
-    category: 'SHORT_RANGE',
-    batteryCost: 600.0,
-    missileCost: 0.15,
-    missileName: 'QRSAM',
-    range: 30,
-    radarRange: 50,
-    defaultAmmo: 72,
-    minAlt: 30,
-    maxAlt: 6000,
-    accuracy: 0.82,
-    color: '#00ff88',
-    speed: 3.0,
-    composition: [
-      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: 3 },
-      { name: 'AESA Radar', type: 'Engagement Radar', qty: 3 },
-      { name: 'Surveillance Radar', type: 'Surveillance Radar', qty: 1 },
-      { name: 'Quick Reaction Launcher (QRL)', type: 'TEL Launcher (6 cells)', qty: 12 }
-    ]
-  },
-  {
-    id: 'd5b',
-    name: 'VSHORAD MANPADS Team',
-    category: 'VERY_SHORT_RANGE',
-    batteryCost: 0.15,
-    missileCost: 0.08,
-    missileName: 'DRDO VSHORAD',
-    range: 6.5,
-    radarRange: 10,
-    defaultAmmo: 4,
-    minAlt: 5,
-    maxAlt: 15000,
-    accuracy: 0.85,
-    color: '#00b4d8',
-    speed: 2.5,
-    composition: [
-      { name: 'DRDO VSHORAD Launcher', type: 'MANPADS Tube', qty: 4 },
-      { name: 'Optical Target Sight', type: 'Thermal Visual sight', qty: 4 }
-    ]
-  },
-  {
-    id: 'd5',
-    name: 'Igla-S MANPADS Team',
-    category: 'VERY_SHORT_RANGE',
-    batteryCost: 1.0,
-    missileCost: 0.05,
-    missileName: 'Igla-S',
-    range: 6,
-    radarRange: 10,
-    defaultAmmo: 4,
-    minAlt: 10,
-    maxAlt: 15000,
-    accuracy: 0.80,
-    color: '#00b4d8',
-    speed: 1.5,
-    composition: [
-      { name: 'Igla-S Launch Grip-stock', type: 'MANPADS Tube', qty: 4 },
-      { name: 'Optical Target Pointer', type: 'Thermal Visual sight', qty: 4 }
-    ]
-  },
-  {
-    id: 'd6',
-    name: 'Arudhra AESA Radar Station',
-    category: 'RADAR',
-    batteryCost: 100.0,
-    missileCost: 0,
-    missileName: 'None',
-    range: 500,
-    radarRange: 500,
-    defaultAmmo: 0,
-    minAlt: 0,
-    maxAlt: 30000,
-    accuracy: 0,
-    color: '#6366f1',
-    speed: 0,
-    composition: [
-      { name: 'Rotating AESA Antenna Unit', type: 'Radar Array', qty: 1 },
-      { name: 'Signal Processing Container', type: 'Tactical Shelter', qty: 1 }
-    ]
-  },
-];
+
+const DEFENCE_CATALOG: DefenceItem[] = mergedDefenceCatalog as DefenceItem[];
 
 type SimPhase = 'config' | 'procure_attacker' | 'procure_defender' | 'simulate' | 'report';
 
@@ -586,8 +191,91 @@ interface VisualLog {
   type: 'LAUNCH' | 'DETECTION' | 'INTERCEPT_SUCCESS' | 'INTERCEPT_FAIL' | 'BREACH' | 'INFO';
 }
 
+
+const COUNTRY_META = {
+  "india": {
+    "label": "India",
+    "flag": "🇮🇳",
+    "color": "#00b4d8",
+    "defColor": "#00b4d8"
+  },
+  "pakistan": {
+    "label": "Pakistan",
+    "flag": "🇵🇰",
+    "color": "#ef4444",
+    "defColor": "#ef4444"
+  },
+  "usa": {
+    "label": "USA",
+    "flag": "🇺🇸",
+    "color": "#3b82f6",
+    "defColor": "#3b82f6"
+  },
+  "china": {
+    "label": "China",
+    "flag": "🇨🇳",
+    "color": "#ef4444",
+    "defColor": "#ef4444"
+  },
+  "russia": {
+    "label": "Russia",
+    "flag": "🇷🇺",
+    "color": "#dc2626",
+    "defColor": "#dc2626"
+  },
+  "japan": {
+    "label": "Japan",
+    "flag": "🇯🇵",
+    "color": "#f97316",
+    "defColor": "#f97316"
+  },
+  "south_korea": {
+    "label": "South Korea",
+    "flag": "🇰🇷",
+    "color": "#22d3ee",
+    "defColor": "#22d3ee"
+  },
+  "uk": {
+    "label": "UK",
+    "flag": "🇬🇧",
+    "color": "#6366f1",
+    "defColor": "#6366f1"
+  },
+  "france": {
+    "label": "France",
+    "flag": "🇫🇷",
+    "color": "#a78bfa",
+    "defColor": "#a78bfa"
+  },
+  "germany": {
+    "label": "Germany",
+    "flag": "🇩🇪",
+    "color": "#facc15",
+    "defColor": "#facc15"
+  },
+  "generic": {
+    "label": "Generic",
+    "flag": "🌐",
+    "color": "#10b981",
+    "defColor": "#10b981"
+  }
+};
+
 export default function SimulationPage() {
   const [phase, setPhase] = useState<SimPhase>('config');
+  const [defCountryTab, setDefCountryTab] = useState<string>('india');
+  const [attCountryTab, setAttCountryTab] = useState<string>('pakistan');
+  const [collapsedThreats, setCollapsedThreats] = useState<Record<string, boolean>>({});
+  const [collapsedDefenders, setCollapsedDefenders] = useState<Record<string, boolean>>({});
+
+  const toggleThreatCollapse = (id: string) => {
+    setCollapsedThreats(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
+  const toggleDefenderCollapse = (id: string) => {
+    setCollapsedDefenders(prev => ({ ...prev, [id]: !prev[id] }));
+  };
+
   const [attackerBudget, setAttackerBudget] = useState(500); // USD Millions
   const defenderBudget = attackerBudget * 4; // Auto-scaling 4x
 
@@ -1178,16 +866,19 @@ export default function SimulationPage() {
                 // Spawn the fired payloads as individual entities starting at current jet position
                 wStatus.fired = wStatus.total;
                 for (let i = 0; i < wStatus.total; i++) {
-                  const isAntiRad = wStatus.weapon.name.toLowerCase().includes('anti-radiation') || wStatus.weapon.name.includes('YJ-91');
+                  const isAntiRad = wStatus.weapon.name.toLowerCase().includes('anti-radiation') || wStatus.weapon.name.toLowerCase().includes('harm') || wStatus.weapon.name.toLowerCase().includes('arm') || wStatus.weapon.name.includes('YJ-91');
                   let targetBatteryId: string | undefined = undefined;
                   let targetX = 50;
                   let targetY = 80;
                   let payloadDistance = nextDistance;
 
                   if (isAntiRad) {
-                    const activeBatteries = currentPlacements.filter(b => !b.isDestroyed);
-                    if (activeBatteries.length > 0) {
-                      const targetBattery = activeBatteries[Math.floor(Math.random() * activeBatteries.length)];
+                    const activeRadars = currentPlacements.filter(b => b.system.category === 'RADAR' && !b.isDestroyed);
+                    const activeOthers = currentPlacements.filter(b => b.system.category !== 'RADAR' && !b.isDestroyed);
+                    const targetPool = activeRadars.length > 0 ? activeRadars : activeOthers;
+
+                    if (targetPool.length > 0) {
+                      const targetBattery = targetPool[Math.floor(Math.random() * targetPool.length)];
                       targetBatteryId = targetBattery.id;
                       targetX = targetBattery.x;
                       targetY = targetBattery.y;
@@ -1302,6 +993,29 @@ export default function SimulationPage() {
       currentPlacements.forEach(placed => {
         if (placed.system.category === 'RADAR' || placed.missilesPurchased <= 0 || placed.isDestroyed) return;
 
+        const isModern = placed.system.name.includes('S-400') ||
+                         placed.system.name.includes('Barak') ||
+                         placed.system.name.includes('Akash-NG') ||
+                         placed.system.name.includes('SPYDER') ||
+                         placed.system.name.includes('QRSAM') ||
+                         placed.system.name.includes('Patriot') ||
+                         placed.system.name.includes('NASAMS') ||
+                         placed.system.name.includes('IRIS-T') ||
+                         placed.system.name.includes('Sky Sabre');
+        
+        const hasStandAloneRadarsInScenario = currentPlacements.some(p => p.system.category === 'RADAR');
+        const activeExternalRadars = currentPlacements.filter(p => p.system.category === 'RADAR' && !p.isDestroyed).length;
+        const activeModernADSystems = currentPlacements.filter(p => p.id !== placed.id && !p.isDestroyed && p.system.category !== 'RADAR' && (
+          p.system.name.includes('S-400') || p.system.name.includes('Barak') || p.system.name.includes('Akash-NG') || p.system.name.includes('SPYDER') || p.system.name.includes('QRSAM') || p.system.name.includes('Patriot') || p.system.name.includes('NASAMS') || p.system.name.includes('IRIS-T') || p.system.name.includes('Sky Sabre')
+        )).length;
+
+        // If radar systems got attacked (destroyed), the air defence systems should not work if they are alone
+        if (hasStandAloneRadarsInScenario && activeExternalRadars === 0) {
+          if (!isModern || activeModernADSystems === 0) {
+            return; // Doesn't work!
+          }
+        }
+
         let targetThreat: VisualThreat | null = null;
         let minDistancePct = placed.selectedMissile.range / 2.5;
 
@@ -1371,9 +1085,10 @@ export default function SimulationPage() {
 
             let capability = getMissileThreatMultiplier(placed.selectedMissile.name, t.threat.type);
             if (capability === undefined) {
-              const sysKey = localFindSystemKey(placed.system.name);
-              if (sysKey && LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
-                capability = LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey][t.threat.type];
+              const sysKey = findSystemKey(placed.system.name);
+              if (sysKey && SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
+                const sharedThreatType = mapLocalThreatToShared(t.threat.type);
+                capability = SYSTEM_THREAT_MULTIPLIERS[sysKey][sharedThreatType];
               }
             }
             if (capability === 0.0) continue;
@@ -1471,61 +1186,19 @@ export default function SimulationPage() {
                              placed.selectedMissile.name.includes('QRSAM');
 
           // --- Radar Cueing Bonus ---
-          // Check if any active RADAR is illuminating this threat (sweep beam facing it)
           let radarBonus = 0;
-          let radarCount = 0;
-          const radarBonusByType: Record<string, number> = {
-            UAV: 0.20, SWARM: 0.20, LOITERING_MUNITION: 0.20,
-            FIGHTER: 0.15, BOMBER: 0.15, CRUISE: 0.15, TACTICAL: 0.15, GLIDE_BOMB: 0.15, ROCKET: 0.15,
-            BALLISTIC: 0.07,
-            HYPERSONIC: 0.04,
-          };
-          const baseRadarBonus = radarBonusByType[targetThreat.threat.type] ?? 0.10;
-
           if (isAdvanced) {
-            const now = simTimeRef.current;
-            currentPlacements.forEach(radarPlaced => {
-              if (radarPlaced.system.category !== 'RADAR' || radarPlaced.isDestroyed) return;
-              radarCount++;
-              // Get/update sweep angle for this radar (6 RPM = 1 rotation per 10s sim-time)
-              const rotPeriod = 10; // seconds per full rotation
-              const prevAngle = radarSweepAnglesRef.current[radarPlaced.id] ?? 0;
-              // Compute bearing from radar to threat (in canvas %-coords)
-              const dx = targetThreat.x - radarPlaced.x;
-              const dy = targetThreat.y - radarPlaced.y;
-              const bearing = Math.atan2(dy, dx); // -π to π
-              // Normalize angle diff
-              let angleDiff = bearing - prevAngle;
-              while (angleDiff > Math.PI) angleDiff -= 2 * Math.PI;
-              while (angleDiff < -Math.PI) angleDiff += 2 * Math.PI;
-              const beamWidth = Math.PI / 12; // ±15 degrees
-              // Check if bonus is currently active for this radar+threat combo
-              const bonusExpiry = radarBonusActiveRef.current[radarPlaced.id]?.[targetThreat.id] ?? 0;
-              if (now <= bonusExpiry) {
-                // Bonus still active from previous sweep pass
-                radarBonus += baseRadarBonus;
-              } else if (Math.abs(angleDiff) <= beamWidth) {
-                // Beam is facing the threat right now — activate bonus for 1.5s
-                if (!radarBonusActiveRef.current[radarPlaced.id]) {
-                  radarBonusActiveRef.current[radarPlaced.id] = {};
-                }
-                radarBonusActiveRef.current[radarPlaced.id][targetThreat.id] = now + 1.5;
-                radarBonus += baseRadarBonus;
-                // Track cue event for this radar
-                if (!radarCuedKillsRef.current[radarPlaced.id]) {
-                  radarCuedKillsRef.current[radarPlaced.id] = { radarName: radarPlaced.system.name, assistedSAMs: new Set(), cuedKills: 0, cueEvents: 0 };
-                }
-                radarCuedKillsRef.current[radarPlaced.id].cueEvents++;
+            const activeRadars = currentPlacements.filter(p => p.system.category === 'RADAR' && !p.isDestroyed).length;
+            if (activeRadars >= 1) {
+              // 8% for first radar, 3% for each additional
+              radarBonus = 0.08 + (activeRadars - 1) * 0.03;
+              if (simTimeRef.current % 10 === 0) {
                 setSimLogs(prev => [...prev, {
-                  time: now,
-                  message: `📡 RADAR CUE: ${radarPlaced.system.name} sweep illuminated ${targetThreat.threat.name} → +${(baseRadarBonus * 100).toFixed(0)}% accuracy boost!`,
+                  time: simTimeRef.current,
+                  message: `📡 RADAR CONNECTIVITY: ${activeRadars}x external radars boosting modern AD network by +${(radarBonus * 100).toFixed(0)}%!`,
                   type: 'DETECTION'
                 }]);
               }
-            });
-            // Additional radar stacking bonus (+4% per extra radar beyond first, cap at +20%)
-            if (radarCount > 1) {
-              radarBonus += Math.min(0.20, (radarCount - 1) * 0.04);
             }
           }
 
@@ -1558,9 +1231,10 @@ export default function SimulationPage() {
             // Apply system/missile threat capability coefficient
             let coefficient = getMissileThreatMultiplier(placed.selectedMissile.name, targetThreat.threat.type);
             if (coefficient === undefined) {
-              const sysKey = localFindSystemKey(placed.system.name);
-              if (sysKey && LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
-                coefficient = LOCAL_SYSTEM_THREAT_MULTIPLIERS[sysKey][targetThreat.threat.type];
+              const sysKey = findSystemKey(placed.system.name);
+              if (sysKey && SYSTEM_THREAT_MULTIPLIERS[sysKey]) {
+                const sharedThreatType = mapLocalThreatToShared(targetThreat.threat.type);
+                coefficient = SYSTEM_THREAT_MULTIPLIERS[sysKey][sharedThreatType];
               }
             }
             if (coefficient !== undefined) {
@@ -1571,8 +1245,16 @@ export default function SimulationPage() {
             if (ecm === 'LOW') interceptAccuracy -= isAdvanced ? 0.03 : 0.10;
             if (ecm === 'HIGH') interceptAccuracy -= isAdvanced ? 0.08 : 0.22;
 
-            // Apply radar cueing bonus (capped at 0.99)
-            interceptAccuracy = Math.min(0.99, Math.max(0, interceptAccuracy + radarBonus));
+            // Apply ARM radar attacked penalty
+            if (hasStandAloneRadarsInScenario && currentPlacements.some(p => p.system.category === 'RADAR' && p.isDestroyed)) {
+              if (activeExternalRadars > 0) {
+                // uses that external radar, but hit rate drops by 30%
+                interceptAccuracy = interceptAccuracy * 0.70;
+              } else if (activeModernADSystems > 0) {
+                // uses peer modern AD system radar, but hit rate drops by 60%
+                interceptAccuracy = interceptAccuracy * 0.40;
+              }
+            }
 
             // Small per-missile variance for realism (±2%)
             interceptAccuracy = Math.min(0.99, Math.max(0, interceptAccuracy + (Math.random() - 0.5) * 0.04));
@@ -1635,6 +1317,83 @@ export default function SimulationPage() {
             ]);
           }
           return;
+        }
+
+        // --- A2A Self-defense logic ---
+        if (target.threat.type === 'FIGHTER') {
+          if (!(interceptor as any).a2aChecked) {
+            (interceptor as any).a2aChecked = { bvr: false, sr: false };
+          }
+
+          const dx = target.x - interceptor.x;
+          const dy = target.y - interceptor.y;
+          const distanceInKm = Math.sqrt(dx * dx + dy * dy) * 2.5;
+
+          // BVR range: 30km to 100km
+          if (distanceInKm > 30 && distanceInKm <= 100 && !(interceptor as any).a2aChecked.bvr) {
+            (interceptor as any).a2aChecked.bvr = true;
+            const a2a = getA2AMissile(target.loadoutStatus, 'BVR');
+            if (a2a) {
+              a2a.status.fired++;
+              const isModern = target.threat.name.includes('Block III') || target.threat.name.includes('Block 52+') || target.threat.name.includes('Rafale') || target.threat.name.includes('Su-30');
+              const detectProb = isModern ? 0.75 : 0.50;
+              if (Math.random() < detectProb) {
+                setSimLogs(prev => [...prev, {
+                  time: simTimeRef.current,
+                  message: `✈️ A2A DEFENSE: ${target.threat.name} RWR locked SAM. Fired ${a2a.name} (BVR AAM) in self-defense!`,
+                  type: 'LAUNCH'
+                }]);
+                if (Math.random() < 0.60) {
+                  interceptor.isDead = true;
+                  setSimLogs(prev => [...prev, {
+                    time: simTimeRef.current,
+                    message: `💥 A2A INTERCEPT: SAM destroyed in flight by ${target.threat.name}'s BVR missile!`,
+                    type: 'INTERCEPT_SUCCESS'
+                  }]);
+                  return;
+                } else {
+                  setSimLogs(prev => [...prev, {
+                    time: simTimeRef.current,
+                    message: `💨 A2A MISS: BVR missile fired by ${target.threat.name} missed the incoming SAM.`,
+                    type: 'INTERCEPT_FAIL'
+                  }]);
+                }
+              }
+            }
+          }
+
+          // SR range: <= 30km
+          if (distanceInKm <= 30 && !(interceptor as any).a2aChecked.sr) {
+            (interceptor as any).a2aChecked.sr = true;
+            const a2a = getA2AMissile(target.loadoutStatus, 'SR');
+            if (a2a) {
+              a2a.status.fired++;
+              const isModern = target.threat.name.includes('Block III') || target.threat.name.includes('Block 52+') || target.threat.name.includes('Rafale') || target.threat.name.includes('Su-30');
+              const detectProb = isModern ? 0.75 : 0.50;
+              if (Math.random() < detectProb) {
+                setSimLogs(prev => [...prev, {
+                  time: simTimeRef.current,
+                  message: `✈️ A2A DEFENSE: ${target.threat.name} visual contact on SAM. Fired ${a2a.name} (SR AAM) in self-defense!`,
+                  type: 'LAUNCH'
+                }]);
+                if (Math.random() < 0.70) {
+                  interceptor.isDead = true;
+                  setSimLogs(prev => [...prev, {
+                    time: simTimeRef.current,
+                    message: `💥 A2A INTERCEPT: SAM destroyed in terminal phase by ${target.threat.name}'s SR missile!`,
+                    type: 'INTERCEPT_SUCCESS'
+                  }]);
+                  return;
+                } else {
+                  setSimLogs(prev => [...prev, {
+                    time: simTimeRef.current,
+                    message: `💨 A2A MISS: SR missile fired by ${target.threat.name} missed the incoming SAM.`,
+                    type: 'INTERCEPT_FAIL'
+                  }]);
+                }
+              }
+            }
+          }
         }
 
         const dx = target.x - interceptor.x;
@@ -1711,28 +1470,33 @@ export default function SimulationPage() {
         const destroyedBatteriesCost = currentPlacements.reduce((sum, item) => sum + (item.isDestroyed ? item.system.batteryCost : 0), 0);
         const finalDefenderOutlay = spentDefenderMissilesCost + destroyedBatteriesCost;
 
-        api.simulations.clientSave({
-          name: `Sandbox Wargame: ${finalHitCount} Neutralized / ${finalThreatCountTotal} Threats`,
-          config: {
-            attackerBudget,
-            defenderBudget,
-            weather,
-            ecm,
-          },
-          results: {
-            totalThreats: finalThreatCountTotal,
-            threatsDetected: finalDetectedCount,
-            threatsIntercepted: finalHitCount,
-            threatsMissed: finalLeakerCount,
-            threatsImpacted: finalLeakerCount,
-            interceptionRate: finalThreatCountTotal > 0 ? (finalHitCount / finalThreatCountTotal) : 0,
-            detectionRate: finalThreatCountTotal > 0 ? (finalDetectedCount / finalThreatCountTotal) : 0,
-            totalCost: finalDefenderOutlay,
-            costPerEngagement: finalDefenderOutlay / (finalThreatCountTotal || 1),
-            costPerSuccessfulInterception: finalDefenderOutlay / (finalHitCount || 1),
-          },
-          duration: simTimeRef.current,
-        }).catch(err => console.error('Failed to save simulation to database:', err));
+        const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+        if (token) {
+          api.simulations.clientSave({
+            name: `Sandbox Wargame: ${finalHitCount} Neutralized / ${finalThreatCountTotal} Threats`,
+            config: {
+              attackerBudget,
+              defenderBudget,
+              weather,
+              ecm,
+            },
+            results: {
+              totalThreats: finalThreatCountTotal,
+              threatsDetected: finalDetectedCount,
+              threatsIntercepted: finalHitCount,
+              threatsMissed: finalLeakerCount,
+              threatsImpacted: finalLeakerCount,
+              interceptionRate: finalThreatCountTotal > 0 ? (finalHitCount / finalThreatCountTotal) : 0,
+              detectionRate: finalThreatCountTotal > 0 ? (finalDetectedCount / finalThreatCountTotal) : 0,
+              totalCost: finalDefenderOutlay,
+              costPerEngagement: finalDefenderOutlay / (finalThreatCountTotal || 1),
+              costPerSuccessfulInterception: finalDefenderOutlay / (finalHitCount || 1),
+            },
+            duration: simTimeRef.current,
+          }).catch(err => console.warn('Failed background wargame save:', err.message));
+        } else {
+          console.log('Skipping background wargame save (no active auth session).');
+        }
 
         setPhase('report');
       }
@@ -2087,14 +1851,20 @@ export default function SimulationPage() {
                   const displayName = sameTypeItems.length > 1
                     ? `${item.threat.name} (Set ${typeIndex + 1})`
                     : item.threat.name;
+                  const isCollapsed = collapsedThreats[item.id] || false;
 
                   return (
                     <div key={item.id} className="p-3 rounded bg-white/[0.02] border border-white/[0.05] space-y-2 text-xs">
                       <div className="flex justify-between items-center">
-                        <div>
-                          <div className="font-semibold text-white">{displayName}</div>
-                          <div className="text-[10px] text-[#6b7280]">
-                            Unit Cost: ${totalUnitCost.toFixed(2)}M
+                        <div className="flex items-center gap-2 cursor-pointer select-none" onClick={() => toggleThreatCollapse(item.id)}>
+                          <span className="text-[#6b7280] hover:text-white transition-all text-[9px] w-3 text-center">
+                            {isCollapsed ? '▼' : '▲'}
+                          </span>
+                          <div>
+                            <div className="font-semibold text-white">{displayName}</div>
+                            <div className="text-[10px] text-[#6b7280]">
+                              Unit Cost: ${totalUnitCost.toFixed(2)}M
+                            </div>
                           </div>
                         </div>
                         <div className="flex items-center gap-2">
@@ -2139,7 +1909,7 @@ export default function SimulationPage() {
                         </div>
                       </div>
 
-                      {item.threat.weaponsCatalog && item.threat.weaponsCatalog.length > 0 && (
+                      {!isCollapsed && item.threat.weaponsCatalog && item.threat.weaponsCatalog.length > 0 && (
                         <div className="bg-black/20 p-2.5 rounded space-y-2 border border-white/5">
                           <div className="flex justify-between items-center text-[10px] text-[#6b7280] font-mono border-b border-white/5 pb-1">
                             <span>WEAPON LOADOUT:</span>
@@ -2297,10 +2067,33 @@ export default function SimulationPage() {
 
           {/* Catalog (Right) */}
           <div className="lg:col-span-2 card p-5 space-y-4">
-            <h3 className="text-sm font-semibold text-[#ef4444] uppercase tracking-wider">Attacker Arsenal Catalogue</h3>
+            <div className="flex flex-wrap gap-4 items-center justify-between border-b border-white/[0.05] pb-3">
+              <h3 className="text-sm font-semibold text-[#ef4444] uppercase tracking-wider">Attacker Arsenal Catalogue</h3>
+              
+              {/* Section Tabs */}
+              <div className="flex flex-wrap gap-1 bg-white/[0.02] border border-white/5 p-0.5 rounded-lg">
+                {Object.keys(COUNTRY_META).map(cid => {
+                  const meta = COUNTRY_META[cid as keyof typeof COUNTRY_META];
+                  return (
+                    <button
+                      key={cid}
+                      type="button"
+                      onClick={() => setAttCountryTab(cid)}
+                      className={`px-2 py-1 rounded text-[10px] font-bold transition-all ${
+                        attCountryTab === cid
+                          ? 'bg-white/10 text-white shadow-sm'
+                          : 'text-[#6b7280] hover:text-white'
+                      }`}
+                    >
+                      {meta.flag} {meta.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {THREAT_CATALOG.map(threat => (
+              {THREAT_CATALOG.filter(threat => (threat.country || 'generic') === attCountryTab).map(threat => (
                 <div
                   key={threat.id}
                   onClick={() => addThreatToCart(threat)}
@@ -2373,18 +2166,24 @@ export default function SimulationPage() {
                   const system = firstBattery.system;
                   const currentQty = batteries.length;
                   const selectedMissile = firstBattery.selectedMissile;
+                  const isCollapsed = collapsedDefenders[systemId] || false;
 
                   return (
                     <div key={systemId} className="p-3 rounded bg-white/[0.02] border border-[#00ff88]/20 space-y-3 text-xs">
                       {/* Group Header */}
                       <div className="flex justify-between items-center pb-2 border-b border-white/[0.05]">
-                        <div>
-                          <div className="font-bold text-white text-xs flex items-center gap-1.5">
-                            <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: system.color }} />
-                            {system.name}
-                          </div>
-                          <div className="text-[10px] text-[#6b7280]">
-                            Base: ${system.batteryCost}M each
+                        <div className="flex items-center gap-2 cursor-pointer select-none" onClick={() => toggleDefenderCollapse(systemId)}>
+                          <span className="text-[#6b7280] hover:text-white transition-all text-[9px] w-3 text-center">
+                            {isCollapsed ? '▼' : '▲'}
+                          </span>
+                          <div>
+                            <div className="font-bold text-white text-xs flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: system.color }} />
+                              {system.name}
+                            </div>
+                            <div className="text-[10px] text-[#6b7280]">
+                              Base: ${system.batteryCost}M each
+                            </div>
                           </div>
                         </div>
                         {/* Quantity Controls */}
@@ -2424,6 +2223,9 @@ export default function SimulationPage() {
                           </button>
                         </div>
                       </div>
+
+                      {!isCollapsed && (
+                        <>
 
                       {/* Dynamic Composition (Amount of Equipment) */}
                       {system.composition && (
@@ -2544,6 +2346,8 @@ export default function SimulationPage() {
                           </div>
                         ))}
                       </div>
+                        </>
+                      )}
                     </div>
                   );
                 });
@@ -2564,10 +2368,33 @@ export default function SimulationPage() {
 
           {/* Catalog (Right) */}
           <div className="lg:col-span-2 card p-5 space-y-4">
-            <h3 className="text-sm font-semibold text-[#00ff88] uppercase tracking-wider">Defender Systems Catalogue</h3>
+            <div className="flex flex-wrap gap-4 items-center justify-between border-b border-white/[0.05] pb-3">
+              <h3 className="text-sm font-semibold text-[#00ff88] uppercase tracking-wider">Defender Systems Catalogue</h3>
+              
+              {/* Section Tabs */}
+              <div className="flex flex-wrap gap-1 bg-white/[0.02] border border-white/5 p-0.5 rounded-lg">
+                {Object.keys(COUNTRY_META).filter(cid => cid !== 'generic').map(cid => {
+                  const meta = COUNTRY_META[cid as keyof typeof COUNTRY_META];
+                  return (
+                    <button
+                      key={cid}
+                      type="button"
+                      onClick={() => setDefCountryTab(cid)}
+                      className={`px-2 py-1 rounded text-[10px] font-bold transition-all ${
+                        defCountryTab === cid
+                          ? 'bg-white/10 text-white shadow-sm'
+                          : 'text-[#6b7280] hover:text-white'
+                      }`}
+                    >
+                      {meta.flag} {meta.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {DEFENCE_CATALOG.map(sys => (
+              {DEFENCE_CATALOG.filter(sys => (sys.country || 'india') === defCountryTab).map(sys => (
                 <div
                   key={sys.id}
                   onClick={() => addDefenceBattery(sys)}

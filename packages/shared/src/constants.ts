@@ -32,6 +32,10 @@ export const THREAT_TYPE_LABELS: Record<string, string> = {
   LOITERING_MUNITION: 'Loitering Munition',
   TACTICAL_MISSILE: 'Tactical Missile',
   HYPERSONIC: 'Hypersonic Threat',
+  MLRS: 'Multiple Launch Rocket',
+  GLIDE_BOMB: 'Glide Bomb / Stand-Off Weapon',
+  ANTI_RADIATION_MISSILE: 'Anti-Radiation Missile (ARM)',
+  AIR_TO_AIR_MISSILE: 'Air-to-Air Missile',
 };
 
 // ---- Speed Class Ranges (Mach) ----

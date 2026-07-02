@@ -1,0 +1,3151 @@
+[
+  {
+    "id": "d1",
+    "name": "S-400 Triumf Regiment",
+    "category": "LONG_RANGE",
+    "batteryCost": 1090,
+    "missileCost": 2.5,
+    "missileName": "48N6DM",
+    "range": 400,
+    "radarRange": 600,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.92,
+    "color": "#ef4444",
+    "speed": 6,
+    "missileOptions": [
+      {
+        "name": "40N6E Ultra Long-Range",
+        "range": 400,
+        "speed": 12,
+        "cost": 2.5,
+        "accuracy": 0.92,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Interceptions up to 400km."
+      },
+      {
+        "name": "48N6DM Long-Range",
+        "range": 250,
+        "speed": 6,
+        "cost": 1.5,
+        "accuracy": 0.88,
+        "minAlt": 10,
+        "maxAlt": 25000,
+        "description": "Standard high-altitude target missile."
+      },
+      {
+        "name": "9M96E2 Medium-Range",
+        "range": 120,
+        "speed": 4.5,
+        "cost": 0.8,
+        "accuracy": 0.85,
+        "minAlt": 10,
+        "maxAlt": 20000,
+        "description": "Agile hit-to-kill weapon."
+      }
+    ],
+    "composition": [
+      {
+        "name": "55K6E Combat Management Post",
+        "type": "C2 Vehicle",
+        "qty": 1
+      },
+      {
+        "name": "91N6E Acquisition Radar (S-band)",
+        "type": "Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "92N6E Grave Stone Radar (X-band)",
+        "type": "Fire Control Radar",
+        "qty": 2
+      },
+      {
+        "name": "5P85TE2 Self-Propelled Launcher",
+        "type": "TEL Launcher (4 canisters)",
+        "qty": 16
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d2b",
+    "name": "Barak 8 ER SAM Regiment",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 650,
+    "missileCost": 1.2,
+    "missileName": "Barak-8 ER",
+    "range": 150,
+    "radarRange": 200,
+    "defaultAmmo": 96,
+    "minAlt": 15,
+    "maxAlt": 30000,
+    "accuracy": 0.88,
+    "color": "#f59e0b",
+    "speed": 3,
+    "composition": [
+      {
+        "name": "Mobile Command & Control (MCP)",
+        "type": "C2 Station",
+        "qty": 1
+      },
+      {
+        "name": "Firing Unit / Battery",
+        "type": "Firing Unit",
+        "qty": 4
+      },
+      {
+        "name": "MF-STAR AESA Radar",
+        "type": "Active AESA Radar",
+        "qty": 4
+      },
+      {
+        "name": "Vertical Launcher Unit (VLU)",
+        "type": "Launcher Truck (8 cells)",
+        "qty": 12
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d2",
+    "name": "MRSAM / Barak-8 Regiment",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 500,
+    "missileCost": 1.2,
+    "missileName": "Barak-8",
+    "range": 70,
+    "radarRange": 120,
+    "defaultAmmo": 96,
+    "minAlt": 15,
+    "maxAlt": 16000,
+    "accuracy": 0.85,
+    "color": "#f59e0b",
+    "speed": 4,
+    "missileOptions": [
+      {
+        "name": "Barak-8 Standard",
+        "range": 70,
+        "speed": 2,
+        "cost": 1,
+        "accuracy": 0.85,
+        "minAlt": 15,
+        "maxAlt": 12000,
+        "description": "Local tactical area protection."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Mobile Command & Control (MCP)",
+        "type": "C2 Station",
+        "qty": 1
+      },
+      {
+        "name": "Firing Unit / Battery",
+        "type": "Firing Unit",
+        "qty": 4
+      },
+      {
+        "name": "MF-STAR Multi-Function Radar",
+        "type": "Active AESA Radar",
+        "qty": 4
+      },
+      {
+        "name": "Vertical Launcher Unit (VLU)",
+        "type": "Launcher Truck (8 cells)",
+        "qty": 12
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d3",
+    "name": "Akash-NG Regiment",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 480,
+    "missileCost": 0.3,
+    "missileName": "Akash-NG",
+    "range": 80,
+    "radarRange": 120,
+    "defaultAmmo": 72,
+    "minAlt": 30,
+    "maxAlt": 20000,
+    "accuracy": 0.85,
+    "color": "#eab308",
+    "speed": 3,
+    "missileOptions": [
+      {
+        "name": "Akash-NG Active Seeker",
+        "range": 80,
+        "speed": 3.5,
+        "cost": 0.3,
+        "accuracy": 0.85,
+        "minAlt": 30,
+        "maxAlt": 20000,
+        "description": "Active RF terminal seeker."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Battery / Firing Unit",
+        "type": "Firing Unit",
+        "qty": 3
+      },
+      {
+        "name": "AESA Fire Control Radar",
+        "type": "Fire Control Radar",
+        "qty": 3
+      },
+      {
+        "name": "Surveillance Radar",
+        "type": "Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "Mobile Launcher Unit (ML)",
+        "type": "TEL Launcher (6 cells)",
+        "qty": 12
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d3a",
+    "name": "Akash SAM Regiment",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 350,
+    "missileCost": 0.2,
+    "missileName": "Akash SAM",
+    "range": 30,
+    "radarRange": 150,
+    "defaultAmmo": 48,
+    "minAlt": 30,
+    "maxAlt": 18000,
+    "accuracy": 0.75,
+    "color": "#f59e0b",
+    "speed": 2.5,
+    "missileOptions": [
+      {
+        "name": "Akash Standard Command",
+        "range": 30,
+        "speed": 2.5,
+        "cost": 0.2,
+        "accuracy": 0.75,
+        "minAlt": 30,
+        "maxAlt": 15000,
+        "description": "PESA command-guided legacy variant."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Battery / Firing Unit",
+        "type": "Firing Unit",
+        "qty": 4
+      },
+      {
+        "name": "Rajendra Radar",
+        "type": "Fire Control Radar",
+        "qty": 4
+      },
+      {
+        "name": "Mobile Launcher Unit (ML)",
+        "type": "TEL Launcher (3 cells)",
+        "qty": 16
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d3b",
+    "name": "Pechora-2M SAM Battery",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 15,
+    "missileCost": 0.1,
+    "missileName": "5V27DE",
+    "range": 35,
+    "radarRange": 50,
+    "defaultAmmo": 8,
+    "minAlt": 20,
+    "maxAlt": 20000,
+    "accuracy": 0.72,
+    "color": "#f59e0b",
+    "speed": 3.5,
+    "composition": [
+      {
+        "name": "UNV-2M Command Cabin",
+        "type": "Guidance Cabin",
+        "qty": 1
+      },
+      {
+        "name": "Pechora-2M 5P73 TEL Launcher",
+        "type": "TEL Launcher (2 rails)",
+        "qty": 4
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d4b",
+    "name": "SPYDER SAM Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 50,
+    "missileCost": 0.5,
+    "missileName": "Derby",
+    "range": 50,
+    "radarRange": 80,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 16000,
+    "accuracy": 0.82,
+    "color": "#00ff88",
+    "speed": 4,
+    "missileOptions": [
+      {
+        "name": "Derby Interceptor",
+        "range": 50,
+        "speed": 4,
+        "cost": 0.5,
+        "accuracy": 0.82,
+        "minAlt": 20,
+        "maxAlt": 16000,
+        "description": "Active radar-homing interception."
+      },
+      {
+        "name": "Python-5 Interceptor",
+        "range": 20,
+        "speed": 4,
+        "cost": 0.3,
+        "accuracy": 0.82,
+        "minAlt": 20,
+        "maxAlt": 9000,
+        "description": "Dual-band infrared point defence."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Mobile Command Post (MCP)",
+        "type": "Tactical C2",
+        "qty": 1
+      },
+      {
+        "name": "EL/M-2106 ATAR 3D Radar",
+        "type": "Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "SPYDER Mobile Launcher",
+        "type": "TEL Launcher (4 rails)",
+        "qty": 6
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d4",
+    "name": "QRSAM Regiment",
+    "category": "SHORT_RANGE",
+    "batteryCost": 600,
+    "missileCost": 0.15,
+    "missileName": "QRSAM",
+    "range": 30,
+    "radarRange": 50,
+    "defaultAmmo": 72,
+    "minAlt": 30,
+    "maxAlt": 6000,
+    "accuracy": 0.82,
+    "color": "#00ff88",
+    "speed": 3,
+    "composition": [
+      {
+        "name": "Battery / Firing Unit",
+        "type": "Firing Unit",
+        "qty": 3
+      },
+      {
+        "name": "AESA Radar",
+        "type": "Engagement Radar",
+        "qty": 3
+      },
+      {
+        "name": "Surveillance Radar",
+        "type": "Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "Quick Reaction Launcher (QRL)",
+        "type": "TEL Launcher (6 cells)",
+        "qty": 12
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d5b",
+    "name": "VSHORAD MANPADS Team",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 0.15,
+    "missileCost": 0.08,
+    "missileName": "DRDO VSHORAD",
+    "range": 6.5,
+    "radarRange": 10,
+    "defaultAmmo": 4,
+    "minAlt": 5,
+    "maxAlt": 15000,
+    "accuracy": 0.85,
+    "color": "#00b4d8",
+    "speed": 2.5,
+    "composition": [
+      {
+        "name": "DRDO VSHORAD Launcher",
+        "type": "MANPADS Tube",
+        "qty": 4
+      },
+      {
+        "name": "Optical Target Sight",
+        "type": "Thermal Visual sight",
+        "qty": 4
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d5",
+    "name": "Igla-S MANPADS Team",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 1,
+    "missileCost": 0.05,
+    "missileName": "Igla-S",
+    "range": 6,
+    "radarRange": 10,
+    "defaultAmmo": 4,
+    "minAlt": 10,
+    "maxAlt": 15000,
+    "accuracy": 0.8,
+    "color": "#00b4d8",
+    "speed": 1.5,
+    "composition": [
+      {
+        "name": "Igla-S Launch Grip-stock",
+        "type": "MANPADS Tube",
+        "qty": 4
+      },
+      {
+        "name": "Optical Target Pointer",
+        "type": "Thermal Visual sight",
+        "qty": 4
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "d6",
+    "name": "Arudhra AESA Radar Station",
+    "category": "RADAR",
+    "batteryCost": 100,
+    "missileCost": 0,
+    "missileName": "None",
+    "range": 500,
+    "radarRange": 500,
+    "defaultAmmo": 0,
+    "minAlt": 0,
+    "maxAlt": 30000,
+    "accuracy": 0,
+    "color": "#6366f1",
+    "speed": 0,
+    "composition": [
+      {
+        "name": "Rotating AESA Antenna Unit",
+        "type": "Radar Array",
+        "qty": 1
+      },
+      {
+        "name": "Signal Processing Container",
+        "type": "Tactical Shelter",
+        "qty": 1
+      }
+    ],
+    "country": "india"
+  },
+  {
+    "id": "dp1",
+    "name": "HQ-9P HIMADS Regiment",
+    "category": "LONG_RANGE",
+    "batteryCost": 350,
+    "missileCost": 1.2,
+    "missileName": "HQ-9P",
+    "range": 200,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.88,
+    "color": "#ef4444",
+    "speed": 4.2,
+    "country": "pakistan",
+    "missileOptions": [
+      {
+        "name": "HQ-9P",
+        "range": 200,
+        "speed": 4.2,
+        "cost": 1.2,
+        "accuracy": 0.88,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for HQ-9P HIMADS Regiment."
+      }
+    ],
+    "composition": [
+      {
+        "name": "T-234 Combat Management Center",
+        "type": "C2 Station",
+        "qty": 1
+      },
+      {
+        "name": "HT-233 PEAA Radar Array",
+        "type": "AESA Fire Control Radar",
+        "qty": 2
+      },
+      {
+        "name": "Mobile Launcher Unit (4 canisters)",
+        "type": "TEL Launcher",
+        "qty": 16
+      }
+    ]
+  },
+  {
+    "id": "dp2",
+    "name": "LY-80 LOMADS Regiment",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 120,
+    "missileCost": 0.5,
+    "missileName": "LY-80",
+    "range": 70,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.82,
+    "color": "#f59e0b",
+    "speed": 4,
+    "country": "pakistan",
+    "missileOptions": [
+      {
+        "name": "LY-80",
+        "range": 70,
+        "speed": 4,
+        "cost": 0.5,
+        "accuracy": 0.82,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for LY-80 LOMADS Regiment."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Command & Control Post",
+        "type": "Tactical Command Post",
+        "qty": 1
+      },
+      {
+        "name": "IBIS-150 Surveillance Radar",
+        "type": "Engagement Radar",
+        "qty": 2
+      },
+      {
+        "name": "LY-80 Launcher truck (6 cells)",
+        "type": "TEL Launcher",
+        "qty": 12
+      }
+    ]
+  },
+  {
+    "id": "dp3",
+    "name": "HQ-17AE SAM Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 40,
+    "missileCost": 0.2,
+    "missileName": "HQ-17AE",
+    "range": 20,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.85,
+    "color": "#00ff88",
+    "speed": 3,
+    "country": "pakistan",
+    "missileOptions": [
+      {
+        "name": "HQ-17AE",
+        "range": 20,
+        "speed": 3,
+        "cost": 0.2,
+        "accuracy": 0.85,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for HQ-17AE SAM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "HQ-17AE Launcher Tracked Vehicle",
+        "type": "Combat TELAR Vehicle",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "dp4",
+    "name": "Spada 2000 SAM Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 35,
+    "missileCost": 0.25,
+    "missileName": "Aspide 2000",
+    "range": 25,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.8,
+    "color": "#00ff88",
+    "speed": 2.5,
+    "country": "pakistan",
+    "missileOptions": [
+      {
+        "name": "Aspide 2000",
+        "range": 25,
+        "speed": 2.5,
+        "cost": 0.25,
+        "accuracy": 0.8,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Spada 2000 SAM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "PLUTO 2D Search Radar Vehicle",
+        "type": "Radar Vehicle",
+        "qty": 1
+      },
+      {
+        "name": "Spada 2000 Launcher (6 cells)",
+        "type": "Towed Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "dp5",
+    "name": "FM-90 SAM Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 20,
+    "missileCost": 0.1,
+    "missileName": "FM-90",
+    "range": 15,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.75,
+    "color": "#00ff88",
+    "speed": 2.3,
+    "country": "pakistan",
+    "missileOptions": [
+      {
+        "name": "FM-90",
+        "range": 15,
+        "speed": 2.3,
+        "cost": 0.1,
+        "accuracy": 0.75,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for FM-90 SAM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "FM-90 Command & Tracking Vehicle",
+        "type": "Radar Control Post",
+        "qty": 1
+      },
+      {
+        "name": "FM-90 Missile Launcher truck",
+        "type": "TEL Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "dp6",
+    "name": "Anza Mk-III MANPADS Team",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 0.8,
+    "missileCost": 0.04,
+    "missileName": "Anza Mk-III",
+    "range": 6,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.68,
+    "color": "#00b4d8",
+    "speed": 2,
+    "country": "pakistan",
+    "missileOptions": [
+      {
+        "name": "Anza Mk-III",
+        "range": 6,
+        "speed": 2,
+        "cost": 0.04,
+        "accuracy": 0.68,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for Anza Mk-III MANPADS Team."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Anza Mk-III Shoulder Launcher",
+        "type": "MANPADS Tube",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "dp7",
+    "name": "TPS-77 Radar Station",
+    "category": "RADAR",
+    "batteryCost": 20,
+    "missileCost": 0,
+    "missileName": "None",
+    "range": 450,
+    "radarRange": 450,
+    "defaultAmmo": 0,
+    "minAlt": 0,
+    "maxAlt": 30000,
+    "accuracy": 0,
+    "color": "#6366f1",
+    "speed": 0,
+    "country": "pakistan",
+    "missileOptions": [
+      {
+        "name": "None",
+        "range": 450,
+        "speed": 0,
+        "cost": 0,
+        "accuracy": 0,
+        "minAlt": 0,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for TPS-77 Radar Station."
+      }
+    ],
+    "composition": [
+      {
+        "name": "L-Band 3D AESA Radar Array",
+        "type": "Surveillance Radar",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "us1",
+    "name": "Patriot PAC-3 MSE Battery",
+    "category": "LONG_RANGE",
+    "batteryCost": 1000,
+    "missileCost": 4,
+    "missileName": "PAC-3 MSE (Ballistic)",
+    "range": 160,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.93,
+    "color": "#ef4444",
+    "speed": 5,
+    "country": "usa",
+    "missileOptions": [
+      {
+        "name": "PAC-3 MSE (Ballistic)",
+        "range": 160,
+        "speed": 5,
+        "cost": 4,
+        "accuracy": 0.93,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Hit-to-kill for TBMs and cruise."
+      },
+      {
+        "name": "GEM-T (Aerodynamic)",
+        "range": 100,
+        "speed": 5,
+        "cost": 2,
+        "accuracy": 0.85,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Blast-frag vs aircraft & cruise."
+      }
+    ],
+    "composition": [
+      {
+        "name": "AN/MSQ-104 Engagement Control Station",
+        "type": "C2 Station",
+        "qty": 1
+      },
+      {
+        "name": "AN/MPQ-65 Fire Control Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "M902 Launching Station (4 canisters)",
+        "type": "TEL Launcher",
+        "qty": 8
+      }
+    ]
+  },
+  {
+    "id": "us2",
+    "name": "NASAMS III Battery",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 250,
+    "missileCost": 1.5,
+    "missileName": "AMRAAM-ER",
+    "range": 50,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.9,
+    "color": "#f59e0b",
+    "speed": 4,
+    "country": "usa",
+    "missileOptions": [
+      {
+        "name": "AMRAAM-ER",
+        "range": 50,
+        "speed": 4,
+        "cost": 1.5,
+        "accuracy": 0.9,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Extended range active radar homing."
+      },
+      {
+        "name": "AIM-9X",
+        "range": 25,
+        "speed": 2.5,
+        "cost": 0.5,
+        "accuracy": 0.88,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Short-range infrared seeker."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Fire Distribution Centre",
+        "type": "C2 Station",
+        "qty": 1
+      },
+      {
+        "name": "AN/MPQ-64F Sentinel Radar",
+        "type": "AESA Radar",
+        "qty": 2
+      },
+      {
+        "name": "NASAMS Launcher (6 cells)",
+        "type": "TEL Launcher",
+        "qty": 8
+      }
+    ]
+  },
+  {
+    "id": "us3",
+    "name": "THAAD Battery",
+    "category": "LONG_RANGE",
+    "batteryCost": 3000,
+    "missileCost": 10,
+    "missileName": "THAAD Interceptor",
+    "range": 200,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.97,
+    "color": "#ef4444",
+    "speed": 8,
+    "country": "usa",
+    "missileOptions": [
+      {
+        "name": "THAAD Interceptor",
+        "range": 200,
+        "speed": 8,
+        "cost": 10,
+        "accuracy": 0.97,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for THAAD Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "AN/TPY-2 X-Band Radar",
+        "type": "AESA Fire Control Radar",
+        "qty": 1
+      },
+      {
+        "name": "THAAD Launcher (8 cells)",
+        "type": "TEL Launcher",
+        "qty": 6
+      }
+    ]
+  },
+  {
+    "id": "us4",
+    "name": "Avenger SHORAD Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 5,
+    "missileCost": 0.4,
+    "missileName": "FIM-92 Stinger",
+    "range": 8,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.82,
+    "color": "#00ff88",
+    "speed": 2,
+    "country": "usa",
+    "missileOptions": [
+      {
+        "name": "FIM-92 Stinger",
+        "range": 8,
+        "speed": 2,
+        "cost": 0.4,
+        "accuracy": 0.82,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Avenger SHORAD Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Avenger Humvee Launcher (8 cells)",
+        "type": "Mobile Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "us5",
+    "name": "Iron Dome Battery (US-acquired)",
+    "category": "SHORT_RANGE",
+    "batteryCost": 100,
+    "missileCost": 0.15,
+    "missileName": "Tamir Interceptor",
+    "range": 70,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.9,
+    "color": "#00ff88",
+    "speed": 3,
+    "country": "usa",
+    "missileOptions": [
+      {
+        "name": "Tamir Interceptor",
+        "range": 70,
+        "speed": 3,
+        "cost": 0.15,
+        "accuracy": 0.9,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Iron Dome Battery (US-acquired)."
+      }
+    ],
+    "composition": [
+      {
+        "name": "ELM-2084 MMR Multi-Mission Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "Iron Dome Launcher (20 cells)",
+        "type": "TEL Launcher",
+        "qty": 2
+      }
+    ]
+  },
+  {
+    "id": "us6",
+    "name": "AN/TPY-2 Radar Station",
+    "category": "RADAR",
+    "batteryCost": 200,
+    "missileCost": 0,
+    "missileName": "None",
+    "range": 1800,
+    "radarRange": 1800,
+    "defaultAmmo": 0,
+    "minAlt": 0,
+    "maxAlt": 30000,
+    "accuracy": 0,
+    "color": "#6366f1",
+    "speed": 0,
+    "country": "usa",
+    "missileOptions": [
+      {
+        "name": "None",
+        "range": 1800,
+        "speed": 0,
+        "cost": 0,
+        "accuracy": 0,
+        "minAlt": 0,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for AN/TPY-2 Radar Station."
+      }
+    ],
+    "composition": [
+      {
+        "name": "AN/TPY-2 X-Band AESA Array",
+        "type": "Surveillance Radar",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "cn_d1",
+    "name": "HQ-9B Regiment",
+    "category": "LONG_RANGE",
+    "batteryCost": 500,
+    "missileCost": 1.5,
+    "missileName": "HQ-9B",
+    "range": 260,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.9,
+    "color": "#ef4444",
+    "speed": 4.5,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "HQ-9B",
+        "range": 260,
+        "speed": 4.5,
+        "cost": 1.5,
+        "accuracy": 0.9,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for HQ-9B Regiment."
+      }
+    ],
+    "composition": [
+      {
+        "name": "HT-233 PESA Radar",
+        "type": "Fire Control Radar",
+        "qty": 2
+      },
+      {
+        "name": "HQ-9B TEL (4 canisters)",
+        "type": "TEL Launcher",
+        "qty": 16
+      }
+    ]
+  },
+  {
+    "id": "cn_d2",
+    "name": "HQ-22 MRSAM Regiment",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 200,
+    "missileCost": 0.8,
+    "missileName": "HQ-22",
+    "range": 170,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.87,
+    "color": "#f59e0b",
+    "speed": 3.5,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "HQ-22",
+        "range": 170,
+        "speed": 3.5,
+        "cost": 0.8,
+        "accuracy": 0.87,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for HQ-22 MRSAM Regiment."
+      }
+    ],
+    "composition": [
+      {
+        "name": "SJ-212 Engagement Radar",
+        "type": "AESA Radar",
+        "qty": 2
+      },
+      {
+        "name": "HQ-22 TEL (4 missiles)",
+        "type": "TEL Launcher",
+        "qty": 12
+      }
+    ]
+  },
+  {
+    "id": "cn_d3",
+    "name": "HQ-17A SAM Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 45,
+    "missileCost": 0.2,
+    "missileName": "HQ-17A",
+    "range": 20,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.85,
+    "color": "#00ff88",
+    "speed": 3,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "HQ-17A",
+        "range": 20,
+        "speed": 3,
+        "cost": 0.2,
+        "accuracy": 0.85,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for HQ-17A SAM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "HQ-17A Combat TELAR",
+        "type": "Combat TELAR Vehicle",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "cn_d4",
+    "name": "PGZ-09 SPAAA Battery",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 5,
+    "missileCost": 0.02,
+    "missileName": "Type-87 23mm",
+    "range": 4,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.72,
+    "color": "#00b4d8",
+    "speed": 1,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "Type-87 23mm",
+        "range": 4,
+        "speed": 1,
+        "cost": 0.02,
+        "accuracy": 0.72,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for PGZ-09 SPAAA Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "PGZ-09 Twin-Gun SPAAA",
+        "type": "Self-Propelled AA",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "cn_d5",
+    "name": "YLC-2V Radar Station",
+    "category": "RADAR",
+    "batteryCost": 30,
+    "missileCost": 0,
+    "missileName": "None",
+    "range": 500,
+    "radarRange": 500,
+    "defaultAmmo": 0,
+    "minAlt": 0,
+    "maxAlt": 30000,
+    "accuracy": 0,
+    "color": "#6366f1",
+    "speed": 0,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "None",
+        "range": 500,
+        "speed": 0,
+        "cost": 0,
+        "accuracy": 0,
+        "minAlt": 0,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for YLC-2V Radar Station."
+      }
+    ],
+    "composition": [
+      {
+        "name": "YLC-2V 3D L-Band Radar",
+        "type": "Surveillance Radar",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "cn_d6",
+    "name": "HQ-9C LRAD Regiment",
+    "category": "LONG_RANGE",
+    "batteryCost": 700,
+    "missileCost": 1.8,
+    "missileName": "HHQ-9C Active Homing",
+    "range": 260,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.9,
+    "color": "#ef4444",
+    "speed": 4.2,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "HHQ-9C Active Homing",
+        "range": 260,
+        "speed": 4.2,
+        "cost": 1.8,
+        "accuracy": 0.9,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Active radar-seeker SAM providing autonomous terminal homing against all target types including stealth."
+      }
+    ],
+    "composition": [
+      {
+        "name": "HT-233A Active Phased Array Radar",
+        "type": "AESA Fire Control Radar",
+        "qty": 2
+      },
+      {
+        "name": "HQ-9C TEL (4 canisters)",
+        "type": "Mobile TEL Launcher",
+        "qty": 16
+      },
+      {
+        "name": "Command & Control Vehicle",
+        "type": "C2 Station",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "cn_d7",
+    "name": "HQ-11 SAM Battery (Red Flag-11)",
+    "category": "SHORT_RANGE",
+    "batteryCost": 18,
+    "missileCost": 0.12,
+    "missileName": "HQ-11 SAM",
+    "range": 10,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.83,
+    "color": "#00ff88",
+    "speed": 2.5,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "HQ-11 SAM",
+        "range": 10,
+        "speed": 2.5,
+        "cost": 0.12,
+        "accuracy": 0.83,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Vertically-launched short-range SAM engaging cruise missiles, precision guided munitions, UAVs, and low-flying aircraft."
+      }
+    ],
+    "composition": [
+      {
+        "name": "HQ-11 TELAR Vehicle (8 VLS cells)",
+        "type": "Combat TELAR Vehicle",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "cn_d8",
+    "name": "HQ-16B MRAD Regiment",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 160,
+    "missileCost": 0.6,
+    "missileName": "LY-80B Active Extended",
+    "range": 80,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.85,
+    "color": "#f59e0b",
+    "speed": 4.2,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "LY-80B Active Extended",
+        "range": 80,
+        "speed": 4.2,
+        "cost": 0.6,
+        "accuracy": 0.85,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Extended-range upgrade of the LY-80 missile with active seeker for autonomous terminal guidance."
+      }
+    ],
+    "composition": [
+      {
+        "name": "IBIS-200 AESA Surveillance Radar",
+        "type": "360° AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "HQ-16B Fire Control Radar",
+        "type": "Track & Guidance Radar",
+        "qty": 2
+      },
+      {
+        "name": "LY-80B Launcher Truck (6 cells)",
+        "type": "Wheeled TEL",
+        "qty": 12
+      }
+    ]
+  },
+  {
+    "id": "ru_d1b",
+    "name": "S-400 Triumf Regiment",
+    "category": "LONG_RANGE",
+    "batteryCost": 1090,
+    "missileCost": 1.5,
+    "missileName": "48N6DM",
+    "range": 250,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.88,
+    "color": "#ef4444",
+    "speed": 6,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "48N6DM",
+        "range": 250,
+        "speed": 6,
+        "cost": 1.5,
+        "accuracy": 0.88,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for S-400 Triumf Regiment."
+      }
+    ],
+    "composition": [
+      {
+        "name": "55K6E Combat Management Post",
+        "type": "C2 Vehicle",
+        "qty": 1
+      },
+      {
+        "name": "91N6E Acquisition Radar",
+        "type": "Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "92N6E Grave Stone Radar",
+        "type": "Fire Control Radar",
+        "qty": 2
+      },
+      {
+        "name": "5P85TE2 Self-Propelled Launcher",
+        "type": "TEL Launcher (4 canisters)",
+        "qty": 16
+      }
+    ]
+  },
+  {
+    "id": "ru_d1",
+    "name": "S-500 Prometey Regiment",
+    "category": "LONG_RANGE",
+    "batteryCost": 1500,
+    "missileCost": 5,
+    "missileName": "77N6-N Hypersonic Kill Vehicle",
+    "range": 600,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.95,
+    "color": "#ef4444",
+    "speed": 7,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "77N6-N Hypersonic Kill Vehicle",
+        "range": 600,
+        "speed": 7,
+        "cost": 5,
+        "accuracy": 0.95,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Anti-ICBM and HGV interceptor."
+      },
+      {
+        "name": "40N6E Ultra Long-Range",
+        "range": 400,
+        "speed": 6,
+        "cost": 2.5,
+        "accuracy": 0.92,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Conventional target engagement."
+      }
+    ],
+    "composition": [
+      {
+        "name": "77T6 Command Post",
+        "type": "C2 Station",
+        "qty": 1
+      },
+      {
+        "name": "91N6A(M) Big Bird Radar",
+        "type": "Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "96L6-TsP AESA Radar",
+        "type": "Fire Control Radar",
+        "qty": 2
+      },
+      {
+        "name": "77P6 TEL (4 canisters)",
+        "type": "TEL Launcher",
+        "qty": 12
+      }
+    ]
+  },
+  {
+    "id": "ru_d2",
+    "name": "S-350E Vityaz Regiment",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 400,
+    "missileCost": 1,
+    "missileName": "9M96E2",
+    "range": 120,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.9,
+    "color": "#f59e0b",
+    "speed": 4.5,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "9M96E2",
+        "range": 120,
+        "speed": 4.5,
+        "cost": 1,
+        "accuracy": 0.9,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for S-350E Vityaz Regiment."
+      }
+    ],
+    "composition": [
+      {
+        "name": "50N6E AESA Multi-Mode Radar",
+        "type": "Fire Control Radar",
+        "qty": 2
+      },
+      {
+        "name": "50P6E TEL (12 missiles)",
+        "type": "TEL Launcher",
+        "qty": 8
+      }
+    ]
+  },
+  {
+    "id": "ru_d3",
+    "name": "Pantsir-S1 Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 14,
+    "missileCost": 0.1,
+    "missileName": "57E6-E",
+    "range": 20,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.88,
+    "color": "#00ff88",
+    "speed": 3.5,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "57E6-E",
+        "range": 20,
+        "speed": 3.5,
+        "cost": 0.1,
+        "accuracy": 0.88,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Pantsir-S1 Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Pantsir-S1 Combat TELAR (2-gun + 12 missiles)",
+        "type": "Combat TELAR",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "ru_d4",
+    "name": "Tor-M2 SAM Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 25,
+    "missileCost": 0.15,
+    "missileName": "9M338K",
+    "range": 16,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.86,
+    "color": "#00ff88",
+    "speed": 3,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "9M338K",
+        "range": 16,
+        "speed": 3,
+        "cost": 0.15,
+        "accuracy": 0.86,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Tor-M2 SAM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Tor-M2 Combat TELAR (8 missiles)",
+        "type": "Combat TELAR",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "ru_d5",
+    "name": "55G6 Tall Rack Radar Station",
+    "category": "RADAR",
+    "batteryCost": 40,
+    "missileCost": 0,
+    "missileName": "None",
+    "range": 600,
+    "radarRange": 600,
+    "defaultAmmo": 0,
+    "minAlt": 0,
+    "maxAlt": 30000,
+    "accuracy": 0,
+    "color": "#6366f1",
+    "speed": 0,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "None",
+        "range": 600,
+        "speed": 0,
+        "cost": 0,
+        "accuracy": 0,
+        "minAlt": 0,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for 55G6 Tall Rack Radar Station."
+      }
+    ],
+    "composition": [
+      {
+        "name": "55G6 VHF Surveillance Radar",
+        "type": "Surveillance Radar",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "ru_d6",
+    "name": "S-300PMU2 Favorit Regiment",
+    "category": "LONG_RANGE",
+    "batteryCost": 450,
+    "missileCost": 1.2,
+    "missileName": "48N6E2 Long-Range",
+    "range": 200,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.85,
+    "color": "#ef4444",
+    "speed": 6,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "48N6E2 Long-Range",
+        "range": 200,
+        "speed": 6,
+        "cost": 1.2,
+        "accuracy": 0.85,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard missile for the S-300PMU2, capable of engaging aircraft, cruise missiles, and shorter-range ballistic missiles."
+      }
+    ],
+    "composition": [
+      {
+        "name": "64N6E2 Big Bird Surveillance Radar",
+        "type": "PESA Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "30N6E2 Flap Lid Fire Control Radar",
+        "type": "PESA Engagement Radar",
+        "qty": 2
+      },
+      {
+        "name": "5P85TE2 Self-Propelled TEL (4 canisters)",
+        "type": "Semi-Mobile TEL",
+        "qty": 12
+      }
+    ]
+  },
+  {
+    "id": "ru_d7",
+    "name": "Buk-M3 Viking Regiment",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 180,
+    "missileCost": 0.5,
+    "missileName": "9M317M Active Seeker",
+    "range": 70,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.87,
+    "color": "#f59e0b",
+    "speed": 4,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "9M317M Active Seeker",
+        "range": 70,
+        "speed": 4,
+        "cost": 0.5,
+        "accuracy": 0.87,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "New Buk-M3 missile with autonomous active radar terminal seeker, enabling simultaneous engagement of 36 targets."
+      }
+    ],
+    "composition": [
+      {
+        "name": "9S18M1-3 Snow Drift Acquisition Radar",
+        "type": "Mobile Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "9S36M Engagement Radar",
+        "type": "Separate Engagement Radar",
+        "qty": 1
+      },
+      {
+        "name": "9A317M TELAR (6 missiles each)",
+        "type": "Self-Propelled TELAR",
+        "qty": 6
+      }
+    ]
+  },
+  {
+    "id": "ru_d8",
+    "name": "Pantsir-S2 (SA-22) Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 14,
+    "missileCost": 0.1,
+    "missileName": "57E6-E SAM",
+    "range": 20,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.86,
+    "color": "#00ff88",
+    "speed": 3.5,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "57E6-E SAM",
+        "range": 20,
+        "speed": 3.5,
+        "cost": 0.1,
+        "accuracy": 0.86,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "High-velocity short-range SAM with dual guidance modes for use against cruise missiles, UAVs, helicopters, and fast jets."
+      },
+      {
+        "name": "2A38M 30mm Autocannon",
+        "range": 4,
+        "speed": 3,
+        "cost": 0.001,
+        "accuracy": 0.75,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Dual 30mm autocannon providing close-in weapon system (CIWS) capability for drone swarms and low-flying targets."
+      }
+    ],
+    "composition": [
+      {
+        "name": "1RS2-1E S-band Acquisition Radar",
+        "type": "360° Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "Dual 57E6-E Missile Launchers (6 + 6)",
+        "type": "SAM Launcher",
+        "qty": 1
+      },
+      {
+        "name": "2A38M 30mm Twin Autocannons",
+        "type": "Close-in Autocannon",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "jp_d1",
+    "name": "Patriot PAC-3 MSE Battery (JASDF)",
+    "category": "LONG_RANGE",
+    "batteryCost": 1000,
+    "missileCost": 4,
+    "missileName": "PAC-3 MSE",
+    "range": 160,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.93,
+    "color": "#ef4444",
+    "speed": 5,
+    "country": "japan",
+    "missileOptions": [
+      {
+        "name": "PAC-3 MSE",
+        "range": 160,
+        "speed": 5,
+        "cost": 4,
+        "accuracy": 0.93,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for Patriot PAC-3 MSE Battery (JASDF)."
+      }
+    ],
+    "composition": [
+      {
+        "name": "AN/MPQ-65 Fire Control Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "PAC-3 MSE Launcher (4 cells)",
+        "type": "TEL Launcher",
+        "qty": 8
+      }
+    ]
+  },
+  {
+    "id": "jp_d2",
+    "name": "Type-03 Chū-SAM Battery",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 100,
+    "missileCost": 0.5,
+    "missileName": "Type-03 SAM",
+    "range": 90,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.87,
+    "color": "#f59e0b",
+    "speed": 3.5,
+    "country": "japan",
+    "missileOptions": [
+      {
+        "name": "Type-03 SAM",
+        "range": 90,
+        "speed": 3.5,
+        "cost": 0.5,
+        "accuracy": 0.87,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for Type-03 Chū-SAM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Type-03 AESA Fire Control Radar",
+        "type": "AESA Radar",
+        "qty": 2
+      },
+      {
+        "name": "Type-03 Launcher (6 cells)",
+        "type": "TEL Launcher",
+        "qty": 6
+      }
+    ]
+  },
+  {
+    "id": "jp_d3",
+    "name": "Type-11 SAM Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 15,
+    "missileCost": 0.2,
+    "missileName": "Type-11 SAM",
+    "range": 10,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.82,
+    "color": "#00ff88",
+    "speed": 2.5,
+    "country": "japan",
+    "missileOptions": [
+      {
+        "name": "Type-11 SAM",
+        "range": 10,
+        "speed": 2.5,
+        "cost": 0.2,
+        "accuracy": 0.82,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Type-11 SAM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Type-11 SAM Mobile Launcher",
+        "type": "Mobile Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "jp_d4",
+    "name": "FPS-3 Radar Station",
+    "category": "RADAR",
+    "batteryCost": 50,
+    "missileCost": 0,
+    "missileName": "None",
+    "range": 600,
+    "radarRange": 600,
+    "defaultAmmo": 0,
+    "minAlt": 0,
+    "maxAlt": 30000,
+    "accuracy": 0,
+    "color": "#6366f1",
+    "speed": 0,
+    "country": "japan",
+    "missileOptions": [
+      {
+        "name": "None",
+        "range": 600,
+        "speed": 0,
+        "cost": 0,
+        "accuracy": 0,
+        "minAlt": 0,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for FPS-3 Radar Station."
+      }
+    ],
+    "composition": [
+      {
+        "name": "FPS-3 AESA Long-Range Radar",
+        "type": "Surveillance Radar",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "kr_d1",
+    "name": "Patriot PAC-3 Battery (ROKAF)",
+    "category": "LONG_RANGE",
+    "batteryCost": 1000,
+    "missileCost": 4,
+    "missileName": "PAC-3 MSE",
+    "range": 160,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.93,
+    "color": "#ef4444",
+    "speed": 5,
+    "country": "south_korea",
+    "missileOptions": [
+      {
+        "name": "PAC-3 MSE",
+        "range": 160,
+        "speed": 5,
+        "cost": 4,
+        "accuracy": 0.93,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for Patriot PAC-3 Battery (ROKAF)."
+      }
+    ],
+    "composition": [
+      {
+        "name": "AN/MPQ-65 Fire Control Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "PAC-3 MSE Launcher (4 cells)",
+        "type": "TEL Launcher",
+        "qty": 8
+      }
+    ]
+  },
+  {
+    "id": "kr_d2",
+    "name": "Cheongung-II M-SAM Battery",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 100,
+    "missileCost": 0.8,
+    "missileName": "KM-SAM",
+    "range": 40,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.88,
+    "color": "#f59e0b",
+    "speed": 4,
+    "country": "south_korea",
+    "missileOptions": [
+      {
+        "name": "KM-SAM",
+        "range": 40,
+        "speed": 4,
+        "cost": 0.8,
+        "accuracy": 0.88,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for Cheongung-II M-SAM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "AESA Engagement Radar",
+        "type": "AESA Radar",
+        "qty": 2
+      },
+      {
+        "name": "M-SAM Vertical Launcher (8 cells)",
+        "type": "TEL Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "kr_d3",
+    "name": "Chun Ma II Short-Range SAM",
+    "category": "SHORT_RANGE",
+    "batteryCost": 10,
+    "missileCost": 0.15,
+    "missileName": "Chun Ma Missile",
+    "range": 10,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.82,
+    "color": "#00ff88",
+    "speed": 2.5,
+    "country": "south_korea",
+    "missileOptions": [
+      {
+        "name": "Chun Ma Missile",
+        "range": 10,
+        "speed": 2.5,
+        "cost": 0.15,
+        "accuracy": 0.82,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Chun Ma II Short-Range SAM."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Chun Ma Combat Vehicle (8 missiles)",
+        "type": "Combat TELAR",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "uk_d1",
+    "name": "Sky Sabre (CAMM-ER) Battery",
+    "category": "LONG_RANGE",
+    "batteryCost": 200,
+    "missileCost": 1.5,
+    "missileName": "CAMM-ER",
+    "range": 45,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.91,
+    "color": "#ef4444",
+    "speed": 3,
+    "country": "uk",
+    "missileOptions": [
+      {
+        "name": "CAMM-ER",
+        "range": 45,
+        "speed": 3,
+        "cost": 1.5,
+        "accuracy": 0.91,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for Sky Sabre (CAMM-ER) Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Giraffe AMB 3D Radar",
+        "type": "AESA Radar",
+        "qty": 2
+      },
+      {
+        "name": "CAMM-ER Canister Launcher",
+        "type": "TEL Launcher (24 cells)",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "uk_d2",
+    "name": "Land Ceptor CAMM Battery",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 80,
+    "missileCost": 0.8,
+    "missileName": "CAMM",
+    "range": 25,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.89,
+    "color": "#f59e0b",
+    "speed": 3,
+    "country": "uk",
+    "missileOptions": [
+      {
+        "name": "CAMM",
+        "range": 25,
+        "speed": 3,
+        "cost": 0.8,
+        "accuracy": 0.89,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for Land Ceptor CAMM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Tactically Mobile Radar",
+        "type": "AESA Radar",
+        "qty": 2
+      },
+      {
+        "name": "CAMM Canister Launcher (8)",
+        "type": "TEL Launcher",
+        "qty": 6
+      }
+    ]
+  },
+  {
+    "id": "uk_d3",
+    "name": "Rapier FSC Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 8,
+    "missileCost": 0.15,
+    "missileName": "Rapier Mk.2",
+    "range": 8,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.78,
+    "color": "#00ff88",
+    "speed": 2.5,
+    "country": "uk",
+    "missileOptions": [
+      {
+        "name": "Rapier Mk.2",
+        "range": 8,
+        "speed": 2.5,
+        "cost": 0.15,
+        "accuracy": 0.78,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Rapier FSC Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Rapier FSC Optical Tracker",
+        "type": "Optical Radar",
+        "qty": 1
+      },
+      {
+        "name": "Rapier Launcher (8 rails)",
+        "type": "Towed Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "uk_d4",
+    "name": "Starstreak HVM Team",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 0.5,
+    "missileCost": 0.06,
+    "missileName": "Starstreak HVM",
+    "range": 7,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.87,
+    "color": "#00b4d8",
+    "speed": 3.5,
+    "country": "uk",
+    "missileOptions": [
+      {
+        "name": "Starstreak HVM",
+        "range": 7,
+        "speed": 3.5,
+        "cost": 0.06,
+        "accuracy": 0.87,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for Starstreak HVM Team."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Starstreak HVM Shoulder Launcher",
+        "type": "MANPADS Tube",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "fr_d1",
+    "name": "SAMP/T (Aster 30) Battery",
+    "category": "LONG_RANGE",
+    "batteryCost": 500,
+    "missileCost": 2,
+    "missileName": "Aster 30 Block 1NT",
+    "range": 120,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.9,
+    "color": "#ef4444",
+    "speed": 4.5,
+    "country": "france",
+    "missileOptions": [
+      {
+        "name": "Aster 30 Block 1NT",
+        "range": 120,
+        "speed": 4.5,
+        "cost": 2,
+        "accuracy": 0.9,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Extended TBM kill capability."
+      },
+      {
+        "name": "Aster 15",
+        "range": 30,
+        "speed": 3,
+        "cost": 1,
+        "accuracy": 0.88,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Local area point defence."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Arabel AESA Fire Control Radar",
+        "type": "Fire Control Radar",
+        "qty": 2
+      },
+      {
+        "name": "Sylver VLS (8 cells)",
+        "type": "VLS Launcher",
+        "qty": 6
+      }
+    ]
+  },
+  {
+    "id": "fr_d2",
+    "name": "VL MICA Battery",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 50,
+    "missileCost": 0.6,
+    "missileName": "MICA-NG",
+    "range": 25,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.88,
+    "color": "#f59e0b",
+    "speed": 4,
+    "country": "france",
+    "missileOptions": [
+      {
+        "name": "MICA-NG",
+        "range": 25,
+        "speed": 4,
+        "cost": 0.6,
+        "accuracy": 0.88,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for VL MICA Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "GM400 Surveillance Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "VL MICA Launcher (8 cells)",
+        "type": "TEL Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "fr_d3",
+    "name": "Crotale NG Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 20,
+    "missileCost": 0.2,
+    "missileName": "Crotale NG Missile",
+    "range": 11,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.82,
+    "color": "#00ff88",
+    "speed": 3,
+    "country": "france",
+    "missileOptions": [
+      {
+        "name": "Crotale NG Missile",
+        "range": 11,
+        "speed": 3,
+        "cost": 0.2,
+        "accuracy": 0.82,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Crotale NG Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Crotale NG TELAR",
+        "type": "Combat TELAR",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "fr_d4",
+    "name": "Mistral VSHORAD Team",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 0.3,
+    "missileCost": 0.08,
+    "missileName": "Mistral 3",
+    "range": 6,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.85,
+    "color": "#00b4d8",
+    "speed": 2.5,
+    "country": "france",
+    "missileOptions": [
+      {
+        "name": "Mistral 3",
+        "range": 6,
+        "speed": 2.5,
+        "cost": 0.08,
+        "accuracy": 0.85,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for Mistral VSHORAD Team."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Mistral 3 Shoulder Launcher",
+        "type": "MANPADS Tube",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "de_d1",
+    "name": "IRIS-T SLX Regiment",
+    "category": "LONG_RANGE",
+    "batteryCost": 500,
+    "missileCost": 1.5,
+    "missileName": "IRIS-T SLX",
+    "range": 80,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.91,
+    "color": "#ef4444",
+    "speed": 4,
+    "country": "germany",
+    "missileOptions": [
+      {
+        "name": "IRIS-T SLX",
+        "range": 80,
+        "speed": 4,
+        "cost": 1.5,
+        "accuracy": 0.91,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for IRIS-T SLX Regiment."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Hensoldt TRML-4D AESA Radar",
+        "type": "AESA Radar",
+        "qty": 2
+      },
+      {
+        "name": "IRIS-T SLX VLS (8 cells)",
+        "type": "VLS Launcher",
+        "qty": 6
+      }
+    ]
+  },
+  {
+    "id": "de_d2",
+    "name": "IRIS-T SLM Battery",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 150,
+    "missileCost": 0.8,
+    "missileName": "IRIS-T SLM",
+    "range": 40,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.9,
+    "color": "#f59e0b",
+    "speed": 3.5,
+    "country": "germany",
+    "missileOptions": [
+      {
+        "name": "IRIS-T SLM",
+        "range": 40,
+        "speed": 3.5,
+        "cost": 0.8,
+        "accuracy": 0.9,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for IRIS-T SLM Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Hensoldt TRML-4D AESA Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "IRIS-T SLM Launcher (8 cells)",
+        "type": "TEL Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "de_d3",
+    "name": "Ozelot VSHORAD Battery",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 3,
+    "missileCost": 0.08,
+    "missileName": "FIM-92 Stinger",
+    "range": 6,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.82,
+    "color": "#00b4d8",
+    "speed": 2,
+    "country": "germany",
+    "missileOptions": [
+      {
+        "name": "FIM-92 Stinger",
+        "range": 6,
+        "speed": 2,
+        "cost": 0.08,
+        "accuracy": 0.82,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for Ozelot VSHORAD Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Ozelot Wiesel 2 Launcher (4 Stingers)",
+        "type": "Mobile Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "de_d4",
+    "name": "IRIS-T SLS Short Battery",
+    "category": "SHORT_RANGE",
+    "batteryCost": 20,
+    "missileCost": 0.4,
+    "missileName": "IRIS-T SLS",
+    "range": 12,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.88,
+    "color": "#00ff88",
+    "speed": 3,
+    "country": "germany",
+    "missileOptions": [
+      {
+        "name": "IRIS-T SLS",
+        "range": 12,
+        "speed": 3,
+        "cost": 0.4,
+        "accuracy": 0.88,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for IRIS-T SLS Short Battery."
+      }
+    ],
+    "composition": [
+      {
+        "name": "IRIS-T SLS Launcher (8 cells)",
+        "type": "TEL Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "us_d7",
+    "name": "Aegis Ashore (SM-3 Battery)",
+    "category": "LONG_RANGE",
+    "batteryCost": 1200,
+    "missileCost": 15,
+    "missileName": "SM-3 Block IIA",
+    "range": 1200,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.95,
+    "color": "#ef4444",
+    "speed": 15,
+    "country": "usa",
+    "missileOptions": [
+      {
+        "name": "SM-3 Block IIA",
+        "range": 1200,
+        "speed": 15,
+        "cost": 15,
+        "accuracy": 0.95,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Exo-atmospheric hit-to-kill interceptor."
+      }
+    ],
+    "composition": [
+      {
+        "name": "AN/SPY-1D(V) Radar Array",
+        "type": "Phased Array Radar",
+        "qty": 1
+      },
+      {
+        "name": "Mark 41 Vertical Launch System",
+        "type": "VLS (24 cells)",
+        "qty": 1
+      },
+      {
+        "name": "Aegis Fire Control System",
+        "type": "C2 Station",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "us_d8",
+    "name": "LPWS C-RAM (Centurion)",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 15,
+    "missileCost": 0.005,
+    "missileName": "20mm HEIT-SD",
+    "range": 2,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.88,
+    "color": "#00b4d8",
+    "speed": 3,
+    "country": "usa",
+    "missileOptions": [
+      {
+        "name": "20mm HEIT-SD",
+        "range": 2,
+        "speed": 3,
+        "cost": 0.005,
+        "accuracy": 0.88,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for LPWS C-RAM (Centurion)."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Phalanx Gatling Gun Unit",
+        "type": "Gatling Gun C-RAM",
+        "qty": 2
+      },
+      {
+        "name": "Ku-band Search & Track Radar",
+        "type": "Integrated Radar",
+        "qty": 2
+      }
+    ]
+  },
+  {
+    "id": "cn_d9",
+    "name": "HQ-19 ABM System",
+    "category": "LONG_RANGE",
+    "batteryCost": 1000,
+    "missileCost": 8,
+    "missileName": "HQ-19",
+    "range": 400,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.95,
+    "color": "#ef4444",
+    "speed": 9,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "HQ-19",
+        "range": 400,
+        "speed": 9,
+        "cost": 8,
+        "accuracy": 0.95,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for HQ-19 ABM System."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Large AESA Early Warning Radar",
+        "type": "Surveillance Radar",
+        "qty": 1
+      },
+      {
+        "name": "HQ-19 TEL Launcher (4 canister)",
+        "type": "TEL Launcher",
+        "qty": 8
+      }
+    ]
+  },
+  {
+    "id": "cn_d10",
+    "name": "LD-2000 C-RAM SPAAG",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 12,
+    "missileCost": 0.005,
+    "missileName": "30mm HE",
+    "range": 3,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.85,
+    "color": "#00b4d8",
+    "speed": 3,
+    "country": "china",
+    "missileOptions": [
+      {
+        "name": "30mm HE",
+        "range": 3,
+        "speed": 3,
+        "cost": 0.005,
+        "accuracy": 0.85,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for LD-2000 C-RAM SPAAG."
+      }
+    ],
+    "composition": [
+      {
+        "name": "LD-2000 7-barrel 30mm Gun",
+        "type": "C-RAM SPAAG",
+        "qty": 2
+      },
+      {
+        "name": "Type 347G Tracking Radar",
+        "type": "Fire Control Radar",
+        "qty": 2
+      }
+    ]
+  },
+  {
+    "id": "ru_d9",
+    "name": "Gibka-S Mobile VSHORAD",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 2,
+    "missileCost": 0.05,
+    "missileName": "Verba MANPADS",
+    "range": 6,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.8,
+    "color": "#00b4d8",
+    "speed": 2.2,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "Verba MANPADS",
+        "range": 6,
+        "speed": 2.2,
+        "cost": 0.05,
+        "accuracy": 0.8,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for Gibka-S Mobile VSHORAD."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Gibka-S Combat Vehicle",
+        "type": "Light Armored SAM",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "ru_d10",
+    "name": "Sosna-R Short-Range SAM",
+    "category": "SHORT_RANGE",
+    "batteryCost": 10,
+    "missileCost": 0.1,
+    "missileName": "9M337 Sosna-R",
+    "range": 10,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.88,
+    "color": "#00ff88",
+    "speed": 3,
+    "country": "russia",
+    "missileOptions": [
+      {
+        "name": "9M337 Sosna-R",
+        "range": 10,
+        "speed": 3,
+        "cost": 0.1,
+        "accuracy": 0.88,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Sosna-R Short-Range SAM."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Sosna-R Launcher (12 launcher-containers)",
+        "type": "Combat Vehicle",
+        "qty": 2
+      },
+      {
+        "name": "Optical Electronic Control System",
+        "type": "Target Tracker",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "jp_d5",
+    "name": "Type-03 Chū-SAM Kai",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 220,
+    "missileCost": 1.2,
+    "missileName": "Type-03 Kai SAM",
+    "range": 120,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.9,
+    "color": "#f59e0b",
+    "speed": 4.5,
+    "country": "japan",
+    "missileOptions": [
+      {
+        "name": "Type-03 Kai SAM",
+        "range": 120,
+        "speed": 4.5,
+        "cost": 1.2,
+        "accuracy": 0.9,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for Type-03 Chū-SAM Kai."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Type-03 Kai AESA Radar",
+        "type": "AESA Radar",
+        "qty": 2
+      },
+      {
+        "name": "Type-03 Kai Launcher (6 cells)",
+        "type": "TEL Launcher",
+        "qty": 6
+      }
+    ]
+  },
+  {
+    "id": "jp_d6",
+    "name": "Type-81 Short Range SAM",
+    "category": "SHORT_RANGE",
+    "batteryCost": 15,
+    "missileCost": 0.3,
+    "missileName": "Type-81C SAM",
+    "range": 10,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.82,
+    "color": "#00ff88",
+    "speed": 2.4,
+    "country": "japan",
+    "missileOptions": [
+      {
+        "name": "Type-81C SAM",
+        "range": 10,
+        "speed": 2.4,
+        "cost": 0.3,
+        "accuracy": 0.82,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for Type-81 Short Range SAM."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Type-81 Optical Tracker/Radar",
+        "type": "Fire Control unit",
+        "qty": 1
+      },
+      {
+        "name": "Type-81 Twin Launcher",
+        "type": "Towed Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "kr_d4",
+    "name": "L-SAM ABM System",
+    "category": "LONG_RANGE",
+    "batteryCost": 600,
+    "missileCost": 3.5,
+    "missileName": "L-SAM Interceptor",
+    "range": 150,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.9,
+    "color": "#ef4444",
+    "speed": 7,
+    "country": "south_korea",
+    "missileOptions": [
+      {
+        "name": "L-SAM Interceptor",
+        "range": 150,
+        "speed": 7,
+        "cost": 3.5,
+        "accuracy": 0.9,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for L-SAM ABM System."
+      }
+    ],
+    "composition": [
+      {
+        "name": "L-SAM MFR Multi-Function Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "L-SAM Launcher (4 cells)",
+        "type": "TEL Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "kr_d5",
+    "name": "LAMD (Low Altitude Missile Defense)",
+    "category": "SHORT_RANGE",
+    "batteryCost": 40,
+    "missileCost": 0.15,
+    "missileName": "LAMD Interceptor",
+    "range": 7,
+    "radarRange": 50,
+    "defaultAmmo": 24,
+    "minAlt": 20,
+    "maxAlt": 15000,
+    "accuracy": 0.88,
+    "color": "#00ff88",
+    "speed": 2.5,
+    "country": "south_korea",
+    "missileOptions": [
+      {
+        "name": "LAMD Interceptor",
+        "range": 7,
+        "speed": 2.5,
+        "cost": 0.15,
+        "accuracy": 0.88,
+        "minAlt": 20,
+        "maxAlt": 15000,
+        "description": "Standard interceptor munition for LAMD (Low Altitude Missile Defense)."
+      }
+    ],
+    "composition": [
+      {
+        "name": "LAMD Fire Control Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "LAMD Launcher (8 cells)",
+        "type": "TEL Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "uk_d5",
+    "name": "Aegis Destroyer (SM-6 Type-45)",
+    "category": "LONG_RANGE",
+    "batteryCost": 800,
+    "missileCost": 4.5,
+    "missileName": "SM-6 Dual II",
+    "range": 240,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.92,
+    "color": "#ef4444",
+    "speed": 3.5,
+    "country": "uk",
+    "missileOptions": [
+      {
+        "name": "SM-6 Dual II",
+        "range": 240,
+        "speed": 3.5,
+        "cost": 4.5,
+        "accuracy": 0.92,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for Aegis Destroyer (SM-6 Type-45)."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Sampson Active Paired Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "Sylver A50 VLS Launcher",
+        "type": "VLS (48 cells)",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "uk_d6",
+    "name": "Starstreak LML (VSHORAD)",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 2,
+    "missileCost": 0.06,
+    "missileName": "Starstreak HVM",
+    "range": 7,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.88,
+    "color": "#00b4d8",
+    "speed": 3.5,
+    "country": "uk",
+    "missileOptions": [
+      {
+        "name": "Starstreak HVM",
+        "range": 7,
+        "speed": 3.5,
+        "cost": 0.06,
+        "accuracy": 0.88,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for Starstreak LML (VSHORAD)."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Lightweight Multiple Launcher (LML)",
+        "type": "VSHORAD Tripod Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "fr_d5",
+    "name": "VL MICA NG (Next-Generation)",
+    "category": "MEDIUM_RANGE",
+    "batteryCost": 100,
+    "missileCost": 0.9,
+    "missileName": "MICA NG",
+    "range": 40,
+    "radarRange": 120,
+    "defaultAmmo": 48,
+    "minAlt": 15,
+    "maxAlt": 20000,
+    "accuracy": 0.9,
+    "color": "#f59e0b",
+    "speed": 4,
+    "country": "france",
+    "missileOptions": [
+      {
+        "name": "MICA NG",
+        "range": 40,
+        "speed": 4,
+        "cost": 0.9,
+        "accuracy": 0.9,
+        "minAlt": 15,
+        "maxAlt": 20000,
+        "description": "Standard interceptor munition for VL MICA NG (Next-Generation)."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Tactical Command Post",
+        "type": "C2 Station",
+        "qty": 1
+      },
+      {
+        "name": "Ground Master 200 Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "VL MICA Launcher Unit (6 cells)",
+        "type": "TEL Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "fr_d6",
+    "name": "Mistral Atlas Mobile VSHORAD",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 1.5,
+    "missileCost": 0.08,
+    "missileName": "Mistral 3",
+    "range": 7.5,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.85,
+    "color": "#00b4d8",
+    "speed": 2.7,
+    "country": "france",
+    "missileOptions": [
+      {
+        "name": "Mistral 3",
+        "range": 7.5,
+        "speed": 2.7,
+        "cost": 0.08,
+        "accuracy": 0.85,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for Mistral Atlas Mobile VSHORAD."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Mistral Atlas Mobile Twin Launcher",
+        "type": "Light Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "de_d5",
+    "name": "Arrow 3 ABM System (German-acquired)",
+    "category": "LONG_RANGE",
+    "batteryCost": 1200,
+    "missileCost": 3,
+    "missileName": "Arrow 3",
+    "range": 250,
+    "radarRange": 400,
+    "defaultAmmo": 64,
+    "minAlt": 10,
+    "maxAlt": 30000,
+    "accuracy": 0.97,
+    "color": "#ef4444",
+    "speed": 9,
+    "country": "germany",
+    "missileOptions": [
+      {
+        "name": "Arrow 3",
+        "range": 250,
+        "speed": 9,
+        "cost": 3,
+        "accuracy": 0.97,
+        "minAlt": 10,
+        "maxAlt": 30000,
+        "description": "Standard interceptor munition for Arrow 3 ABM System (German-acquired)."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Super Green Pine Radar",
+        "type": "AESA Radar",
+        "qty": 1
+      },
+      {
+        "name": "Arrow 3 Launch Control Post",
+        "type": "C2 Station",
+        "qty": 1
+      },
+      {
+        "name": "Arrow 3 Launcher (6 cells)",
+        "type": "TEL Launcher",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "de_d6",
+    "name": "Mantis C-RAM Gun System",
+    "category": "VERY_SHORT_RANGE",
+    "batteryCost": 25,
+    "missileCost": 0.005,
+    "missileName": "35mm AHEAD",
+    "range": 3,
+    "radarRange": 10,
+    "defaultAmmo": 8,
+    "minAlt": 5,
+    "maxAlt": 10000,
+    "accuracy": 0.88,
+    "color": "#00b4d8",
+    "speed": 3.2,
+    "country": "germany",
+    "missileOptions": [
+      {
+        "name": "35mm AHEAD",
+        "range": 3,
+        "speed": 3.2,
+        "cost": 0.005,
+        "accuracy": 0.88,
+        "minAlt": 5,
+        "maxAlt": 10000,
+        "description": "Standard interceptor munition for Mantis C-RAM Gun System."
+      }
+    ],
+    "composition": [
+      {
+        "name": "Mantis 35mm Turret Unit",
+        "type": "C-RAM Gun Turret",
+        "qty": 6
+      },
+      {
+        "name": "Radar and Optronic Sensor Unit",
+        "type": "Sensor Unit",
+        "qty": 2
+      }
+    ]
+  }
+]
