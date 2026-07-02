@@ -97,6 +97,19 @@
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.75
+      },
+      {
+        "name": "PL-15 BVR AAM",
+        "type": "CRUISE",
+        "speed": 5,
+        "range": 200,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 2,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.6
       }
     ]
   },
@@ -157,30 +170,6 @@
         "rcs": 0.1,
         "altitude": 150,
         "cost": 0.2,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "MAM-L Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "MAM-T Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
@@ -259,30 +248,6 @@
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
-      },
-      {
-        "name": "MAM-L Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "MAM-T Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
       }
     ]
   },
@@ -312,17 +277,17 @@
     "maxSlots": 7,
     "weaponsCatalog": [
       {
-        "name": "PL-15 BVR AAM",
+        "name": "PL-15E BVR AAM",
         "type": "CRUISE",
-        "speed": 5,
-        "range": 200,
+        "speed": 4,
+        "range": 145,
         "rcs": 0.05,
         "altitude": 100,
-        "cost": 2,
+        "cost": 1.5,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.6
+        "accuracy": 0.58
       },
       {
         "name": "PL-12",
@@ -498,11 +463,23 @@
     "maxSlots": 11,
     "weaponsCatalog": [
       {
-        "name": "KD-88",
+        "name": "CM-400AKG Supersonic",
         "type": "CRUISE",
-        "speed": 0.85,
-        "range": 200,
-        "rcs": 0.08,
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "YJ-91 Anti-Radiation",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 120,
+        "rcs": 0.1,
         "altitude": 50,
         "cost": 1,
         "maxQty": 4,
@@ -510,17 +487,55 @@
         "set": 1
       },
       {
-        "name": "PL-15 BVR AAM",
+        "name": "YJ-83K",
         "type": "CRUISE",
-        "speed": 5,
-        "range": 200,
+        "speed": 0.9,
+        "range": 180,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "PL-10",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 30,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.7
+      },
+      {
+        "name": "PL-5 SRAAM",
+        "type": "CRUISE",
+        "speed": 2.5,
+        "range": 18,
+        "rcs": 0.03,
+        "altitude": 100,
+        "cost": 0.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.65
+      },
+      {
+        "name": "PL-15E BVR AAM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 145,
         "rcs": 0.05,
         "altitude": 100,
-        "cost": 2,
+        "cost": 1.5,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.6
+        "accuracy": 0.58
       },
       {
         "name": "PL-12",
@@ -536,48 +551,23 @@
         "accuracy": 0.6
       },
       {
-        "name": "PL-17",
-        "type": "CRUISE",
-        "speed": 6,
-        "range": 300,
-        "rcs": 0.06,
-        "altitude": 100,
-        "cost": 3,
-        "maxQty": 2,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.75
-      },
-      {
-        "name": "LD-10 Anti-Radiation",
-        "type": "CRUISE",
-        "speed": 3,
-        "range": 80,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.8,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "FT-1 Guided Bomb",
+        "name": "LS-6 Series Glide Bomb",
         "type": "GLIDE_BOMB",
-        "speed": 0.85,
-        "range": 15,
+        "speed": 0.9,
+        "range": 60,
         "rcs": 0.1,
         "altitude": 150,
-        "cost": 0.1,
+        "cost": 0.2,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
       },
       {
-        "name": "FT-2 Guided Bomb",
+        "name": "LT-2 / LT-3 LGB",
         "type": "GLIDE_BOMB",
-        "speed": 0.85,
-        "range": 20,
-        "rcs": 0.12,
+        "speed": 0.95,
+        "range": 15,
+        "rcs": 0.15,
         "altitude": 150,
         "cost": 0.15,
         "maxQty": 6,
@@ -585,11 +575,23 @@
         "set": 1
       },
       {
-        "name": "LS-6 Guided Glide Bomb",
+        "name": "GB250 LGB",
         "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 60,
-        "rcs": 0.1,
+        "speed": 0.85,
+        "range": 25,
+        "rcs": 0.08,
+        "altitude": 150,
+        "cost": 0.1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GB500 LGB",
+        "type": "GLIDE_BOMB",
+        "speed": 0.85,
+        "range": 25,
+        "rcs": 0.12,
         "altitude": 150,
         "cost": 0.2,
         "maxQty": 6,
@@ -612,56 +614,6 @@
     "maxSlots": 9,
     "weaponsCatalog": [
       {
-        "name": "AIM-120C AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
-        "name": "AGM-88 HARM",
-        "type": "CRUISE",
-        "speed": 2,
-        "range": 150,
-        "rcs": 0.1,
-        "altitude": 100,
-        "cost": 0.8,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "GBU-31 JDAM",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 28,
-        "rcs": 0.15,
-        "altitude": 150,
-        "cost": 0.3,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
         "speed": 4,
@@ -682,6 +634,18 @@
         "rcs": 0.03,
         "altitude": 50,
         "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-158C LRASM",
+        "type": "CRUISE",
+        "speed": 0.8,
+        "range": 560,
+        "rcs": 0.02,
+        "altitude": 20,
+        "cost": 3,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -747,6 +711,18 @@
         "set": 1
       },
       {
+        "name": "JDAM GPS Guided Bombs",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.12,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "LJDAM GPS/Laser Bombs",
         "type": "GLIDE_BOMB",
         "speed": 0.9,
@@ -769,6 +745,54 @@
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "GBU-53/B StormBreaker",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 110,
+        "rcs": 0.01,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-24 Paveway III",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 19,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.35,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-88 HARM",
+        "type": "CRUISE",
+        "speed": 2,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -785,18 +809,6 @@
     "country": "china",
     "maxSlots": 6,
     "weaponsCatalog": [
-      {
-        "name": "CJ-10A Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.85,
-        "range": 1500,
-        "rcs": 0.05,
-        "altitude": 50,
-        "cost": 1.5,
-        "maxQty": 12,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "CJ-20 Cruise Missile",
         "type": "CRUISE",
@@ -872,18 +884,6 @@
     ]
   },
   {
-    "id": "china6",
-    "name": "Z-10 (Educational Reference)",
-    "type": "FIGHTER",
-    "speed": 0.24,
-    "altitude": 6400,
-    "rcs": 3,
-    "threatScore": 55,
-    "cost": 20,
-    "color": "#ef4444",
-    "country": "china"
-  },
-  {
     "id": "generic4",
     "name": "Generic Loitering Munition",
     "type": "LOITERING_MUNITION",
@@ -945,56 +945,6 @@
     "maxSlots": 9,
     "weaponsCatalog": [
       {
-        "name": "AIM-120C AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
-        "name": "AGM-88 HARM",
-        "type": "CRUISE",
-        "speed": 2,
-        "range": 150,
-        "rcs": 0.1,
-        "altitude": 100,
-        "cost": 0.8,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "GBU-31 JDAM",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 28,
-        "rcs": 0.15,
-        "altitude": 150,
-        "cost": 0.3,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "AGM-65 Maverick",
         "type": "CRUISE",
         "speed": 0.9,
@@ -1017,6 +967,19 @@
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "AIM-120C AMRAAM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 120,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
       },
       {
         "name": "AIM-120D AMRAAM",
@@ -1043,32 +1006,20 @@
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.7
+      },
+      {
+        "name": "AGM-88 HARM",
+        "type": "CRUISE",
+        "speed": 2,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
-  },
-  {
-    "id": "france1",
-    "name": "Mirage III",
-    "type": "FIGHTER",
-    "speed": 2.2,
-    "altitude": 17000,
-    "rcs": 3.5,
-    "threatScore": 60,
-    "cost": 15,
-    "color": "#a78bfa",
-    "country": "france"
-  },
-  {
-    "id": "france2",
-    "name": "Mirage 5",
-    "type": "FIGHTER",
-    "speed": 2.2,
-    "altitude": 16000,
-    "rcs": 3.2,
-    "threatScore": 62,
-    "cost": 18,
-    "color": "#a78bfa",
-    "country": "france"
   },
   {
     "id": "pakistan6",
@@ -1103,30 +1054,6 @@
         "rcs": 0.02,
         "altitude": 50,
         "cost": 0.2,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "MAM-L Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "MAM-T Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
@@ -1354,56 +1281,6 @@
     "maxSlots": 12,
     "weaponsCatalog": [
       {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
-        "name": "Kh-29 Tactical Missile",
-        "type": "CRUISE",
-        "speed": 1.2,
-        "range": 30,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "KAB-500L Guided Bomb",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "Nirbhay ALCM",
         "type": "CRUISE",
         "speed": 0.8,
@@ -1461,6 +1338,18 @@
         "rcs": 0.08,
         "altitude": 50,
         "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kh-59MK2 Stealth Cruise",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 285,
+        "rcs": 0.04,
+        "altitude": 50,
+        "cost": 1.8,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -1586,6 +1475,70 @@
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.88
+      },
+      {
+        "name": "R-77 BVRAAM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 100,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.85
+      },
+      {
+        "name": "R-73 SRAAM",
+        "type": "CRUISE",
+        "speed": 2.5,
+        "range": 30,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.3,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.8
+      },
+      {
+        "name": "BrahMos-A Supersonic",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 400,
+        "rcs": 0.06,
+        "altitude": 14000,
+        "cost": 3.2,
+        "maxQty": 1,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "TARA 500kg Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 175,
+        "rcs": 0.22,
+        "altitude": 5000,
+        "cost": 0.18,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.95
+      },
+      {
+        "name": "SAAW 125kg",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.12,
+        "altitude": 2000,
+        "cost": 0.1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.94
       }
     ]
   },
@@ -1630,12 +1583,12 @@
       },
       {
         "name": "SCALP EG Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.8,
-        "range": 560,
-        "rcs": 0.03,
-        "altitude": 50,
-        "cost": 3,
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -1652,6 +1605,81 @@
         "weightSlots": 1,
         "set": 1,
         "accuracy": 0.96
+      },
+      {
+        "name": "MICA RF BVR Missile",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 80,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "SAAW 125kg",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.12,
+        "altitude": 2000,
+        "cost": 0.1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.94
+      },
+      {
+        "name": "TARA 500kg Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 175,
+        "rcs": 0.22,
+        "altitude": 5000,
+        "cost": 0.18,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.95
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Spice 2000 Guided Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 60,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Crystal Maze AGM-142",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 80,
+        "rcs": 0.12,
+        "altitude": 200,
+        "cost": 1.1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -1666,10 +1694,10 @@
     "cost": 25,
     "color": "#00b4d8",
     "country": "india",
-    "maxSlots": 4,
+    "maxSlots": 9,
     "weaponsCatalog": [
       {
-        "name": "MICA IR/EM",
+        "name": "MICA RF BVR Missile",
         "type": "CRUISE",
         "speed": 4,
         "range": 80,
@@ -1682,16 +1710,104 @@
         "accuracy": 0.88
       },
       {
-        "name": "SCALP EG Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.8,
-        "range": 560,
-        "rcs": 0.03,
-        "altitude": 50,
-        "cost": 3,
+        "name": "HAMMER AASM (250kg)",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 70,
+        "rcs": 0.15,
+        "altitude": 100,
+        "cost": 0.35,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.96
+      },
+      {
+        "name": "Spice 250 Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.05,
+        "altitude": 150,
+        "cost": 0.4,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "GB500 LGB",
+        "type": "GLIDE_BOMB",
+        "speed": 0.85,
+        "range": 25,
+        "rcs": 0.12,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Spice 2000 Guided Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 60,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "TARA 500kg Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 175,
+        "rcs": 0.22,
+        "altitude": 5000,
+        "cost": 0.18,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.95
+      },
+      {
+        "name": "SAAW 125kg",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.12,
+        "altitude": 2000,
+        "cost": 0.1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.94
+      },
+      {
+        "name": "Crystal Maze AGM-142",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 80,
+        "rcs": 0.12,
+        "altitude": 200,
+        "cost": 1.1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "MICA IR/EM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 80,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
       }
     ]
   },
@@ -1722,32 +1838,21 @@
         "accuracy": 0.94
       },
       {
-        "name": "MAM-L Smart Munition",
-        "type": "CRUISE",
+        "name": "TARA 500kg Glide Bomb",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
+        "range": 175,
+        "rcs": 0.22,
+        "altitude": 5000,
+        "cost": 0.18,
         "maxQty": 6,
         "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "MAM-T Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
+        "set": 1,
+        "accuracy": 0.95
       },
       {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -1799,28 +1904,17 @@
         "accuracy": 0.94
       },
       {
-        "name": "MAM-L Smart Munition",
-        "type": "CRUISE",
+        "name": "TARA 500kg Glide Bomb",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
+        "range": 175,
+        "rcs": 0.22,
+        "altitude": 5000,
+        "cost": 0.18,
         "maxQty": 6,
         "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "MAM-T Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
+        "set": 1,
+        "accuracy": 0.95
       }
     ]
   },
@@ -1994,78 +2088,79 @@
     "maxSlots": 7,
     "weaponsCatalog": [
       {
-        "name": "R-77 BVRAAM",
+        "name": "Rampage Standoff",
         "type": "CRUISE",
-        "speed": 4,
+        "speed": 1.6,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "TARA 500kg Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 175,
+        "rcs": 0.22,
+        "altitude": 5000,
+        "cost": 0.18,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.95
+      },
+      {
+        "name": "SAAW 125kg",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.12,
+        "altitude": 2000,
+        "cost": 0.1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.94
+      },
+      {
+        "name": "Kh-35U Harpoonski",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 260,
+        "rcs": 0.05,
+        "altitude": 30,
+        "cost": 1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Rudram-1 ARM",
+        "type": "CRUISE",
+        "speed": 2,
+        "range": 150,
+        "rcs": 0.06,
+        "altitude": 100,
+        "cost": 0.8,
+        "maxQty": 2,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Astra Mk1",
+        "type": "CRUISE",
+        "speed": 4.5,
         "range": 110,
         "rcs": 0.05,
         "altitude": 100,
-        "cost": 1,
+        "cost": 1.2,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
-        "name": "Gaurav & Gautam PGMs",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 80,
-        "rcs": 0.08,
-        "altitude": 150,
-        "cost": 0.3,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "Spice 250 / Spice 1000",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 100,
-        "rcs": 0.05,
-        "altitude": 150,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "Griffin LGB",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.1,
-        "altitude": 150,
-        "cost": 0.15,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "Sudharshan LGB",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 9,
-        "rcs": 0.15,
-        "altitude": 150,
-        "cost": 0.1,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
       },
       {
         "name": "R-77-1 / RVV-SD",
@@ -2105,7 +2200,121 @@
     "threatScore": 62,
     "cost": 18,
     "color": "#00b4d8",
-    "country": "india"
+    "country": "india",
+    "maxSlots": 7,
+    "weaponsCatalog": [
+      {
+        "name": "TARA 500kg Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 175,
+        "rcs": 0.22,
+        "altitude": 5000,
+        "cost": 0.18,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.95
+      },
+      {
+        "name": "SAAW 125kg",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.12,
+        "altitude": 2000,
+        "cost": 0.1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.94
+      },
+      {
+        "name": "Rampage Standoff",
+        "type": "CRUISE",
+        "speed": 1.6,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "ASRAAM (Single Hardpoint)",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 25,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.7,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.7
+      },
+      {
+        "name": "Crystal Maze AGM-142",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 80,
+        "rcs": 0.12,
+        "altitude": 200,
+        "cost": 1.1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Spice 250 Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.05,
+        "altitude": 150,
+        "cost": 0.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Spice 1000 Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 60,
+        "rcs": 0.08,
+        "altitude": 150,
+        "cost": 0.6,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Spice 2000 Guided Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 60,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      }
+    ]
   },
   {
     "id": "usa3",
@@ -2248,7 +2457,7 @@
         "rcs": 0.1,
         "altitude": 50000,
         "cost": 4,
-        "maxQty": 4,
+        "maxQty": 2,
         "weightSlots": 1,
         "set": 1
       }
@@ -2388,56 +2597,6 @@
     "maxSlots": 9,
     "weaponsCatalog": [
       {
-        "name": "AIM-120C AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
-        "name": "AGM-88 HARM",
-        "type": "CRUISE",
-        "speed": 2,
-        "range": 150,
-        "rcs": 0.1,
-        "altitude": 100,
-        "cost": 0.8,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "GBU-31 JDAM",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 28,
-        "rcs": 0.15,
-        "altitude": 150,
-        "cost": 0.3,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
         "speed": 4,
@@ -2458,6 +2617,18 @@
         "rcs": 0.03,
         "altitude": 50,
         "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-158C LRASM",
+        "type": "CRUISE",
+        "speed": 0.8,
+        "range": 560,
+        "rcs": 0.02,
+        "altitude": 20,
+        "cost": 3,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -2523,6 +2694,18 @@
         "set": 1
       },
       {
+        "name": "JDAM GPS Guided Bombs",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.12,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "LJDAM GPS/Laser Bombs",
         "type": "GLIDE_BOMB",
         "speed": 0.9,
@@ -2545,6 +2728,54 @@
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "GBU-53/B StormBreaker",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 110,
+        "rcs": 0.01,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-24 Paveway III",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 19,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.35,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-88 HARM",
+        "type": "CRUISE",
+        "speed": 2,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -2562,32 +2793,6 @@
     "maxSlots": 11,
     "weaponsCatalog": [
       {
-        "name": "AIM-120C AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
         "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
         "speed": 4,
@@ -2599,6 +2804,32 @@
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.92
+      },
+      {
+        "name": "AIM-260 JATM",
+        "type": "CRUISE",
+        "speed": 5,
+        "range": 200,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 2.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.9
+      },
+      {
+        "name": "AIM-120C AMRAAM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 120,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
       },
       {
         "name": "AIM-9M Sidewinder",
@@ -2628,56 +2859,6 @@
     "country": "usa",
     "maxSlots": 21,
     "weaponsCatalog": [
-      {
-        "name": "AGM-158 JASSM-ER",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 925,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "AIM-120C AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
-        "name": "GBU-31 JDAM",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 28,
-        "rcs": 0.15,
-        "altitude": 200,
-        "cost": 0.3,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
@@ -2718,7 +2899,7 @@
       },
       {
         "name": "AGM-65",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -2791,56 +2972,6 @@
     "country": "usa",
     "maxSlots": 23,
     "weaponsCatalog": [
-      {
-        "name": "AGM-158 JASSM-ER",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 925,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "AIM-120C AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
-        "name": "GBU-31 JDAM",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 28,
-        "rcs": 0.15,
-        "altitude": 200,
-        "cost": 0.3,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
@@ -2916,17 +3047,64 @@
         "set": 1
       },
       {
-        "name": "SM-6 A2A Missile (AIM-174B)",
+        "name": "AGM-158 JASSM",
         "type": "CRUISE",
-        "speed": 3.5,
+        "speed": 0.8,
         "range": 370,
-        "rcs": 0.08,
-        "altitude": 100,
-        "cost": 4,
-        "maxQty": 2,
+        "rcs": 0.03,
+        "altitude": 50,
+        "cost": 1.5,
+        "maxQty": 4,
         "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.92
+        "set": 1
+      },
+      {
+        "name": "AGM-158C LRASM",
+        "type": "CRUISE",
+        "speed": 0.8,
+        "range": 560,
+        "rcs": 0.02,
+        "altitude": 20,
+        "cost": 3,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-88 HARM",
+        "type": "CRUISE",
+        "speed": 2,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "JDAM GPS Guided Bombs",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.12,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Paveway II/III LGBs",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -2943,44 +3121,6 @@
     "country": "usa",
     "maxSlots": 13,
     "weaponsCatalog": [
-      {
-        "name": "AGM-154 JSOW",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 130,
-        "rcs": 0.08,
-        "altitude": 100,
-        "cost": 0.6,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "AIM-120C AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
       {
         "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
@@ -3030,7 +3170,7 @@
         "cost": 4,
         "maxQty": 2,
         "weightSlots": 1,
-        "set": 2,
+        "set": 1,
         "accuracy": 0.92
       },
       {
@@ -3059,7 +3199,7 @@
       },
       {
         "name": "JASSM-ER",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -3107,7 +3247,7 @@
       },
       {
         "name": "GBU-53/B",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -3132,30 +3272,6 @@
     "country": "usa",
     "maxSlots": 11,
     "weaponsCatalog": [
-      {
-        "name": "AGM-65 Maverick",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 28,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.3,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "GBU-12 Paveway II",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.25,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "APKWS Guided Rockets",
         "type": "CRUISE",
@@ -3233,18 +3349,6 @@
     "maxSlots": 24,
     "weaponsCatalog": [
       {
-        "name": "AGM-158 JASSM-ER",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 925,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 2,
-        "maxQty": 12,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "AGM-158 JASSM",
         "type": "CRUISE",
         "speed": 0.8,
@@ -3252,7 +3356,7 @@
         "rcs": 0.03,
         "altitude": 50,
         "cost": 1.5,
-        "maxQty": 12,
+        "maxQty": 24,
         "weightSlots": 1,
         "set": 1
       },
@@ -3307,30 +3411,6 @@
     "country": "usa",
     "maxSlots": 16,
     "weaponsCatalog": [
-      {
-        "name": "GBU-57 MOP",
-        "type": "GLIDE_BOMB",
-        "speed": 0.95,
-        "range": 50,
-        "rcs": 0.5,
-        "altitude": 50,
-        "cost": 3.5,
-        "maxQty": 12,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "GBU-31 JDAM",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 28,
-        "rcs": 0.15,
-        "altitude": 200,
-        "cost": 0.3,
-        "maxQty": 12,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "AGM-158 JASSM",
         "type": "CRUISE",
@@ -3428,17 +3508,161 @@
     "cost": 84,
     "color": "#3b82f6",
     "country": "usa",
-    "maxSlots": 20,
+    "maxSlots": 18,
     "weaponsCatalog": [
       {
-        "name": "AGM-86B ALCM",
-        "type": "CRUISE",
-        "speed": 0.73,
-        "range": 2400,
+        "name": "GBU-31 Heavy JDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.3,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-32 JDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.28,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-38 Light JDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
         "rcs": 0.1,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-24 Paveway III",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 19,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.35,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-28 Bunker Buster",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 10,
+        "rcs": 0.3,
+        "altitude": 150,
+        "cost": 0.5,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "CBU-103 Cluster Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 24,
+        "rcs": 0.1,
+        "altitude": 150,
+        "cost": 0.3,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "CBU-104 Cluster Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 24,
+        "rcs": 0.1,
+        "altitude": 150,
+        "cost": 0.3,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "CBU-105 Sensor Fuzed Weapon",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 24,
+        "rcs": 0.1,
+        "altitude": 150,
+        "cost": 0.4,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-158 JASSM",
+        "type": "CRUISE",
+        "speed": 0.8,
+        "range": 370,
+        "rcs": 0.03,
         "altitude": 50,
-        "cost": 1.2,
-        "maxQty": 4,
+        "cost": 1.5,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-154 JSOW",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 130,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.8,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-84 SLAM-ER",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 270,
+        "rcs": 0.08,
+        "altitude": 30,
+        "cost": 1.5,
+        "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-181 LRSO Stealth",
+        "type": "CRUISE",
+        "speed": 0.8,
+        "range": 2500,
+        "rcs": 0.01,
+        "altitude": 30,
+        "cost": 3,
+        "maxQty": 12,
         "weightSlots": 1,
         "set": 1
       }
@@ -3457,56 +3681,6 @@
     "country": "russia",
     "maxSlots": 12,
     "weaponsCatalog": [
-      {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
-        "name": "Kh-29 Tactical Missile",
-        "type": "CRUISE",
-        "speed": 1.2,
-        "range": 30,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "KAB-500L Guided Bomb",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "R-27",
         "type": "CRUISE",
@@ -3548,7 +3722,7 @@
         "name": "Kh-59MK2 Stealth Cruise",
         "type": "CRUISE",
         "speed": 0.85,
-        "range": 290,
+        "range": 285,
         "rcs": 0.04,
         "altitude": 50,
         "cost": 1.8,
@@ -3632,32 +3806,6 @@
     "maxSlots": 5,
     "weaponsCatalog": [
       {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
         "name": "Kh-47M2 Kinzhal Hypersonic",
         "type": "CRUISE",
         "speed": 10,
@@ -3684,18 +3832,6 @@
     "country": "russia",
     "maxSlots": 3,
     "weaponsCatalog": [
-      {
-        "name": "Kh-22 Antiship/Land",
-        "type": "CRUISE",
-        "speed": 4.5,
-        "range": 600,
-        "rcs": 0.2,
-        "altitude": 12000,
-        "cost": 2.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "Kh-32 Supersonic",
         "type": "CRUISE",
@@ -3748,18 +3884,6 @@
     "maxSlots": 14,
     "weaponsCatalog": [
       {
-        "name": "Kh-101 Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 5500,
-        "rcs": 0.04,
-        "altitude": 50,
-        "cost": 1.5,
-        "maxQty": 8,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "Kh-102 Nuclear Cruise",
         "type": "CRUISE",
         "speed": 0.78,
@@ -3767,7 +3891,7 @@
         "rcs": 0.01,
         "altitude": 30,
         "cost": 3,
-        "maxQty": 8,
+        "maxQty": 12,
         "weightSlots": 1,
         "set": 1
       },
@@ -3779,7 +3903,7 @@
         "rcs": 0.05,
         "altitude": 30,
         "cost": 1.5,
-        "maxQty": 8,
+        "maxQty": 12,
         "weightSlots": 1,
         "set": 1
       },
@@ -3791,7 +3915,7 @@
         "rcs": 0.04,
         "altitude": 50,
         "cost": 1.8,
-        "maxQty": 8,
+        "maxQty": 12,
         "weightSlots": 1,
         "set": 1
       }
@@ -3810,32 +3934,6 @@
     "country": "russia",
     "maxSlots": 7,
     "weaponsCatalog": [
-      {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
       {
         "name": "R-27",
         "type": "CRUISE",
@@ -3911,7 +4009,7 @@
       },
       {
         "name": "FAB-250 / FAB-500",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -3920,6 +4018,58 @@
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "R-77-1 / RVV-SD",
+        "type": "CRUISE",
+        "speed": 4.5,
+        "range": 110,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1.2,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.85
+      },
+      {
+        "name": "R-77 BVRAAM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 100,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.85
+      },
+      {
+        "name": "R-73 SRAAM",
+        "type": "CRUISE",
+        "speed": 2.5,
+        "range": 30,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.3,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.8
+      },
+      {
+        "name": "R-74M / RVV-MD",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 40,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.75
       }
     ]
   },
@@ -3937,32 +4087,6 @@
     "maxSlots": 9,
     "weaponsCatalog": [
       {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
         "name": "R-77-1 / RVV-SD",
         "type": "CRUISE",
         "speed": 4.5,
@@ -3974,6 +4098,19 @@
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.85
+      },
+      {
+        "name": "R-77M BVRAAM",
+        "type": "CRUISE",
+        "speed": 5,
+        "range": 190,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1.6,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.9
       },
       {
         "name": "R-74M / RVV-MD",
@@ -4002,13 +4139,37 @@
         "accuracy": 0.6
       },
       {
-        "name": "Kh-59ME / MK / MK2",
+        "name": "Kh-59ME",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
+        "speed": 0.85,
+        "range": 115,
+        "rcs": 0.08,
         "altitude": 100,
-        "cost": 0.5,
+        "cost": 1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kh-59MK",
+        "type": "CRUISE",
+        "speed": 0.88,
+        "range": 200,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kh-59MK2 Stealth Cruise",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 285,
+        "rcs": 0.04,
+        "altitude": 50,
+        "cost": 1.8,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -4063,11 +4224,23 @@
       },
       {
         "name": "FAB-250 / FAB-500",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
         "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kh-29T / L",
+        "type": "CRUISE",
+        "speed": 1.2,
+        "range": 30,
+        "rcs": 0.08,
+        "altitude": 50,
         "cost": 0.5,
         "maxQty": 4,
         "weightSlots": 1,
@@ -4088,56 +4261,6 @@
     "country": "russia",
     "maxSlots": 10,
     "weaponsCatalog": [
-      {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
-        "name": "Kh-29 Tactical Missile",
-        "type": "CRUISE",
-        "speed": 1.2,
-        "range": 30,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "KAB-500L Guided Bomb",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "R-27R / ER",
         "type": "CRUISE",
@@ -4166,7 +4289,55 @@
       },
       {
         "name": "FAB-250 / FAB-500",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "FAB-500 / 1500 with UMPC",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 60,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "KAB-500 / 1500 Guided",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "KAB-500KR / KAB-500L",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.12,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "KAB-250 Smart Bomb",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -4192,56 +4363,6 @@
     "maxSlots": 12,
     "weaponsCatalog": [
       {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
-        "name": "Kh-29 Tactical Missile",
-        "type": "CRUISE",
-        "speed": 1.2,
-        "range": 30,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "KAB-500L Guided Bomb",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "R-77-1 / RVV-SD",
         "type": "CRUISE",
         "speed": 4.5,
@@ -4255,37 +4376,76 @@
         "accuracy": 0.85
       },
       {
-        "name": "R-27 Series",
+        "name": "R-77M BVRAAM",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
+        "speed": 5,
+        "range": 190,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1.6,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.9
+      },
+      {
+        "name": "R-27",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 80,
         "rcs": 0.05,
         "altitude": 100,
-        "cost": 0.5,
+        "cost": 0.6,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.6
+      },
+      {
+        "name": "R-74M / RVV-MD",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 40,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.75
+      },
+      {
+        "name": "Kh-59ME",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 115,
+        "rcs": 0.08,
+        "altitude": 100,
+        "cost": 1,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
       },
       {
-        "name": "R-74M",
+        "name": "Kh-59MK",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
+        "speed": 0.88,
+        "range": 200,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.2,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
       },
       {
-        "name": "Kh-59ME / MK / MK2",
+        "name": "Kh-59MK2 Stealth Cruise",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
+        "speed": 0.85,
+        "range": 285,
+        "rcs": 0.04,
+        "altitude": 50,
+        "cost": 1.8,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -4327,6 +4487,30 @@
         "set": 1
       },
       {
+        "name": "Kh-31PD High-Speed ARM",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 250,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kh-31AD High-Speed Anti-Ship",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 160,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "KAB-500KR / KAB-500L",
         "type": "GLIDE_BOMB",
         "speed": 0.9,
@@ -4340,7 +4524,7 @@
       },
       {
         "name": "FAB-250 / FAB-500",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -4361,6 +4545,18 @@
         "maxQty": 2,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "Kh-38M Series",
+        "type": "CRUISE",
+        "speed": 2.2,
+        "range": 80,
+        "rcs": 0.06,
+        "altitude": 100,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -4378,32 +4574,6 @@
     "maxSlots": 8,
     "weaponsCatalog": [
       {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
         "name": "R-37M",
         "type": "CRUISE",
         "speed": 6,
@@ -4417,16 +4587,30 @@
         "accuracy": 0.8
       },
       {
-        "name": "R-33 / R-33S",
+        "name": "R-33",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
+        "speed": 4.5,
+        "range": 120,
+        "rcs": 0.06,
         "altitude": 100,
-        "cost": 0.5,
+        "cost": 1.5,
         "maxQty": 6,
         "weightSlots": 1,
-        "set": 1
+        "set": 2,
+        "accuracy": 0.6
+      },
+      {
+        "name": "R-33S",
+        "type": "CRUISE",
+        "speed": 4.5,
+        "range": 160,
+        "rcs": 0.06,
+        "altitude": 100,
+        "cost": 1.8,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.65
       },
       {
         "name": "R-77-1 / RVV-SD",
@@ -4470,56 +4654,6 @@
     "maxSlots": 12,
     "weaponsCatalog": [
       {
-        "name": "R-77M BVRAAM",
-        "type": "CRUISE",
-        "speed": 4.5,
-        "range": 160,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 1.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "R-73M SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 35,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
-        "name": "Kh-31PM Anti-Radiation Missile",
-        "type": "CRUISE",
-        "speed": 3.5,
-        "range": 250,
-        "rcs": 0.08,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "Kh-59MK Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 285,
-        "rcs": 0.1,
-        "altitude": 50,
-        "cost": 1.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "R-37M",
         "type": "CRUISE",
         "speed": 6,
@@ -4546,25 +4680,51 @@
         "accuracy": 0.85
       },
       {
-        "name": "R-27 Series",
+        "name": "R-27R / ER",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
+        "speed": 4.5,
+        "range": 100,
         "rcs": 0.05,
         "altitude": 100,
-        "cost": 0.5,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.65
+      },
+      {
+        "name": "R-27T / ET",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 70,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.7,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.65
+      },
+      {
+        "name": "Kh-59ME",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 115,
+        "rcs": 0.08,
+        "altitude": 100,
+        "cost": 1,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
       },
       {
-        "name": "Kh-59ME / MK2",
+        "name": "Kh-59MK2 Stealth Cruise",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
+        "speed": 0.85,
+        "range": 285,
+        "rcs": 0.04,
+        "altitude": 50,
+        "cost": 1.8,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -4595,7 +4755,7 @@
       },
       {
         "name": "FAB-250 / FAB-500",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -4607,7 +4767,7 @@
       },
       {
         "name": "KAB-500KR / KAB-1500LG",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -4633,54 +4793,16 @@
     "maxSlots": 12,
     "weaponsCatalog": [
       {
-        "name": "R-77M BVRAAM",
-        "type": "CRUISE",
-        "speed": 4.5,
-        "range": 160,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 1.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.9
-      },
-      {
-        "name": "R-74M2 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 40,
-        "rcs": 0.03,
-        "altitude": 100,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "Kh-59MK2 Stealth Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 290,
-        "rcs": 0.05,
-        "altitude": 50,
-        "cost": 1.8,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "R-37M / Izdeliye 810",
         "type": "CRUISE",
-        "speed": 0.9,
+        "speed": 4,
         "range": 50,
         "rcs": 0.05,
         "altitude": 100,
         "cost": 0.5,
         "maxQty": 2,
         "weightSlots": 1,
-        "set": 1
+        "set": 2
       },
       {
         "name": "Kh-38M Series",
@@ -4696,7 +4818,7 @@
       },
       {
         "name": "KAB-250 / KAB-500",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -4741,6 +4863,81 @@
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "R-77M BVRAAM",
+        "type": "CRUISE",
+        "speed": 5,
+        "range": 190,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1.6,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.9
+      },
+      {
+        "name": "R-37M",
+        "type": "CRUISE",
+        "speed": 6,
+        "range": 300,
+        "rcs": 0.06,
+        "altitude": 100,
+        "cost": 3,
+        "maxQty": 2,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.8
+      },
+      {
+        "name": "R-74M2 SRAAM",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 50,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "Kh-69 Stealth Cruise",
+        "type": "CRUISE",
+        "speed": 0.8,
+        "range": 290,
+        "rcs": 0.02,
+        "altitude": 50,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kh-58UShKE Anti-Radiation",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 245,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kh-31A Antiship",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 70,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -4757,56 +4954,6 @@
     "country": "china",
     "maxSlots": 11,
     "weaponsCatalog": [
-      {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
-        "name": "Kh-29 Tactical Missile",
-        "type": "CRUISE",
-        "speed": 1.2,
-        "range": 30,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "KAB-500L Guided Bomb",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "YJ-83K",
         "type": "CRUISE",
@@ -4895,18 +5042,6 @@
     "maxSlots": 6,
     "weaponsCatalog": [
       {
-        "name": "CJ-10A Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.85,
-        "range": 1500,
-        "rcs": 0.05,
-        "altitude": 50,
-        "cost": 1.5,
-        "maxQty": 12,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "CJ-20 Cruise Missile",
         "type": "CRUISE",
         "speed": 0.85,
@@ -4994,18 +5129,6 @@
     "maxSlots": 6,
     "weaponsCatalog": [
       {
-        "name": "CJ-10A Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.85,
-        "range": 1500,
-        "rcs": 0.05,
-        "altitude": 50,
-        "cost": 1.5,
-        "maxQty": 12,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "CH-AS-X-13 Heavy ALBM",
         "type": "CRUISE",
         "speed": 12,
@@ -5069,7 +5192,7 @@
   },
   {
     "id": "china16",
-    "name": "J-8II Finback-B",
+    "name": "J-8II",
     "type": "FIGHTER",
     "speed": 2.2,
     "altitude": 20000,
@@ -5077,7 +5200,85 @@
     "threatScore": 55,
     "cost": 18,
     "color": "#ef4444",
-    "country": "china"
+    "country": "china",
+    "maxSlots": 7,
+    "weaponsCatalog": [
+      {
+        "name": "PL-12",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 100,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.6
+      },
+      {
+        "name": "PL-5 SRAAM",
+        "type": "CRUISE",
+        "speed": 2.5,
+        "range": 18,
+        "rcs": 0.03,
+        "altitude": 100,
+        "cost": 0.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.65
+      },
+      {
+        "name": "PL-8",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 20,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.25,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.65
+      },
+      {
+        "name": "YJ-91 Anti-Radiation",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 120,
+        "rcs": 0.1,
+        "altitude": 50,
+        "cost": 1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "KD-88",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 200,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      }
+    ]
   },
   {
     "id": "china17",
@@ -5092,56 +5293,6 @@
     "country": "china",
     "maxSlots": 10,
     "weaponsCatalog": [
-      {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
-        "name": "Kh-29 Tactical Missile",
-        "type": "CRUISE",
-        "speed": 1.2,
-        "range": 30,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "KAB-500L Guided Bomb",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "PL-15 BVR AAM",
         "type": "CRUISE",
@@ -5241,6 +5392,18 @@
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "YJ-91 Anti-Radiation",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 120,
+        "rcs": 0.1,
+        "altitude": 50,
+        "cost": 1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -5257,56 +5420,6 @@
     "country": "china",
     "maxSlots": 12,
     "weaponsCatalog": [
-      {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
-        "name": "Kh-29 Tactical Missile",
-        "type": "CRUISE",
-        "speed": 1.2,
-        "range": 30,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "KAB-500L Guided Bomb",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
       {
         "name": "PL-15 BVR AAM",
         "type": "CRUISE",
@@ -5403,6 +5516,42 @@
         "altitude": 150,
         "cost": 0.15,
         "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AKF-98 Stealth Cruise Missile",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 300,
+        "rcs": 0.02,
+        "altitude": 50,
+        "cost": 1.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "YJ-12 Supersonic Cruise",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 400,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 2.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "HD-1A Supersonic Cruise Missile",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 290,
+        "rcs": 0.08,
+        "altitude": 15000,
+        "cost": 2.2,
+        "maxQty": 4,
         "weightSlots": 1,
         "set": 1
       }
@@ -5524,56 +5673,6 @@
     "maxSlots": 10,
     "weaponsCatalog": [
       {
-        "name": "R-77 BVRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 110,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.85
-      },
-      {
-        "name": "R-73 SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 30,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.8
-      },
-      {
-        "name": "Kh-29 Tactical Missile",
-        "type": "CRUISE",
-        "speed": 1.2,
-        "range": 30,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 0.5,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "KAB-500L Guided Bomb",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "R-27R / ER",
         "type": "CRUISE",
         "speed": 4.5,
@@ -5601,7 +5700,55 @@
       },
       {
         "name": "FAB-250 / FAB-500",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "FAB-500 / 1500 with UMPC",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 60,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "KAB-500 / 1500 Guided",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "KAB-500KR / KAB-500L",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.12,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "KAB-250 Smart Bomb",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -5692,56 +5839,6 @@
     "maxSlots": 12,
     "weaponsCatalog": [
       {
-        "name": "R-77M BVRAAM",
-        "type": "CRUISE",
-        "speed": 4.5,
-        "range": 160,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 1.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "R-73M SRAAM",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 35,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
-        "name": "Kh-31PM Anti-Radiation Missile",
-        "type": "CRUISE",
-        "speed": 3.5,
-        "range": 250,
-        "rcs": 0.08,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "Kh-59MK Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 285,
-        "rcs": 0.1,
-        "altitude": 50,
-        "cost": 1.2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "R-37M",
         "type": "CRUISE",
         "speed": 6,
@@ -5768,25 +5865,51 @@
         "accuracy": 0.85
       },
       {
-        "name": "R-27 Series",
+        "name": "R-27R / ER",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
+        "speed": 4.5,
+        "range": 100,
         "rcs": 0.05,
         "altitude": 100,
-        "cost": 0.5,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.65
+      },
+      {
+        "name": "R-27T / ET",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 70,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.7,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.65
+      },
+      {
+        "name": "Kh-59ME",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 115,
+        "rcs": 0.08,
+        "altitude": 100,
+        "cost": 1,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
       },
       {
-        "name": "Kh-59ME / MK2",
+        "name": "Kh-59MK2 Stealth Cruise",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
+        "speed": 0.85,
+        "range": 285,
+        "rcs": 0.04,
+        "altitude": 50,
+        "cost": 1.8,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -5817,7 +5940,7 @@
       },
       {
         "name": "FAB-250 / FAB-500",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -5829,7 +5952,7 @@
       },
       {
         "name": "KAB-500KR / KAB-1500LG",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -5852,17 +5975,42 @@
     "cost": 60,
     "color": "#f97316",
     "country": "japan",
-    "maxSlots": 6,
+    "maxSlots": 10,
     "weaponsCatalog": [
       {
-        "name": "AIM-120C AMRAAM",
+        "name": "AGM-158 JASSM-ER",
+        "type": "CRUISE",
+        "speed": 0.8,
+        "range": 925,
+        "rcs": 0.03,
+        "altitude": 50,
+        "cost": 2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
         "speed": 4,
-        "range": 105,
+        "range": 180,
         "rcs": 0.05,
         "altitude": 100,
-        "cost": 1,
+        "cost": 1.5,
         "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.92
+      },
+      {
+        "name": "Mitsubishi AAM-5 SRAAM",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 35,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.88
@@ -5878,7 +6026,20 @@
         "maxQty": 4,
         "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.82
+        "accuracy": 0.88
+      },
+      {
+        "name": "AIM-120C AMRAAM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 120,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
       }
     ]
   },
@@ -5896,56 +6057,6 @@
     "maxSlots": 11,
     "weaponsCatalog": [
       {
-        "name": "AGM-158 JASSM-ER",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 925,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 2,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "AIM-120C AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
-        "name": "GBU-31 JDAM",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 28,
-        "rcs": 0.15,
-        "altitude": 200,
-        "cost": 0.3,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
         "speed": 4,
@@ -5957,6 +6068,32 @@
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.92
+      },
+      {
+        "name": "AIM-260 JATM",
+        "type": "CRUISE",
+        "speed": 5,
+        "range": 200,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 2.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.9
+      },
+      {
+        "name": "AIM-120C AMRAAM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 120,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
       },
       {
         "name": "AIM-9M Sidewinder",
@@ -6015,56 +6152,6 @@
     "maxSlots": 9,
     "weaponsCatalog": [
       {
-        "name": "AIM-120C AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
-      },
-      {
-        "name": "AGM-88 HARM",
-        "type": "CRUISE",
-        "speed": 2,
-        "range": 150,
-        "rcs": 0.1,
-        "altitude": 100,
-        "cost": 0.8,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "GBU-31 JDAM",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 28,
-        "rcs": 0.15,
-        "altitude": 150,
-        "cost": 0.3,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "AGM-65 Maverick",
         "type": "CRUISE",
         "speed": 0.9,
@@ -6087,6 +6174,19 @@
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "AIM-120C AMRAAM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 120,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
       },
       {
         "name": "AIM-120D AMRAAM",
@@ -6113,12 +6213,24 @@
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.7
+      },
+      {
+        "name": "AGM-88 HARM",
+        "type": "CRUISE",
+        "speed": 2,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
   {
     "id": "south_korea3",
-    "name": "FA-50 Golden Eagle",
+    "name": "FA-50 Block 20 / FA-50PL",
     "type": "FIGHTER",
     "speed": 1.5,
     "altitude": 14600,
@@ -6127,20 +6239,104 @@
     "cost": 30,
     "color": "#22d3ee",
     "country": "south_korea",
-    "maxSlots": 2,
+    "maxSlots": 7,
     "weaponsCatalog": [
       {
-        "name": "AIM-9X Sidewinder",
+        "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
+        "speed": 4,
+        "range": 180,
+        "rcs": 0.05,
         "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
+        "cost": 1.5,
+        "maxQty": 6,
         "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.82
+        "accuracy": 0.92
+      },
+      {
+        "name": "AGM-65 Maverick",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 22,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.3,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "KEPD 350 Taurus Cruise",
+        "type": "CRUISE",
+        "speed": 0.95,
+        "range": 500,
+        "rcs": 0.03,
+        "altitude": 30,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-38 Light JDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.1,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-31 Heavy JDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.3,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-31 Heavy JDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.3,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "CBU-105 Sensor Fuzed Weapon",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 24,
+        "rcs": 0.1,
+        "altitude": 150,
+        "cost": 0.4,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -6185,7 +6381,7 @@
       },
       {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -6259,32 +6455,8 @@
     "maxSlots": 4,
     "weaponsCatalog": [
       {
-        "name": "AGM-114 Hellfire",
-        "type": "ROCKET",
-        "speed": 1.3,
-        "range": 8,
-        "rcs": 0.02,
-        "altitude": 80,
-        "cost": 0.12,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2
-      },
-      {
-        "name": "GBU-12 Paveway II",
-        "type": "GLIDE_BOMB",
-        "speed": 0.9,
-        "range": 15,
-        "rcs": 0.12,
-        "altitude": 150,
-        "cost": 0.25,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -6302,18 +6474,6 @@
         "rcs": 0.03,
         "altitude": 50,
         "cost": 0.2,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "MAM-L Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
@@ -6361,7 +6521,7 @@
       },
       {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -6462,7 +6622,7 @@
       },
       {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -6532,7 +6692,109 @@
     "threatScore": 75,
     "cost": 100,
     "color": "#f97316",
-    "country": "japan"
+    "country": "japan",
+    "maxSlots": 11,
+    "weaponsCatalog": [
+      {
+        "name": "Mitsubishi ASM-1 Anti-Ship",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.1,
+        "altitude": 15,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Mitsubishi ASM-2 Anti-Ship",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 15,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Mitsubishi ASM-3 Supersonic",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 200,
+        "rcs": 0.06,
+        "altitude": 50,
+        "cost": 2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Mitsubishi AAM-4B BVRAAM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 120,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 1.2,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.9
+      },
+      {
+        "name": "Mitsubishi AAM-5 SRAAM",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 35,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "Mitsubishi AAM-3 SRAAM",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 15,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.3,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.85
+      },
+      {
+        "name": "GBU-31 Heavy JDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.3,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-54 LJDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      }
+    ]
   },
   {
     "id": "japan8",
@@ -6549,7 +6811,7 @@
     "weaponsCatalog": [
       {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -6572,33 +6834,117 @@
     "cost": 65,
     "color": "#22d3ee",
     "country": "south_korea",
-    "maxSlots": 4,
+    "maxSlots": 10,
     "weaponsCatalog": [
       {
-        "name": "Meteor BVRAAM",
+        "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
         "speed": 4,
-        "range": 200,
+        "range": 180,
         "rcs": 0.05,
         "altitude": 100,
-        "cost": 2,
+        "cost": 1.5,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.94
+        "accuracy": 0.92
       },
       {
-        "name": "AIM-9X Sidewinder",
+        "name": "IRIS-T SRAAM",
         "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
+        "speed": 3,
+        "range": 25,
         "rcs": 0.04,
         "altitude": 100,
         "cost": 0.4,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.88
+        "accuracy": 0.9
+      },
+      {
+        "name": "KEPD 350 Taurus Cruise",
+        "type": "CRUISE",
+        "speed": 0.95,
+        "range": 500,
+        "rcs": 0.03,
+        "altitude": 30,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Korean ALCM",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 500,
+        "rcs": 0.03,
+        "altitude": 50,
+        "cost": 1.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Korean HAGM Hypersonic",
+        "type": "CRUISE",
+        "speed": 5,
+        "range": 300,
+        "rcs": 0.06,
+        "altitude": 30000,
+        "cost": 3,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-31 Heavy JDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.3,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-54 LJDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Korean GPS Guided Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 70,
+        "rcs": 0.06,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Paveway II/III LGBs",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -6613,55 +6959,125 @@
     "cost": 100,
     "color": "#22d3ee",
     "country": "south_korea",
-    "maxSlots": 4,
+    "maxSlots": 19,
     "weaponsCatalog": [
       {
-        "name": "AGM-158 JASSM-ER",
+        "name": "KEPD 350 Taurus Cruise",
         "type": "CRUISE",
-        "speed": 0.9,
-        "range": 925,
-        "rcs": 0.08,
-        "altitude": 50,
-        "cost": 2,
+        "speed": 0.95,
+        "range": 500,
+        "rcs": 0.03,
+        "altitude": 30,
+        "cost": 1.5,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
       },
       {
-        "name": "AIM-120C AMRAAM",
+        "name": "AGM-84 SLAM-ER",
         "type": "CRUISE",
-        "speed": 4,
-        "range": 105,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.88
-      },
-      {
-        "name": "AIM-9X Sidewinder",
-        "type": "CRUISE",
-        "speed": 2.5,
-        "range": 22,
-        "rcs": 0.04,
-        "altitude": 100,
-        "cost": 0.4,
+        "speed": 0.85,
+        "range": 270,
+        "rcs": 0.08,
+        "altitude": 30,
+        "cost": 1.5,
         "maxQty": 4,
         "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.82
+        "set": 1
       },
       {
-        "name": "GBU-31 JDAM",
+        "name": "AGM-130 Standoff",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 75,
+        "rcs": 0.12,
+        "altitude": 150,
+        "cost": 0.9,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-28 Bunker Buster",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 10,
+        "rcs": 0.3,
+        "altitude": 150,
+        "cost": 0.5,
+        "maxQty": 1,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-24 Paveway III",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 19,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.35,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "CBU-105 Sensor Fuzed Weapon",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 24,
+        "rcs": 0.1,
+        "altitude": 150,
+        "cost": 0.4,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-31 Heavy JDAM",
         "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 28,
-        "rcs": 0.15,
-        "altitude": 200,
+        "rcs": 0.2,
+        "altitude": 150,
         "cost": 0.3,
         "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-54 LJDAM",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-88 HARM",
+        "type": "CRUISE",
+        "speed": 2,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 0.8,
+        "maxQty": 4,
         "weightSlots": 1,
         "set": 1
       }
@@ -6682,7 +7098,7 @@
     "weaponsCatalog": [
       {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -6705,20 +7121,91 @@
     "cost": 90,
     "color": "#6366f1",
     "country": "uk",
-    "maxSlots": 4,
+    "maxSlots": 13,
     "weaponsCatalog": [
       {
-        "name": "AIM-120D AMRAAM",
+        "name": "Brimstone",
         "type": "CRUISE",
-        "speed": 4,
-        "range": 180,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1.5,
+        "speed": 1.3,
+        "range": 20,
+        "rcs": 0.03,
+        "altitude": 50,
+        "cost": 0.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "SPEAR 3 Cruise Missile",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 140,
+        "rcs": 0.02,
+        "altitude": 50,
+        "cost": 0.4,
         "maxQty": 6,
         "weightSlots": 1,
-        "set": 2,
-        "accuracy": 0.92
+        "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Paveway II/III LGBs",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Paveway IV Guided Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 30,
+        "rcs": 0.08,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Marte ER Anti-Ship",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.08,
+        "altitude": 15,
+        "cost": 0.9,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-88 HARM",
+        "type": "CRUISE",
+        "speed": 2,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 0.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       },
       {
         "name": "Meteor BVRAAM",
@@ -6734,29 +7221,17 @@
         "accuracy": 0.94
       },
       {
-        "name": "ASRAAM SRAAM",
+        "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
-        "speed": 3,
-        "range": 25,
-        "rcs": 0.04,
+        "speed": 4,
+        "range": 180,
+        "rcs": 0.05,
         "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
+        "cost": 1.5,
+        "maxQty": 6,
         "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.86
-      },
-      {
-        "name": "Storm Shadow Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.8,
-        "range": 560,
-        "rcs": 0.03,
-        "altitude": 50,
-        "cost": 3,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
+        "accuracy": 0.92
       }
     ]
   },
@@ -6801,7 +7276,7 @@
       },
       {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -6876,24 +7351,36 @@
     "weaponsCatalog": [
       {
         "name": "AGM-114 Hellfire",
-        "type": "ROCKET",
-        "speed": 1.3,
-        "range": 8,
-        "rcs": 0.02,
-        "altitude": 80,
-        "cost": 0.12,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 2
-      },
-      {
-        "name": "GBU-12 Paveway II",
         "type": "GLIDE_BOMB",
         "speed": 0.9,
-        "range": 15,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-39 SDB",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "LJDAM GPS/Laser Bombs",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 28,
         "rcs": 0.12,
         "altitude": 150,
-        "cost": 0.25,
+        "cost": 0.3,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
@@ -6941,12 +7428,12 @@
       },
       {
         "name": "SCALP EG Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.8,
-        "range": 560,
-        "rcs": 0.03,
-        "altitude": 50,
-        "cost": 3,
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -6963,6 +7450,67 @@
         "weightSlots": 1,
         "set": 1,
         "accuracy": 0.96
+      },
+      {
+        "name": "MICA RF BVR Missile",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 80,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-24 Paveway III",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 19,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.35,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Paveway IV Guided Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 30,
+        "rcs": 0.08,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Crystal Maze AGM-142",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 80,
+        "rcs": 0.12,
+        "altitude": 200,
+        "cost": 1.1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -7007,12 +7555,12 @@
       },
       {
         "name": "SCALP EG Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.8,
-        "range": 560,
-        "rcs": 0.03,
-        "altitude": 50,
-        "cost": 3,
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -7029,6 +7577,79 @@
         "weightSlots": 1,
         "set": 1,
         "accuracy": 0.96
+      },
+      {
+        "name": "MICA RF BVR Missile",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 80,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-24 Paveway III",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 19,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.35,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Paveway IV Guided Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 30,
+        "rcs": 0.08,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Crystal Maze AGM-142",
+        "type": "CRUISE",
+        "speed": 0.9,
+        "range": 80,
+        "rcs": 0.12,
+        "altitude": 200,
+        "cost": 1.1,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Exocet AM39 Anti-Ship",
+        "type": "CRUISE",
+        "speed": 0.93,
+        "range": 70,
+        "rcs": 0.08,
+        "altitude": 15,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -7043,10 +7664,10 @@
     "cost": 40,
     "color": "#a78bfa",
     "country": "france",
-    "maxSlots": 4,
+    "maxSlots": 9,
     "weaponsCatalog": [
       {
-        "name": "MICA IR/EM",
+        "name": "MICA RF BVR Missile",
         "type": "CRUISE",
         "speed": 4,
         "range": 80,
@@ -7059,16 +7680,66 @@
         "accuracy": 0.88
       },
       {
-        "name": "SCALP EG Cruise Missile",
+        "name": "HAMMER AASM (250kg)",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 70,
+        "rcs": 0.15,
+        "altitude": 100,
+        "cost": 0.35,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.96
+      },
+      {
+        "name": "Crystal Maze AGM-142",
         "type": "CRUISE",
-        "speed": 0.8,
-        "range": 560,
-        "rcs": 0.03,
-        "altitude": 50,
-        "cost": 3,
+        "speed": 0.9,
+        "range": 80,
+        "rcs": 0.12,
+        "altitude": 200,
+        "cost": 1.1,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-24 Paveway III",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 19,
+        "rcs": 0.2,
+        "altitude": 150,
+        "cost": 0.35,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "MICA IR/EM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 80,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
       }
     ]
   },
@@ -7082,7 +7753,34 @@
     "threatScore": 75,
     "cost": 25,
     "color": "#a78bfa",
-    "country": "france"
+    "country": "france",
+    "maxSlots": 2,
+    "weaponsCatalog": [
+      {
+        "name": "GBU-39 SDB",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 50,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      }
+    ]
   },
   {
     "id": "germany2",
@@ -7095,20 +7793,80 @@
     "cost": 90,
     "color": "#facc15",
     "country": "germany",
-    "maxSlots": 4,
+    "maxSlots": 13,
     "weaponsCatalog": [
       {
-        "name": "AIM-120D AMRAAM",
-        "type": "CRUISE",
-        "speed": 4,
-        "range": 180,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 1.5,
+        "name": "GBU-12 Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
         "maxQty": 6,
         "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "GBU-48 Enhanced Paveway II",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 25,
+        "rcs": 0.12,
+        "altitude": 150,
+        "cost": 0.25,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Paveway IV Guided Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 30,
+        "rcs": 0.08,
+        "altitude": 150,
+        "cost": 0.2,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "AGM-88E Advanced ARM",
+        "type": "CRUISE",
+        "speed": 2.2,
+        "range": 150,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "IRIS-T SRAAM",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 25,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.4,
+        "maxQty": 4,
+        "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.92
+        "accuracy": 0.9
+      },
+      {
+        "name": "KEPD 350 Taurus Cruise",
+        "type": "CRUISE",
+        "speed": 0.95,
+        "range": 500,
+        "rcs": 0.03,
+        "altitude": 30,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       },
       {
         "name": "Meteor BVRAAM",
@@ -7124,29 +7882,17 @@
         "accuracy": 0.94
       },
       {
-        "name": "ASRAAM SRAAM",
+        "name": "AIM-120D AMRAAM",
         "type": "CRUISE",
-        "speed": 3,
-        "range": 25,
-        "rcs": 0.04,
+        "speed": 4,
+        "range": 180,
+        "rcs": 0.05,
         "altitude": 100,
-        "cost": 0.4,
-        "maxQty": 4,
+        "cost": 1.5,
+        "maxQty": 6,
         "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.86
-      },
-      {
-        "name": "Storm Shadow Cruise Missile",
-        "type": "CRUISE",
-        "speed": 0.8,
-        "range": 560,
-        "rcs": 0.03,
-        "altitude": 50,
-        "cost": 3,
-        "maxQty": 4,
-        "weightSlots": 1,
-        "set": 1
+        "accuracy": 0.92
       }
     ]
   },
@@ -7191,32 +7937,8 @@
     "maxSlots": 4,
     "weaponsCatalog": [
       {
-        "name": "MAM-L Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
-        "name": "MAM-T Smart Munition",
-        "type": "CRUISE",
-        "speed": 0.9,
-        "range": 50,
-        "rcs": 0.05,
-        "altitude": 100,
-        "cost": 0.5,
-        "maxQty": 6,
-        "weightSlots": 1,
-        "set": 1
-      },
-      {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -7225,6 +7947,32 @@
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "SAAW 125kg",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.12,
+        "altitude": 2000,
+        "cost": 0.1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.94
+      },
+      {
+        "name": "TARA 500kg Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 175,
+        "rcs": 0.22,
+        "altitude": 5000,
+        "cost": 0.18,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.95
       }
     ]
   },
@@ -7242,17 +7990,17 @@
     "maxSlots": 7,
     "weaponsCatalog": [
       {
-        "name": "PL-15 BVR AAM",
+        "name": "PL-15E BVR AAM",
         "type": "CRUISE",
-        "speed": 5,
-        "range": 200,
+        "speed": 4,
+        "range": 145,
         "rcs": 0.05,
         "altitude": 100,
-        "cost": 2,
+        "cost": 1.5,
         "maxQty": 6,
         "weightSlots": 1,
         "set": 2,
-        "accuracy": 0.6
+        "accuracy": 0.58
       },
       {
         "name": "PL-12",
@@ -7425,7 +8173,7 @@
     "cost": 15,
     "color": "#ef4444",
     "country": "pakistan",
-    "maxSlots": 6,
+    "maxSlots": 9,
     "weaponsCatalog": [
       {
         "name": "Kemankeş 1 Loitering",
@@ -7564,6 +8312,235 @@
     ]
   },
   {
+    "id": "pakistan_tb2",
+    "name": "Bayraktar TB2 (UCAV)",
+    "type": "UAV",
+    "speed": 0.18,
+    "altitude": 8200,
+    "rcs": 0.1,
+    "threatScore": 50,
+    "cost": 5,
+    "color": "#ef4444",
+    "country": "pakistan",
+    "maxSlots": 4,
+    "weaponsCatalog": [
+      {
+        "name": "MAM-L Smart Munition",
+        "type": "GLIDE_BOMB",
+        "speed": 0.5,
+        "range": 15,
+        "rcs": 0.01,
+        "altitude": 50,
+        "cost": 0.05,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "MAM-T Smart Munition",
+        "type": "GLIDE_BOMB",
+        "speed": 0.6,
+        "range": 30,
+        "rcs": 0.01,
+        "altitude": 50,
+        "cost": 0.08,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kemankeş 1 Loitering",
+        "type": "CRUISE",
+        "speed": 0.3,
+        "range": 200,
+        "rcs": 0.01,
+        "altitude": 2000,
+        "cost": 0.2,
+        "maxQty": 2,
+        "weightSlots": 1,
+        "set": 1
+      }
+    ]
+  },
+  {
+    "id": "pakistan_mirage3",
+    "name": "Mirage III (PAF)",
+    "type": "FIGHTER",
+    "speed": 2.2,
+    "altitude": 17000,
+    "rcs": 3,
+    "threatScore": 58,
+    "cost": 12,
+    "color": "#ef4444",
+    "country": "pakistan",
+    "maxSlots": 5,
+    "weaponsCatalog": [
+      {
+        "name": "Ra'ad-II ALCM",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 560,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "H-2 SOW",
+        "type": "GLIDE_BOMB",
+        "speed": 0.8,
+        "range": 60,
+        "rcs": 0.06,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "H-4 SOW",
+        "type": "GLIDE_BOMB",
+        "speed": 0.85,
+        "range": 120,
+        "rcs": 0.07,
+        "altitude": 100,
+        "cost": 0.8,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "MICA IR/EM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 80,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "AIM-9M Sidewinder",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 26,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.7
+      },
+      {
+        "name": "Paveway II/III LGBs",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      }
+    ]
+  },
+  {
+    "id": "pakistan_mirage5",
+    "name": "Mirage 5 (PAF)",
+    "type": "FIGHTER",
+    "speed": 2.2,
+    "altitude": 17000,
+    "rcs": 3.2,
+    "threatScore": 60,
+    "cost": 14,
+    "color": "#ef4444",
+    "country": "pakistan",
+    "maxSlots": 7,
+    "weaponsCatalog": [
+      {
+        "name": "Ra'ad-II ALCM",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 560,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "H-2 SOW",
+        "type": "GLIDE_BOMB",
+        "speed": 0.8,
+        "range": 60,
+        "rcs": 0.06,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "H-4 SOW",
+        "type": "GLIDE_BOMB",
+        "speed": 0.85,
+        "range": 120,
+        "rcs": 0.07,
+        "altitude": 100,
+        "cost": 0.8,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "MICA IR/EM",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 80,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 1,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "AIM-9M Sidewinder",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 26,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.7
+      },
+      {
+        "name": "Paveway II/III LGBs",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 15,
+        "rcs": 0.15,
+        "altitude": 150,
+        "cost": 0.15,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1
+      }
+    ]
+  },
+  {
     "id": "usa_f35a",
     "name": "F-35A Lightning II (USA)",
     "type": "FIGHTER",
@@ -7604,7 +8581,7 @@
       },
       {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -7705,7 +8682,7 @@
       },
       {
         "name": "GBU-39 SDB",
-        "type": "CRUISE",
+        "type": "GLIDE_BOMB",
         "speed": 0.9,
         "range": 50,
         "rcs": 0.05,
@@ -7755,6 +8732,19 @@
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.75
+      },
+      {
+        "name": "PL-15 BVR AAM",
+        "type": "CRUISE",
+        "speed": 5,
+        "range": 200,
+        "rcs": 0.05,
+        "altitude": 100,
+        "cost": 2,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.6
       }
     ]
   },
@@ -7869,6 +8859,42 @@
         "maxQty": 6,
         "weightSlots": 1,
         "set": 1
+      },
+      {
+        "name": "AKF-98 Stealth Cruise Missile",
+        "type": "CRUISE",
+        "speed": 0.85,
+        "range": 300,
+        "rcs": 0.02,
+        "altitude": 50,
+        "cost": 1.8,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "YJ-12 Supersonic Cruise",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 400,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 2.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "HD-1A Supersonic Cruise Missile",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 290,
+        "rcs": 0.08,
+        "altitude": 15000,
+        "cost": 2.2,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
       }
     ]
   },
@@ -7910,16 +8936,17 @@
         "set": 1
       },
       {
-        "name": "MAM-L Smart Munition",
+        "name": "SAAW 125kg",
         "type": "GLIDE_BOMB",
-        "speed": 0.5,
-        "range": 15,
-        "rcs": 0.01,
-        "altitude": 50,
-        "cost": 0.05,
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.12,
+        "altitude": 2000,
+        "cost": 0.1,
         "maxQty": 6,
         "weightSlots": 1,
-        "set": 1
+        "set": 1,
+        "accuracy": 0.94
       }
     ]
   },
@@ -7937,16 +8964,30 @@
     "maxSlots": 4,
     "weaponsCatalog": [
       {
-        "name": "MAM-L Smart Munition",
+        "name": "SAAW 125kg",
         "type": "GLIDE_BOMB",
-        "speed": 0.5,
-        "range": 15,
-        "rcs": 0.01,
-        "altitude": 50,
-        "cost": 0.05,
+        "speed": 0.9,
+        "range": 100,
+        "rcs": 0.12,
+        "altitude": 2000,
+        "cost": 0.1,
         "maxQty": 6,
         "weightSlots": 1,
-        "set": 1
+        "set": 1,
+        "accuracy": 0.94
+      },
+      {
+        "name": "TARA 500kg Glide Bomb",
+        "type": "GLIDE_BOMB",
+        "speed": 0.9,
+        "range": 175,
+        "rcs": 0.22,
+        "altitude": 5000,
+        "cost": 0.18,
+        "maxQty": 6,
+        "weightSlots": 1,
+        "set": 1,
+        "accuracy": 0.95
       },
       {
         "name": "GBU-39 SDB",
