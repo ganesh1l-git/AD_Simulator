@@ -5,8 +5,7 @@
   "packageManager": "npm@11.13.0",
   "description": "Indian Air Defence Educational Simulator",
   "workspaces": [
-    "packages/*",
-    "apps/*"
+    "apps/web"
   ],
   "scripts": {
     "dev": "turbo run dev",
