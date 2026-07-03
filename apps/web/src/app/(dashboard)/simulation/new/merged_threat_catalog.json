@@ -2610,6 +2610,32 @@
         "accuracy": 0.92
       },
       {
+        "name": "AIM-9X Sidewinder",
+        "type": "CRUISE",
+        "speed": 2.5,
+        "range": 22,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "AIM-9M Sidewinder",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 26,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.7
+      },
+      {
         "name": "AGM-158 JASSM",
         "type": "CRUISE",
         "speed": 0.8,
@@ -2873,6 +2899,32 @@
         "accuracy": 0.92
       },
       {
+        "name": "AIM-9X Sidewinder",
+        "type": "CRUISE",
+        "speed": 2.5,
+        "range": 22,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "AIM-9M Sidewinder",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 26,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.7
+      },
+      {
         "name": "AIM-260 JATM",
         "type": "CRUISE",
         "speed": 5,
@@ -2984,6 +3036,32 @@
         "weightSlots": 1,
         "set": 2,
         "accuracy": 0.92
+      },
+      {
+        "name": "AIM-9X Sidewinder",
+        "type": "CRUISE",
+        "speed": 2.5,
+        "range": 22,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.88
+      },
+      {
+        "name": "AIM-9M Sidewinder",
+        "type": "CRUISE",
+        "speed": 3,
+        "range": 26,
+        "rcs": 0.04,
+        "altitude": 100,
+        "cost": 0.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 2,
+        "accuracy": 0.7
       },
       {
         "name": "AIM-260 JATM",

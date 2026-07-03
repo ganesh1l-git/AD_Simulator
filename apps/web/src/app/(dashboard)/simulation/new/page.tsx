@@ -89,8 +89,12 @@ const getA2AMissile = (loadoutStatus: any, type: 'BVR' | 'SR') => {
   for (const [wName, status] of Object.entries(loadoutStatus) as any) {
     if (status.fired < status.total) {
       const nameLower = wName.toLowerCase();
-      const isBVR = nameLower.includes('amraam') || nameLower.includes('pl-15') || nameLower.includes('r-77') || nameLower.includes('meteor') || nameLower.includes('mica') || nameLower.includes('sd-10');
-      const isSR = nameLower.includes('sidewinder') || nameLower.includes('pl-5') || nameLower.includes('r-73') || nameLower.includes('magic') || nameLower.includes('python');
+      const isBVR = nameLower.includes('amraam') || nameLower.includes('pl-15') || nameLower.includes('r-77') || nameLower.includes('meteor') || nameLower.includes('mica') || nameLower.includes('sd-10') || nameLower.includes('aim-260') || nameLower.includes('r-37') || nameLower.includes('r-27') || nameLower.includes('pl-21') || nameLower.includes('r-33') || nameLower.includes('derby') || nameLower.includes('gökdoğan');
+      const isSR = nameLower.includes('sidewinder') || nameLower.includes('pl-5') || nameLower.includes('r-73') || nameLower.includes('magic') || nameLower.includes('python') || nameLower.includes('aim-9') || nameLower.includes('asraam') || nameLower.includes('pl-10') || nameLower.includes('pl-8') || nameLower.includes('r-74') || nameLower.includes('iris-t') || nameLower.includes('bozdoğan');
+      
+      const isA2A = isBVR || isSR;
+      if (!isA2A) continue; // Skip non-A2A weapons
+
       if (type === 'BVR' && (isBVR || status.weapon.range > 30)) {
         return { name: wName, status };
       }
@@ -720,8 +724,8 @@ export default function SimulationPage() {
     setSimTime(0);
     simTimeRef.current = 0;
     setSimLogs([
-      { time: 0, message: '🛡️ Simulation initialized. Defense coordinates mapped.', type: 'INFO' },
-      { time: 0, message: '📡 Active AESA Radars operating. Coverage cones active.', type: 'INFO' }
+      { time: 0, message: '[SYS] Simulation initialized. Defense coordinates mapped.', type: 'INFO' },
+      { time: 0, message: '[RADAR] Active AESA Radars operating. Coverage cones active.', type: 'INFO' }
     ]);
     setLeakerCount(0);
     setHitCount(0);
@@ -840,7 +844,7 @@ export default function SimulationPage() {
             t.isDead = true;
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `✈️ RTB: Attacker ${t.threat.name} successfully returned to base and exited airspace.`,
+              message: `[RTB] Attacker ${t.threat.name} successfully returned to base and exited airspace.`,
               type: 'INFO'
             }]);
           }
@@ -859,8 +863,20 @@ export default function SimulationPage() {
 
         // Check standoff launch condition for jets/UAVs
         if (t.loadoutStatus) {
-          let hasUnfired = false;
+          let hasGroundStrikePayloads = false;
+          let hasUnfiredGroundStrikePayloads = false;
+
           Object.entries(t.loadoutStatus).forEach(([wName, wStatus]) => {
+            const nameLower = wName.toLowerCase();
+            const isA2A = nameLower.includes('amraam') || nameLower.includes('pl-15') || nameLower.includes('r-77') || nameLower.includes('meteor') || nameLower.includes('mica') || nameLower.includes('sd-10') || nameLower.includes('sidewinder') || nameLower.includes('pl-10') || nameLower.includes('pl-5') || nameLower.includes('r-73') || nameLower.includes('magic') || nameLower.includes('python') || nameLower.includes('aim-9') || nameLower.includes('asraam') || nameLower.includes('derby') || nameLower.includes('gökdoğan') || nameLower.includes('bozdoğan') || nameLower.includes('iris-t') || nameLower.includes('r-37') || nameLower.includes('r-27') || nameLower.includes('pl-21') || nameLower.includes('pl-8') || nameLower.includes('r-33') || nameLower.includes('r-74');
+
+            if (isA2A) {
+              // A2A missiles are reserved for defense/escort protection, never launched at the ground city target
+              return;
+            }
+
+            hasGroundStrikePayloads = true;
+
             if (wStatus.fired < wStatus.total) {
               if (nextDistance <= wStatus.weapon.range) {
                 // Spawn the fired payloads as individual entities starting at current jet position
@@ -918,21 +934,21 @@ export default function SimulationPage() {
 
                 setSimLogs(prev => [...prev, {
                   time: simTimeRef.current,
-                  message: `🚀 STANDOFF LAUNCH: ${t.threat.name} released ${wStatus.total}x ${wName} payload at range ${nextDistance.toFixed(0)}km!`,
+                  message: `[LAUNCH] STANDOFF: ${t.threat.name} released ${wStatus.total}x ${wName} payload at range ${nextDistance.toFixed(0)}km`,
                   type: 'LAUNCH'
                 }]);
               } else {
-                hasUnfired = true;
+                hasUnfiredGroundStrikePayloads = true;
               }
             }
           });
 
-          // If all configured weapons are fired, the aircraft RTBs immediately
-          if (!hasUnfired && Object.keys(t.loadoutStatus).length > 0) {
+          // If all configured ground-strike weapons are fired, the aircraft RTBs immediately
+          if (hasGroundStrikePayloads && !hasUnfiredGroundStrikePayloads) {
             t.isReturning = true;
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `✈️ RTB: ${t.threat.name} expended all payloads. Turning back to base.`,
+              message: `[RTB] ${t.threat.name} expended all ground strike payloads. Turning back to base.`,
               type: 'INFO'
             }]);
           }
@@ -949,14 +965,14 @@ export default function SimulationPage() {
             const batteryName = hitBattery ? hitBattery.system.name : 'Defender Unit';
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `💥 DIRECT HIT: Anti-radiation missile destroyed ${batteryName}!`,
+              message: `[IMPACT] SEAD HIT: Anti-radiation missile destroyed ${batteryName}`,
               type: 'BREACH'
             }]);
           } else {
             setLeakerCount(prev => prev + 1);
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `💥 BREACH: Attacker ${t.threat.name} impacted Command HQ!`,
+              message: `[BREACH] Attacker ${t.threat.name} impacted Command HQ`,
               type: 'BREACH'
             }]);
           }
@@ -982,7 +998,7 @@ export default function SimulationPage() {
             const currentAlt = Math.round(t.threat.altitude * (currentDistance / 200.0));
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `📡 DETECTION: ${t.threat.name} locked on radar coordinates at range ${currentDistance.toFixed(0)}km. Alt: ${currentAlt}m, Speed: Mach ${t.threat.speed}`,
+              message: `[DETECT] ${t.threat.name} locked — range ${currentDistance.toFixed(0)}km, Alt: ${currentAlt}m, Mach ${t.threat.speed}`,
               type: 'DETECTION'
             }]);
           }
@@ -1284,13 +1300,13 @@ export default function SimulationPage() {
           if (missilesToFire > 1) {
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `🚀 SALVO LAUNCH: ${placed.system.name} fired ${missilesToFire}× ${placed.selectedMissile.name}. Target Alt: ${currentAlt}m, Range: ${currentDistance.toFixed(0)}km${radarBonus > 0 ? ` [Radar cueing +${(radarBonus * 100).toFixed(0)}%]` : ''}`,
+              message: `[SALVO] ${placed.system.name} fired ${missilesToFire}x ${placed.selectedMissile.name} — Alt: ${currentAlt}m, Range: ${currentDistance.toFixed(0)}km${radarBonus > 0 ? ` [Radar +${(radarBonus * 100).toFixed(0)}%]` : ''}`,
               type: 'LAUNCH'
             }]);
           } else {
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `🚀 LAUNCH: ${placed.system.name} launched ${placed.selectedMissile.name}. Target Alt: ${currentAlt}m, Range: ${currentDistance.toFixed(0)}km${radarBonus > 0 ? ` [Radar cueing +${(radarBonus * 100).toFixed(0)}%]` : ''}`,
+              message: `[LAUNCH] ${placed.system.name} fired ${placed.selectedMissile.name} — Alt: ${currentAlt}m, Range: ${currentDistance.toFixed(0)}km${radarBonus > 0 ? ` [Radar +${(radarBonus * 100).toFixed(0)}%]` : ''}`,
               type: 'LAUNCH'
             }]);
           }
@@ -1396,6 +1412,79 @@ export default function SimulationPage() {
           }
         }
 
+        // --- Escort Cover Intercept Logic ---
+        // Air superiority escorts (F-22, F-15EX, J-20, Su-35, Su-57, J-16, Typhoon, Rafale, KF-21, Su-30, MiG-31)
+        // can detect SAM interceptors targeting their wingmen and launch BVR A2A missiles to destroy the SAM in flight.
+        if (!(interceptor as any).escortInterceptionChecked) {
+          (interceptor as any).escortInterceptionChecked = true;
+
+          const escort = activeThreats.find(escortThreat => {
+            if (escortThreat.isDead || escortThreat.isLeaked || escortThreat.threat.type !== 'FIGHTER') return false;
+            if (escortThreat.id === target.id) return false; // Self-defense logic already covers this target
+
+            const escName = escortThreat.threat.name.toLowerCase();
+            const isAirSuperiority = escName.includes('f-22') ||
+                                     escName.includes('f-15ex') ||
+                                     escName.includes('j-20') ||
+                                     escName.includes('su-35') ||
+                                     escName.includes('su-57') ||
+                                     escName.includes('j-16') ||
+                                     escName.includes('typhoon') ||
+                                     escName.includes('rafale') ||
+                                     escName.includes('kf-21') ||
+                                     escName.includes('su-30') ||
+                                     escName.includes('mig-31') ||
+                                     escName.includes('f-15c') ||
+                                     escName.includes('f-15k') ||
+                                     escName.includes('j-10') ||
+                                     escName.includes('f-16');
+
+            if (!isAirSuperiority) return false;
+
+            const a2a = getA2AMissile(escortThreat.loadoutStatus, 'BVR');
+            if (!a2a) return false;
+
+            // Distance from escort to SAM in Km
+            const dx = escortThreat.x - interceptor.x;
+            const dy = escortThreat.y - interceptor.y;
+            const escortDist = Math.sqrt(dx * dx + dy * dy) * 2.5;
+
+            // Escort is within BVR range to launch intercept
+            return escortDist <= 100;
+          });
+
+          if (escort) {
+            const a2a = getA2AMissile(escort.loadoutStatus, 'BVR');
+            if (a2a) {
+              a2a.status.fired++;
+              const isModern = escort.threat.name.includes('F-22') || escort.threat.name.includes('J-20') || escort.threat.name.includes('Su-57');
+              const detectProb = isModern ? 0.85 : 0.65;
+              if (Math.random() < detectProb) {
+                setSimLogs(prev => [...prev, {
+                  time: simTimeRef.current,
+                  message: `🛡️ ESCORT COVER: Escort fighter ${escort.threat.name} locked SAM targeting wingman ${target.threat.name}. Fired ${a2a.name} (BVR AAM) to defend wingman!`,
+                  type: 'LAUNCH'
+                }]);
+                if (Math.random() < 0.50) {
+                  interceptor.isDead = true;
+                  setSimLogs(prev => [...prev, {
+                    time: simTimeRef.current,
+                    message: `💥 ESCORT SUCCESS: SAM destroyed in flight by ${escort.threat.name}'s escort missile!`,
+                    type: 'INTERCEPT_SUCCESS'
+                  }]);
+                  return;
+                } else {
+                  setSimLogs(prev => [...prev, {
+                    time: simTimeRef.current,
+                    message: `💨 ESCORT MISS: Escort BVR missile fired by ${escort.threat.name} missed the SAM.`,
+                    type: 'INTERCEPT_FAIL'
+                  }]);
+                }
+              }
+            }
+          }
+        }
+
         const dx = target.x - interceptor.x;
         const dy = target.y - interceptor.y;
         const distPct = Math.sqrt(dx * dx + dy * dy);
@@ -1434,13 +1523,13 @@ export default function SimulationPage() {
             delete interceptorRadarCueRef.current[interceptor.id];
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `⚡ INTERCEPT SUCCESS: Target ${target.threat.name} neutralized!`,
+              message: `[KILL] Target ${target.threat.name} neutralized`,
               type: 'INTERCEPT_SUCCESS'
             }]);
           } else {
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `💨 INTERCEPT FAIL: Interceptor missed ${target.threat.name}!`,
+              message: `[MISS] Interceptor missed ${target.threat.name}`,
               type: 'INTERCEPT_FAIL'
             }]);
           }
@@ -1688,43 +1777,42 @@ export default function SimulationPage() {
   const finalDefenderCostCalculated = spentDefenderMissilesCost + destroyedBatteriesCostCalculated;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       {/* Banner */}
-      <div className="card p-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#00ff88]/5 via-transparent to-[#ef4444]/5" />
-        <div className="relative flex justify-between items-center flex-wrap gap-4">
+      <div className="card p-4">
+        <div className="flex justify-between items-center flex-wrap gap-3">
           <div>
-            <h1 className="text-2xl font-bold text-white mb-1">Layered Simulation Sandbox</h1>
-            <p className="text-sm text-[#6b7280]">
-              Engage in two-player budget procurement exercises: Attacker vs Defender
+            <h1 className="text-base font-bold text-[#cbd5e1] tracking-wide uppercase font-mono">Layered Simulation Sandbox</h1>
+            <p className="text-[11px] text-[#475569] font-mono mt-0.5">
+              Two-player budget procurement exercise — Attacker vs Defender
             </p>
           </div>
           <div className="flex gap-2">
-            <div className="badge badge-green text-[10px]">OPERATIONAL RATIOS: 4:1 BUDGET</div>
+            <div className="badge badge-cyan text-[9px]">OPERATIONAL RATIO: 4:1 BUDGET</div>
           </div>
         </div>
       </div>
 
       {/* Progress Phases */}
-      <div className="card p-4">
-        <div className="flex items-center gap-4 flex-wrap">
+      <div className="card p-3">
+        <div className="flex items-center gap-3 flex-wrap">
           {[
-            { id: 'config', label: '1. Rules & Setup' },
-            { id: 'procure_attacker', label: '2. Attacker Procurement' },
-            { id: 'procure_defender', label: '3. Defender Layering' },
-            { id: 'simulate', label: '4. Simulation' },
-            { id: 'report', label: '5. Post-Action Report' }
+            { id: 'config', label: 'SETUP' },
+            { id: 'procure_attacker', label: 'ATTACKER PROC.' },
+            { id: 'procure_defender', label: 'DEFENDER LAYER' },
+            { id: 'simulate', label: 'SIMULATION' },
+            { id: 'report', label: 'AAR' }
           ].map((p, i) => (
-            <div key={p.id} className="flex items-center gap-2">
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center text-[10px] font-bold ${
-                phase === p.id ? 'bg-[#00ff88] text-[#0a0e17]' : 'bg-[#1f2937] text-[#4b5563]'
+            <div key={p.id} className="flex items-center gap-1.5">
+              <div className={`w-5 h-5 flex items-center justify-center text-[9px] font-mono font-bold ${
+                phase === p.id ? 'bg-[#38bdf8] text-[#0b0f19]' : 'bg-[#1b2340] text-[#475569]'
               }`}>
                 {i + 1}
               </div>
-              <span className={`text-xs ${phase === p.id ? 'text-[#00ff88] font-medium' : 'text-[#4b5563]'}`}>
+              <span className={`text-[10px] font-mono ${phase === p.id ? 'text-[#38bdf8] font-semibold' : 'text-[#475569]'}`}>
                 {p.label}
               </span>
-              {i < 4 && <div className="w-4 h-px bg-[#1f2937]" />}
+              {i < 4 && <div className="w-3 h-px bg-[#1b2340]" />}
             </div>
           ))}
         </div>
@@ -1732,11 +1820,11 @@ export default function SimulationPage() {
 
       {/* Warning Banner */}
       {warning && (
-        <div className="card p-4 border-[#ef4444]/30 bg-[#ef4444]/5 text-[#ef4444] text-sm font-mono flex items-center gap-3 animate-pulse">
-          <span className="text-lg">⚠️</span>
+        <div className="card p-3 border-[#dc2626]/30 bg-[#dc2626]/5 text-[#dc2626] text-[11px] font-mono flex items-center gap-2">
+          <span className="text-[11px] font-bold">[WARN]</span>
           <div>
-            <p className="font-bold text-[#ef4444]">Wrong entry of equipment</p>
-            <p className="text-xs text-[#9ca3af]">{warning}</p>
+            <p className="font-bold text-[#dc2626]">INVALID EQUIPMENT ENTRY</p>
+            <p className="text-[10px] text-[#94a3b8]">{warning}</p>
           </div>
         </div>
       )}
@@ -1745,7 +1833,7 @@ export default function SimulationPage() {
       {phase === 'config' && (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 animate-fade-in-up">
           <div className="card p-5 space-y-4">
-            <h3 className="text-sm font-semibold text-[#9ca3af] uppercase tracking-wider">War Game Budgets</h3>
+            <h3 className="text-[10px] font-mono font-semibold text-[#64748b] uppercase tracking-[0.1em]">War Game Budgets</h3>
             
             <div className="space-y-4">
               <div>
@@ -1765,7 +1853,7 @@ export default function SimulationPage() {
 
               <div>
                 <label className="text-xs text-[#6b7280] mb-1 block">Defender Air Defence Budget (4x Attacker)</label>
-                <div className="text-xl font-mono font-black text-[#00ff88] bg-white/[0.02] border border-white/[0.05] p-3 rounded">
+                <div className="text-lg font-mono font-bold text-[#4ade80] bg-[#0b0f19] border border-[rgba(148,163,184,0.08)] p-3">
                   ${defenderBudget} Million ($2.0 Billion equivalents)
                 </div>
                 <p className="text-[10px] text-[#4b5563] mt-1.5 leading-relaxed">
@@ -1776,7 +1864,7 @@ export default function SimulationPage() {
           </div>
 
           <div className="card p-5 space-y-4">
-            <h3 className="text-sm font-semibold text-[#9ca3af] uppercase tracking-wider">Environmental & ECM Modifier</h3>
+            <h3 className="text-[10px] font-mono font-semibold text-[#64748b] uppercase tracking-[0.1em]">Environmental & ECM Modifier</h3>
             
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -1786,9 +1874,9 @@ export default function SimulationPage() {
                   onChange={e => setWeather(e.target.value as any)}
                   className="input-field"
                 >
-                  <option value="CLEAR">☀️ CLEAR (Full range visibility)</option>
-                  <option value="CLOUDY">⛅ CLOUDY (-10% launch velocity)</option>
-                  <option value="STORMY">⛈️ STORMY (-25% velocity)</option>
+                  <option value="CLEAR">CLEAR — Full range visibility</option>
+                  <option value="CLOUDY">CLOUDY — -10% launch velocity</option>
+                  <option value="STORMY">STORMY — -25% velocity</option>
                 </select>
               </div>
 
@@ -1799,9 +1887,9 @@ export default function SimulationPage() {
                   onChange={e => setEcm(e.target.value as any)}
                   className="input-field"
                 >
-                  <option value="NONE">🟢 NONE (Standard lock success)</option>
-                  <option value="LOW">🟡 LOW (-8% accuracy success)</option>
-                  <option value="HIGH">🔴 HIGH (-18% accuracy success)</option>
+                  <option value="NONE">NONE — Standard lock success</option>
+                  <option value="LOW">LOW — -8% accuracy</option>
+                  <option value="HIGH">HIGH — -18% accuracy</option>
                 </select>
               </div>
             </div>
@@ -2444,27 +2532,27 @@ export default function SimulationPage() {
                     key={speed}
                     type="button"
                     onClick={() => setSimSpeed(speed)}
-                    className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold transition-all ${
-                      simSpeed === speed ? 'bg-[#00ff88] text-[#0a0e17]' : 'bg-white/5 text-[#9ca3af] hover:bg-white/10'
+                    className={`px-2 py-0.5 text-[9px] font-mono font-bold transition-all ${
+                      simSpeed === speed ? 'bg-[#38bdf8] text-[#0b0f19]' : 'bg-[#1b2340] text-[#64748b] hover:bg-[#232d4a]'
                     }`}
                   >
                     {speed}x
                   </button>
                 ))}
               </div>
-              <span className="text-xs font-mono text-[#00ff88]">SIM TIME: {simTime}s</span>
+              <span className="text-[10px] font-mono text-[#38bdf8]">T+{simTime}s</span>
             </div>
 
             <canvas
               ref={canvasRef}
               width={800}
               height={500}
-              className="bg-[#070b12] border border-[#00ff88]/30 rounded-lg w-full max-w-[800px] aspect-[8/5]"
+              className="bg-[#070b12] border border-[rgba(56,189,248,0.15)] w-full max-w-[800px] aspect-[8/5]"
             />
 
             <div className="flex gap-4 w-full justify-center text-xs font-mono text-[#6b7280]">
               <div className="flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded bg-[#00ff88]" /> Defender
+                <span className="w-2 h-2 bg-[#4ade80]" /> Defender
               </div>
               <div className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded bg-[#ef4444]" /> Attacker Threat
@@ -2543,13 +2631,13 @@ export default function SimulationPage() {
       {phase === 'report' && (
         <div className="space-y-6 animate-fade-in-up">
           {/* Main Stats Summary */}
-          <div className="card p-6 border-[#00ff88]/20 space-y-6">
-            <h2 className="text-lg font-bold text-[#00ff88]">📊 Engagement After-Action Report</h2>
+          <div className="card p-4 border-[rgba(56,189,248,0.15)] space-y-4">
+            <h2 className="text-sm font-mono font-bold text-[#38bdf8] uppercase tracking-[0.1em]">Engagement After-Action Report</h2>
             
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center font-mono">
-              <div className="p-4 rounded-lg bg-white/[0.03] border border-white/[0.05]">
+              <div className="p-3 bg-[#0b0f19] border border-[rgba(148,163,184,0.08)]">
                 <div className="text-[10px] text-[#6b7280] uppercase">Interception Success</div>
-                <div className="text-2xl font-black text-[#00ff88] mt-1">
+                <div className="text-xl font-bold font-mono text-[#4ade80] mt-1">
                   {((hitCount / threatCountTotal) * 100).toFixed(1)}%
                 </div>
                 <div className="text-[10px] text-[#4b5563] mt-1">{hitCount} / {threatCountTotal} Threats</div>
@@ -2573,7 +2661,7 @@ export default function SimulationPage() {
 
               <div className="p-4 rounded-lg bg-white/[0.03] border border-white/[0.05]">
                 <div className="text-[10px] text-[#6b7280] uppercase">Defensive Efficiency</div>
-                <div className={`text-2xl font-black mt-1 ${hitCount >= threatCountTotal * 0.8 ? 'text-[#00ff88]' : 'text-[#f59e0b]'}`}>
+                <div className={`text-xl font-bold font-mono mt-1 ${hitCount >= threatCountTotal * 0.8 ? 'text-[#4ade80]' : 'text-[#f59e0b]'}`}>
                   {hitCount >= threatCountTotal * 0.8 ? 'OPTIMAL' : 'COMPROMISED'}
                 </div>
                 <div className="text-[10px] text-[#4b5563] mt-1">Layer evaluation rank</div>
@@ -2865,7 +2953,7 @@ export default function SimulationPage() {
               }}
               className="btn-primary"
             >
-              🔄 Launch New War Game Exercise
+              LAUNCH NEW EXERCISE
             </button>
             
             <button
@@ -2877,20 +2965,22 @@ export default function SimulationPage() {
               }}
               className="btn-secondary"
             >
-              🛠️ Re-layer Defense Positionings
+              RE-LAYER DEFENSE
             </button>
           </div>
         </div>
       )}
 
       {/* Educational Disclaimer */}
-      <div className="card p-4 border-[#f59e0b]/20">
-        <div className="flex items-start gap-3">
-          <span className="text-lg">ℹ️</span>
+      <div className="card p-3 border-[rgba(120,101,13,0.25)]">
+        <div className="flex items-start gap-2">
+          <svg className="w-3.5 h-3.5 text-[#d97706] mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
           <div>
-            <p className="text-xs text-[#f59e0b] font-medium mb-1">Educational Platform Disclaimer</p>
-            <p className="text-[11px] text-[#6b7280] leading-relaxed">
-              This simulator highlights the asymmetric cost structures between threat delivery vehicles (like tactical glide units) and defensive platforms (like S-400 regiments). Missile costs represent approximated declassified figures.
+            <p className="text-[10px] text-[#d97706] font-mono font-semibold tracking-[0.05em] mb-0.5">EDUCATIONAL DISCLAIMER</p>
+            <p className="text-[10px] text-[#475569] leading-relaxed font-mono">
+              This simulator highlights asymmetric cost structures between threat delivery vehicles and defensive platforms. Missile costs represent approximated declassified figures.
             </p>
           </div>
         </div>

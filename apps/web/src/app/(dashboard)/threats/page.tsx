@@ -1,2064 +1,224 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import mergedThreats from '../simulation/new/merged_threat_catalog.json';
 
-export const THREATS = [
-  {
-    "id": "1",
-    "name": "Shaheen-III",
-    "type": "BALLISTIC_MISSILE",
-    "country": "Pakistan",
-    "speed": 12,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-150000m",
-    "rcs": 1,
-    "visibility": "HIGH",
-    "score": 95,
-    "cost": 5000,
-    "range": 2750,
-    "warhead": 500
-  },
-  {
-    "id": "2",
-    "name": "Ghauri-II",
-    "type": "BALLISTIC_MISSILE",
-    "country": "Pakistan",
-    "speed": 10,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-120000m",
-    "rcs": 2,
-    "visibility": "VERY_HIGH",
-    "score": 85,
-    "cost": 3000,
-    "range": 1800,
-    "warhead": 700
-  },
-  {
-    "id": "3",
-    "name": "DF-21D (Educational Reference)",
-    "type": "BALLISTIC_MISSILE",
-    "country": "China",
-    "speed": 10,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-100000m",
-    "rcs": 0.8,
-    "visibility": "HIGH",
-    "score": 90,
-    "cost": 10000,
-    "range": 1770,
-    "warhead": 600
-  },
-  {
-    "id": "4",
-    "name": "Babur-3",
-    "type": "CRUISE_MISSILE",
-    "country": "Pakistan",
-    "speed": 0.8,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "30-1000km",
-    "rcs": 0.05,
-    "visibility": "LOW",
-    "score": 80,
-    "cost": 1500,
-    "range": 450,
-    "warhead": 300
-  },
-  {
-    "id": "5",
-    "name": "Ra'ad-II ALCM",
-    "type": "CRUISE_MISSILE",
-    "country": "Pakistan",
-    "speed": 0.85,
-    "speedClass": "SUBSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "100-8000m",
-    "rcs": 0.08,
-    "visibility": "LOW",
-    "score": 75,
-    "cost": 1200,
-    "range": 600,
-    "warhead": 250
-  },
-  {
-    "id": "6",
-    "name": "CJ-20 ALCM (Educational Reference)",
-    "type": "CRUISE_MISSILE",
-    "country": "China",
-    "speed": 0.9,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "20-5000m",
-    "rcs": 0.05,
-    "visibility": "LOW",
-    "score": 82,
-    "cost": 2000,
-    "range": 2000,
-    "warhead": 500
-  },
-  {
-    "id": "7",
-    "name": "Wing Loong II",
-    "type": "UAV",
-    "country": "China",
-    "speed": 0.28,
-    "speedClass": "SUBSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "1000-9000m",
-    "rcs": 1,
-    "visibility": "MEDIUM",
-    "score": 50,
-    "cost": 2000,
-    "range": 4000,
-    "warhead": 480
-  },
-  {
-    "id": "8",
-    "name": "Generic MALE UAV",
-    "type": "UAV",
-    "country": "Generic",
-    "speed": 0.25,
-    "speedClass": "SUBSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "500-7500m",
-    "rcs": 0.5,
-    "visibility": "MEDIUM",
-    "score": 45,
-    "cost": 1000,
-    "range": 1500,
-    "warhead": 200
-  },
-  {
-    "id": "9",
-    "name": "Generic Drone Swarm (50 units)",
-    "type": "DRONE_SWARM",
-    "country": "Generic",
-    "speed": 0.15,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "30-500km",
-    "rcs": 0.01,
-    "visibility": "LOW",
-    "score": 70,
-    "cost": 500,
-    "range": 100,
-    "warhead": 5
-  },
-  {
-    "id": "10",
-    "name": "JF-17 Thunder Block III",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Pakistan / China",
-    "speed": 1.6,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-16800m",
-    "rcs": 3,
-    "visibility": "HIGH",
-    "score": 65,
-    "cost": 32000,
-    "range": 1200,
-    "warhead": 3600
-  },
-  {
-    "id": "11",
-    "name": "J-10C (Educational Reference)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "China",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18000m",
-    "rcs": 1.5,
-    "visibility": "MEDIUM",
-    "score": 70,
-    "cost": 45000,
-    "range": 1600,
-    "warhead": 6000
-  },
-  {
-    "id": "12",
-    "name": "F-16 Block 52+ (Educational Reference)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15240m",
-    "rcs": 1.2,
-    "visibility": "MEDIUM",
-    "score": 72,
-    "cost": 70000,
-    "range": 1500,
-    "warhead": 7700
-  },
-  {
-    "id": "13",
-    "name": "H-6K (Educational Reference)",
-    "type": "BOMBER_AIRCRAFT",
-    "country": "China",
-    "speed": 0.85,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "3000-12000m",
-    "rcs": 30,
-    "visibility": "VERY_HIGH",
-    "score": 80,
-    "cost": 50000,
-    "range": 3500,
-    "warhead": 12000
-  },
-  {
-    "id": "14",
-    "name": "Z-10 (Educational Reference)",
-    "type": "ATTACK_HELICOPTER",
-    "country": "China",
-    "speed": 0.24,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "10-6400m",
-    "rcs": 3,
-    "visibility": "MEDIUM",
-    "score": 55,
-    "cost": 20000,
-    "range": 800,
-    "warhead": 1500
-  },
-  {
-    "id": "15",
-    "name": "Generic Loitering Munition",
-    "type": "LOITERING_MUNITION",
-    "country": "Generic",
-    "speed": 0.2,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "100-4500m",
-    "rcs": 0.05,
-    "visibility": "LOW",
-    "score": 55,
-    "cost": 100,
-    "range": 200,
-    "warhead": 15
-  },
-  {
-    "id": "16",
-    "name": "Nasr (Hatf-IX)",
-    "type": "TACTICAL_MISSILE",
-    "country": "Pakistan",
-    "speed": 3,
-    "speedClass": "SUPERSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "500-15000m",
-    "rcs": 0.5,
-    "visibility": "HIGH",
-    "score": 75,
-    "cost": 500,
-    "range": 70,
-    "warhead": 200
-  },
-  {
-    "id": "17",
-    "name": "Generic Hypersonic Glide Vehicle",
-    "type": "HYPERSONIC",
-    "country": "Generic",
-    "speed": 8,
-    "speedClass": "HYPERSONIC",
-    "altClass": "VERY_HIGH",
-    "altitude": "20000-80000m",
-    "rcs": 0.1,
-    "visibility": "LOW",
-    "score": 98,
-    "cost": 15000,
-    "range": 2000,
-    "warhead": 500
-  },
-  {
-    "id": "18",
-    "name": "Generic Hypersonic Cruise Missile",
-    "type": "HYPERSONIC",
-    "country": "Generic",
-    "speed": 6,
-    "speedClass": "HYPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "15000-35000m",
-    "rcs": 0.08,
-    "visibility": "LOW",
-    "score": 95,
-    "cost": 12000,
-    "range": 1500,
-    "warhead": 300
-  },
-  {
-    "id": "19",
-    "name": "F-16 Block 52+",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15240m",
-    "rcs": 1.2,
-    "visibility": "MEDIUM",
-    "score": 72,
-    "cost": 40000,
-    "range": 1500,
-    "warhead": 7700
-  },
-  {
-    "id": "20",
-    "name": "Mirage III",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "France",
-    "speed": 2.2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-17000m",
-    "rcs": 3.5,
-    "visibility": "HIGH",
-    "score": 60,
-    "cost": 15000,
-    "range": 1200,
-    "warhead": 4000
-  },
-  {
-    "id": "21",
-    "name": "Mirage 5",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "France",
-    "speed": 2.2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-16000m",
-    "rcs": 3.2,
-    "visibility": "HIGH",
-    "score": 62,
-    "cost": 18000,
-    "range": 1300,
-    "warhead": 4000
-  },
-  {
-    "id": "22",
-    "name": "Shahpar-2",
-    "type": "UAV",
-    "country": "Pakistan",
-    "speed": 0.18,
-    "speedClass": "SUBSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "100-6000m",
-    "rcs": 0.4,
-    "visibility": "MEDIUM",
-    "score": 45,
-    "cost": 2000,
-    "range": 1000,
-    "warhead": 120
-  },
-  {
-    "id": "23",
-    "name": "Burraq UAV",
-    "type": "UAV",
-    "country": "Pakistan",
-    "speed": 0.18,
-    "speedClass": "SUBSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "100-7500m",
-    "rcs": 0.5,
-    "visibility": "MEDIUM",
-    "score": 42,
-    "cost": 1500,
-    "range": 1000,
-    "warhead": 100
-  },
-  {
-    "id": "24",
-    "name": "Ababeel",
-    "type": "BALLISTIC_MISSILE",
-    "country": "Pakistan",
-    "speed": 15,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-180000m",
-    "rcs": 1.5,
-    "visibility": "HIGH",
-    "score": 99,
-    "cost": 12000,
-    "range": 2200,
-    "warhead": 1500
-  },
-  {
-    "id": "25",
-    "name": "Ghaznavi",
-    "type": "BALLISTIC_MISSILE",
-    "country": "Pakistan",
-    "speed": 6,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-80000m",
-    "rcs": 0.8,
-    "visibility": "HIGH",
-    "score": 80,
-    "cost": 4000,
-    "range": 290,
-    "warhead": 700
-  },
-  {
-    "id": "26",
-    "name": "CM-302",
-    "type": "CRUISE_MISSILE",
-    "country": "China",
-    "speed": 3,
-    "speedClass": "SUPERSONIC",
-    "altClass": "LOW",
-    "altitude": "20-50km",
-    "rcs": 0.08,
-    "visibility": "LOW",
-    "score": 85,
-    "cost": 3000,
-    "range": 290,
-    "warhead": 250
-  },
-  {
-    "id": "27",
-    "name": "Harbah",
-    "type": "CRUISE_MISSILE",
-    "country": "Pakistan",
-    "speed": 0.8,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "20-50km",
-    "rcs": 0.04,
-    "visibility": "LOW",
-    "score": 78,
-    "cost": 1800,
-    "range": 750,
-    "warhead": 300
-  },
-  {
-    "id": "28",
-    "name": "CH-901",
-    "type": "LOITERING_MUNITION",
-    "country": "China",
-    "speed": 0.12,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "100-1500m",
-    "rcs": 0.02,
-    "visibility": "LOW",
-    "score": 52,
-    "cost": 100,
-    "range": 15,
-    "warhead": 3.5
-  },
-  {
-    "id": "29",
-    "name": "Fateh-1",
-    "type": "MLRS",
-    "country": "Pakistan",
-    "speed": 3,
-    "speedClass": "SUPERSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "500-25000m",
-    "rcs": 0.15,
-    "visibility": "MEDIUM",
-    "score": 68,
-    "cost": 200,
-    "range": 140,
-    "warhead": 150
-  },
-  {
-    "id": "30",
-    "name": "Fateh-2",
-    "type": "MLRS",
-    "country": "Pakistan",
-    "speed": 4.5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "1000-50000m",
-    "rcs": 0.2,
-    "visibility": "LOW",
-    "score": 78,
-    "cost": 500,
-    "range": 400,
-    "warhead": 200
-  },
-  {
-    "id": "31",
-    "name": "Taimoor ALCM",
-    "type": "CRUISE_MISSILE",
-    "country": "Pakistan",
-    "speed": 0.8,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "30-5000m",
-    "rcs": 0.05,
-    "visibility": "LOW",
-    "score": 78,
-    "cost": 1000,
-    "range": 290,
-    "warhead": 250
-  },
-  {
-    "id": "32",
-    "name": "C-802AK",
-    "type": "CRUISE_MISSILE",
-    "country": "China",
-    "speed": 0.9,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "20-200km",
-    "rcs": 0.08,
-    "visibility": "LOW",
-    "score": 70,
-    "cost": 800,
-    "range": 180,
-    "warhead": 165
-  },
-  {
-    "id": "33",
-    "name": "C-705KD",
-    "type": "CRUISE_MISSILE",
-    "country": "China",
-    "speed": 0.8,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "15-1000km",
-    "rcs": 0.04,
-    "visibility": "LOW",
-    "score": 65,
-    "cost": 500,
-    "range": 140,
-    "warhead": 130
-  },
-  {
-    "id": "34",
-    "name": "Agni-P (Agni-Prime)",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 12,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-120000m",
-    "rcs": 1,
-    "visibility": "HIGH",
-    "score": 96,
-    "cost": 8000,
-    "range": 2000,
-    "warhead": 1000
-  },
-  {
-    "id": "35",
-    "name": "Pralay",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 6,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-50000m",
-    "rcs": 0.6,
-    "visibility": "LOW",
-    "score": 88,
-    "cost": 3000,
-    "range": 500,
-    "warhead": 500
-  },
-  {
-    "id": "36",
-    "name": "BrahMos Land-Attack",
-    "type": "CRUISE_MISSILE",
-    "country": "India / Russia",
-    "speed": 3,
-    "speedClass": "SUPERSONIC",
-    "altClass": "LOW",
-    "altitude": "10-15000m",
-    "rcs": 0.08,
-    "visibility": "LOW",
-    "score": 92,
-    "cost": 3500,
-    "range": 450,
-    "warhead": 300
-  },
-  {
-    "id": "37",
-    "name": "Nirbhay",
-    "type": "CRUISE_MISSILE",
-    "country": "India",
-    "speed": 0.8,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "30-6000m",
-    "rcs": 0.05,
-    "visibility": "LOW",
-    "score": 78,
-    "cost": 1500,
-    "range": 1000,
-    "warhead": 300
-  },
-  {
-    "id": "38",
-    "name": "Su-30MKI",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "India / Russia",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15000m",
-    "rcs": 5,
-    "visibility": "VERY_HIGH",
-    "score": 74,
-    "cost": 35000,
-    "range": 1500,
-    "warhead": 8000
-  },
-  {
-    "id": "39",
-    "name": "Rafale",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "France / India",
-    "speed": 1.8,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-16000m",
-    "rcs": 1,
-    "visibility": "LOW",
-    "score": 82,
-    "cost": 50000,
-    "range": 1800,
-    "warhead": 9500
-  },
-  {
-    "id": "40",
-    "name": "Mirage 2000I",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "France / India",
-    "speed": 2.2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-17000m",
-    "rcs": 2,
-    "visibility": "HIGH",
-    "score": 68,
-    "cost": 25000,
-    "range": 1550,
-    "warhead": 6300
-  },
-  {
-    "id": "41",
-    "name": "Tapas BH-201",
-    "type": "UAV",
-    "country": "India",
-    "speed": 0.25,
-    "speedClass": "SUBSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "100-9000m",
-    "rcs": 0.5,
-    "visibility": "MEDIUM",
-    "score": 50,
-    "cost": 4000,
-    "range": 1000,
-    "warhead": 350
-  },
-  {
-    "id": "42",
-    "name": "Archer ALFA",
-    "type": "UAV",
-    "country": "India",
-    "speed": 0.2,
-    "speedClass": "SUBSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "100-6000m",
-    "rcs": 0.3,
-    "visibility": "MEDIUM",
-    "score": 46,
-    "cost": 2500,
-    "range": 500,
-    "warhead": 150
-  },
-  {
-    "id": "43",
-    "name": "Pinaka Guided Rocket",
-    "type": "MLRS",
-    "country": "India",
-    "speed": 4,
-    "speedClass": "SUPERSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "200-20000m",
-    "rcs": 0.1,
-    "visibility": "MEDIUM",
-    "score": 62,
-    "cost": 150,
-    "range": 90,
-    "warhead": 100
-  },
-  {
-    "id": "44",
-    "name": "ALS-50 Loitering Munition",
-    "type": "LOITERING_MUNITION",
-    "country": "India",
-    "speed": 0.12,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "50-1000km",
-    "rcs": 0.03,
-    "visibility": "LOW",
-    "score": 54,
-    "cost": 100,
-    "range": 50,
-    "warhead": 5
-  },
-  {
-    "id": "45",
-    "name": "Agni-I",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 7.5,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-150000m",
-    "rcs": 0.8,
-    "visibility": "HIGH",
-    "score": 80,
-    "cost": 2500,
-    "range": 700,
-    "warhead": 1000
-  },
-  {
-    "id": "46",
-    "name": "Agni-II",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 12,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-220000m",
-    "rcs": 1,
-    "visibility": "HIGH",
-    "score": 88,
-    "cost": 4500,
-    "range": 2000,
-    "warhead": 1000
-  },
-  {
-    "id": "47",
-    "name": "Agni-III",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 15,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-350000m",
-    "rcs": 1.2,
-    "visibility": "HIGH",
-    "score": 92,
-    "cost": 6000,
-    "range": 3500,
-    "warhead": 1500
-  },
-  {
-    "id": "48",
-    "name": "Agni-IV",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 15,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-400000m",
-    "rcs": 1.2,
-    "visibility": "HIGH",
-    "score": 94,
-    "cost": 7000,
-    "range": 4000,
-    "warhead": 1000
-  },
-  {
-    "id": "49",
-    "name": "Agni-V",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 24,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-800000m",
-    "rcs": 1.5,
-    "visibility": "HIGH",
-    "score": 99,
-    "cost": 10000,
-    "range": 5500,
-    "warhead": 1500
-  },
-  {
-    "id": "50",
-    "name": "Prithvi-I",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "0-30000m",
-    "rcs": 0.6,
-    "visibility": "HIGH",
-    "score": 68,
-    "cost": 1000,
-    "range": 150,
-    "warhead": 1000
-  },
-  {
-    "id": "51",
-    "name": "Prithvi-II",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "0-50000m",
-    "rcs": 0.6,
-    "visibility": "HIGH",
-    "score": 75,
-    "cost": 1200,
-    "range": 250,
-    "warhead": 500
-  },
-  {
-    "id": "52",
-    "name": "Prithvi-III",
-    "type": "BALLISTIC_MISSILE",
-    "country": "India",
-    "speed": 5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "0-50000m",
-    "rcs": 0.6,
-    "visibility": "HIGH",
-    "score": 78,
-    "cost": 1500,
-    "range": 350,
-    "warhead": 1000
-  },
-  {
-    "id": "53",
-    "name": "Prahaar",
-    "type": "TACTICAL_MISSILE",
-    "country": "India",
-    "speed": 4,
-    "speedClass": "SUPERSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "100-35000m",
-    "rcs": 0.15,
-    "visibility": "LOW",
-    "score": 70,
-    "cost": 800,
-    "range": 150,
-    "warhead": 200
-  },
-  {
-    "id": "54",
-    "name": "Pragati",
-    "type": "TACTICAL_MISSILE",
-    "country": "India",
-    "speed": 4.5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "200-40000m",
-    "rcs": 0.2,
-    "visibility": "LOW",
-    "score": 75,
-    "cost": 1000,
-    "range": 200,
-    "warhead": 200
-  },
-  {
-    "id": "55",
-    "name": "Suryastra Heavy MLRS",
-    "type": "MLRS",
-    "country": "India",
-    "speed": 5,
-    "speedClass": "HYPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "200-40000m",
-    "rcs": 0.1,
-    "visibility": "LOW",
-    "score": 72,
-    "cost": 200,
-    "range": 300,
-    "warhead": 150
-  },
-  {
-    "id": "56",
-    "name": "MiG-29UPG",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "India / Russia",
-    "speed": 2.25,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18000m",
-    "rcs": 3,
-    "visibility": "HIGH",
-    "score": 70,
-    "cost": 25000,
-    "range": 1200,
-    "warhead": 4000
-  },
-  {
-    "id": "57",
-    "name": "Jaguar IS",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "India / UK",
-    "speed": 1.6,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "30-14000m",
-    "rcs": 6,
-    "visibility": "VERY_HIGH",
-    "score": 62,
-    "cost": 18000,
-    "range": 850,
-    "warhead": 4750
-  },
-  {
-    "id": "58",
-    "name": "Minuteman III ICBM",
-    "type": "BALLISTIC_MISSILE",
-    "country": "USA",
-    "speed": 23,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-1300000m",
-    "rcs": 1,
-    "visibility": "HIGH",
-    "score": 99,
-    "cost": 35000,
-    "range": 13000,
-    "warhead": 1000
-  },
-  {
-    "id": "59",
-    "name": "PrSM Tactical Missile",
-    "type": "TACTICAL_MISSILE",
-    "country": "USA",
-    "speed": 5,
-    "speedClass": "HYPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "500-50000m",
-    "rcs": 0.25,
-    "visibility": "MEDIUM",
-    "score": 82,
-    "cost": 1500,
-    "range": 500,
-    "warhead": 200
-  },
-  {
-    "id": "60",
-    "name": "DF-41 Heavy ICBM",
-    "type": "BALLISTIC_MISSILE",
-    "country": "China",
-    "speed": 25,
-    "speedClass": "HYPERSONIC",
-    "altClass": "EXOATMOSPHERIC",
-    "altitude": "0-1500000m",
-    "rcs": 1.5,
-    "visibility": "HIGH",
-    "score": 100,
-    "cost": 45000,
-    "range": 15000,
-    "warhead": 1500
-  },
-  {
-    "id": "61",
-    "name": "DF-100 Supersonic LACM",
-    "type": "CRUISE_MISSILE",
-    "country": "China",
-    "speed": 4,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "1000-30000m",
-    "rcs": 0.08,
-    "visibility": "LOW",
-    "score": 90,
-    "cost": 4000,
-    "range": 2000,
-    "warhead": 500
-  },
-  {
-    "id": "62",
-    "name": "3M22 Zircon Hypersonic LACM",
-    "type": "HYPERSONIC",
-    "country": "Russia",
-    "speed": 9,
-    "speedClass": "HYPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "500-35000m",
-    "rcs": 0.1,
-    "visibility": "LOW",
-    "score": 99,
-    "cost": 4500,
-    "range": 1000,
-    "warhead": 400
-  },
-  {
-    "id": "63",
-    "name": "Tu-160M White Swan Bomber",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 2.05,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-16000m",
-    "rcs": 15,
-    "visibility": "VERY_HIGH",
-    "score": 95,
-    "cost": 80000,
-    "range": 12000,
-    "warhead": 40000
-  },
-  {
-    "id": "64",
-    "name": "Type-88 SSM Coastal Launcher",
-    "type": "CRUISE_MISSILE",
-    "country": "Japan",
-    "speed": 0.9,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "10-300km",
-    "rcs": 0.05,
-    "visibility": "LOW",
-    "score": 72,
-    "cost": 1200,
-    "range": 180,
-    "warhead": 225
-  },
-  {
-    "id": "65",
-    "name": "Type-93 ASM Airborne ALCM",
-    "type": "CRUISE_MISSILE",
-    "country": "Japan",
-    "speed": 0.9,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "10-300km",
-    "rcs": 0.04,
-    "visibility": "LOW",
-    "score": 74,
-    "cost": 1500,
-    "range": 170,
-    "warhead": 200
-  },
-  {
-    "id": "66",
-    "name": "Hyunmoo-5 Heavy Ballistic",
-    "type": "BALLISTIC_MISSILE",
-    "country": "South Korea",
-    "speed": 10,
-    "speedClass": "HYPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "0-80000m",
-    "rcs": 0.8,
-    "visibility": "HIGH",
-    "score": 94,
-    "cost": 6000,
-    "range": 300,
-    "warhead": 8000
-  },
-  {
-    "id": "67",
-    "name": "Hyunmoo-3C LACM",
-    "type": "CRUISE_MISSILE",
-    "country": "South Korea",
-    "speed": 0.8,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "20-1000km",
-    "rcs": 0.05,
-    "visibility": "LOW",
-    "score": 80,
-    "cost": 1500,
-    "range": 1500,
-    "warhead": 500
-  },
-  {
-    "id": "68",
-    "name": "FC/ASW Supersonic LACM",
-    "type": "CRUISE_MISSILE",
-    "country": "UK / France",
-    "speed": 3,
-    "speedClass": "SUPERSONIC",
-    "altClass": "LOW",
-    "altitude": "10-100km",
-    "rcs": 0.03,
-    "visibility": "LOW",
-    "score": 88,
-    "cost": 3500,
-    "range": 300,
-    "warhead": 300
-  },
-  {
-    "id": "69",
-    "name": "SPEAR 3 Standoff ALCM",
-    "type": "CRUISE_MISSILE",
-    "country": "UK",
-    "speed": 0.9,
-    "speedClass": "SUBSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "50-10000m",
-    "rcs": 0.02,
-    "visibility": "STEALTH",
-    "score": 68,
-    "cost": 300,
-    "range": 140,
-    "warhead": 40
-  },
-  {
-    "id": "70",
-    "name": "SCALP Naval (MdCN)",
-    "type": "CRUISE_MISSILE",
-    "country": "France",
-    "speed": 0.8,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "15-500km",
-    "rcs": 0.04,
-    "visibility": "LOW",
-    "score": 84,
-    "cost": 2500,
-    "range": 1000,
-    "warhead": 500
-  },
-  {
-    "id": "71",
-    "name": "AASM Hammer 1000 Glide Bomb",
-    "type": "GLIDE_BOMB",
-    "country": "France",
-    "speed": 0.95,
-    "speedClass": "SUBSONIC",
-    "altClass": "MEDIUM",
-    "altitude": "50-12000m",
-    "rcs": 0.08,
-    "visibility": "LOW",
-    "score": 72,
-    "cost": 500,
-    "range": 70,
-    "warhead": 1000
-  },
-  {
-    "id": "72",
-    "name": "Taurus KEPD 350 (Standalone)",
-    "type": "CRUISE_MISSILE",
-    "country": "Germany / Sweden",
-    "speed": 0.95,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "30-100km",
-    "rcs": 0.05,
-    "visibility": "LOW",
-    "score": 82,
-    "cost": 1500,
-    "range": 500,
-    "warhead": 480
-  },
-  {
-    "id": "73",
-    "name": "DeepStrike Missile (Standalone)",
-    "type": "TACTICAL_MISSILE",
-    "country": "Germany",
-    "speed": 5,
-    "speedClass": "HYPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "500-80000m",
-    "rcs": 0.2,
-    "visibility": "MEDIUM",
-    "score": 80,
-    "cost": 1500,
-    "range": 500,
-    "warhead": 150
-  },
-  {
-    "id": "74",
-    "name": "F-16C/D Fighting Falcon (USA)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA",
-    "speed": 2.05,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15240m",
-    "rcs": 1.2,
-    "visibility": "MEDIUM",
-    "score": 74,
-    "cost": 65000,
-    "range": 1760,
-    "warhead": 7700
-  },
-  {
-    "id": "75",
-    "name": "F-15C/D Eagle",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA",
-    "speed": 2.5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18300m",
-    "rcs": 4,
-    "visibility": "HIGH",
-    "score": 78,
-    "cost": 55000,
-    "range": 1900,
-    "warhead": 7300
-  },
-  {
-    "id": "76",
-    "name": "F-15E Strike Eagle",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA",
-    "speed": 2.5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18300m",
-    "rcs": 4.5,
-    "visibility": "HIGH",
-    "score": 82,
-    "cost": 88000,
-    "range": 3900,
-    "warhead": 10400
-  },
-  {
-    "id": "77",
-    "name": "F-15EX Eagle II",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA",
-    "speed": 2.5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18300m",
-    "rcs": 4.2,
-    "visibility": "HIGH",
-    "score": 85,
-    "cost": 100000,
-    "range": 4000,
-    "warhead": 13380
-  },
-  {
-    "id": "78",
-    "name": "F/A-18E/F Super Hornet",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA",
-    "speed": 1.8,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15200m",
-    "rcs": 1.5,
-    "visibility": "MEDIUM",
-    "score": 76,
-    "cost": 67000,
-    "range": 2000,
-    "warhead": 8050
-  },
-  {
-    "id": "79",
-    "name": "A-10C Thunderbolt II (Warthog)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA",
-    "speed": 0.75,
-    "speedClass": "SUBSONIC",
-    "altClass": "LOW",
-    "altitude": "10-13700m",
-    "rcs": 8,
-    "visibility": "VERY_HIGH",
-    "score": 60,
-    "cost": 18000,
-    "range": 1300,
-    "warhead": 7260
-  },
-  {
-    "id": "80",
-    "name": "B-1B Lancer",
-    "type": "BOMBER_AIRCRAFT",
-    "country": "USA",
-    "speed": 1.25,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "60-18000m",
-    "rcs": 10,
-    "visibility": "HIGH",
-    "score": 90,
-    "cost": 317000,
-    "range": 9400,
-    "warhead": 34000
-  },
-  {
-    "id": "81",
-    "name": "B-2A Spirit",
-    "type": "BOMBER_AIRCRAFT",
-    "country": "USA",
-    "speed": 0.95,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "150-15200m",
-    "rcs": 0.001,
-    "visibility": "STEALTH",
-    "score": 99,
-    "cost": 2100000,
-    "range": 11100,
-    "warhead": 18000
-  },
-  {
-    "id": "82",
-    "name": "B-52H Stratofortress",
-    "type": "BOMBER_AIRCRAFT",
-    "country": "USA",
-    "speed": 0.84,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "150-15000m",
-    "rcs": 100,
-    "visibility": "VERY_HIGH",
-    "score": 88,
-    "cost": 84000,
-    "range": 14000,
-    "warhead": 32000
-  },
-  {
-    "id": "83",
-    "name": "Su-34 Fullback",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 1.8,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-17000m",
-    "rcs": 3.5,
-    "visibility": "HIGH",
-    "score": 78,
-    "cost": 36000,
-    "range": 4000,
-    "warhead": 8000
-  },
-  {
-    "id": "84",
-    "name": "MiG-31K Foxhound",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 2.83,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-20600m",
-    "rcs": 15,
-    "visibility": "HIGH",
-    "score": 88,
-    "cost": 70000,
-    "range": 3000,
-    "warhead": 2000
-  },
-  {
-    "id": "85",
-    "name": "Tu-22M3 Backfire-C",
-    "type": "BOMBER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 1.88,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-13300m",
-    "rcs": 40,
-    "visibility": "VERY_HIGH",
-    "score": 87,
-    "cost": 150000,
-    "range": 6800,
-    "warhead": 24000
-  },
-  {
-    "id": "86",
-    "name": "Tu-95MS Bear-H",
-    "type": "BOMBER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 0.82,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "200-12000m",
-    "rcs": 120,
-    "visibility": "VERY_HIGH",
-    "score": 82,
-    "cost": 90000,
-    "range": 15000,
-    "warhead": 15000
-  },
-  {
-    "id": "87",
-    "name": "MiG-29SMT Fulcrum-E",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 2.25,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18000m",
-    "rcs": 3,
-    "visibility": "HIGH",
-    "score": 70,
-    "cost": 30000,
-    "range": 2100,
-    "warhead": 4000
-  },
-  {
-    "id": "88",
-    "name": "MiG-35 Fulcrum-F",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 2.25,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-17500m",
-    "rcs": 2.5,
-    "visibility": "HIGH",
-    "score": 75,
-    "cost": 45000,
-    "range": 3100,
-    "warhead": 6000
-  },
-  {
-    "id": "89",
-    "name": "Su-27S Flanker-B",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 2.35,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18500m",
-    "rcs": 4,
-    "visibility": "HIGH",
-    "score": 72,
-    "cost": 35000,
-    "range": 3530,
-    "warhead": 6000
-  },
-  {
-    "id": "90",
-    "name": "Su-30SM Flanker-H",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-17500m",
-    "rcs": 4.5,
-    "visibility": "HIGH",
-    "score": 78,
-    "cost": 40000,
-    "range": 3000,
-    "warhead": 8000
-  },
-  {
-    "id": "91",
-    "name": "MiG-31 Foxhound",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 2.83,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-20600m",
-    "rcs": 14,
-    "visibility": "HIGH",
-    "score": 80,
-    "cost": 60000,
-    "range": 3300,
-    "warhead": 4000
-  },
-  {
-    "id": "92",
-    "name": "Su-35S Flanker-E",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 2.25,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18000m",
-    "rcs": 3,
-    "visibility": "HIGH",
-    "score": 84,
-    "cost": 85000,
-    "range": 3600,
-    "warhead": 8000
-  },
-  {
-    "id": "93",
-    "name": "Su-57 Felon",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-20000m",
-    "rcs": 0.1,
-    "visibility": "STEALTH",
-    "score": 94,
-    "cost": 100000,
-    "range": 3500,
-    "warhead": 8000
-  },
-  {
-    "id": "94",
-    "name": "JH-7A Flying Leopard",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "China",
-    "speed": 1.75,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15500m",
-    "rcs": 5,
-    "visibility": "HIGH",
-    "score": 68,
-    "cost": 28000,
-    "range": 3650,
-    "warhead": 6500
-  },
-  {
-    "id": "95",
-    "name": "H-6K Strategic Bomber",
-    "type": "BOMBER_AIRCRAFT",
-    "country": "China",
-    "speed": 0.85,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "3000-13100m",
-    "rcs": 30,
-    "visibility": "VERY_HIGH",
-    "score": 82,
-    "cost": 45000,
-    "range": 3500,
-    "warhead": 12000
-  },
-  {
-    "id": "96",
-    "name": "H-6N Strategic Bomber (Tanker)",
-    "type": "BOMBER_AIRCRAFT",
-    "country": "China",
-    "speed": 0.85,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "3000-13100m",
-    "rcs": 32,
-    "visibility": "VERY_HIGH",
-    "score": 88,
-    "cost": 55000,
-    "range": 7000,
-    "warhead": 15000
-  },
-  {
-    "id": "97",
-    "name": "J-8II Finback-B",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "China",
-    "speed": 2.2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-20000m",
-    "rcs": 3.5,
-    "visibility": "HIGH",
-    "score": 55,
-    "cost": 18000,
-    "range": 2200,
-    "warhead": 5000
-  },
-  {
-    "id": "98",
-    "name": "J-11B Flanker-L",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "China",
-    "speed": 2.35,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18500m",
-    "rcs": 4.5,
-    "visibility": "HIGH",
-    "score": 74,
-    "cost": 35000,
-    "range": 3530,
-    "warhead": 6000
-  },
-  {
-    "id": "99",
-    "name": "J-15 Flying Shark",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "China",
-    "speed": 2.2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18000m",
-    "rcs": 4,
-    "visibility": "HIGH",
-    "score": 78,
-    "cost": 70000,
-    "range": 3500,
-    "warhead": 6500
-  },
-  {
-    "id": "100",
-    "name": "J-35A Snowy Owl (5th Gen)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "China",
-    "speed": 1.8,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-16000m",
-    "rcs": 0.005,
-    "visibility": "STEALTH",
-    "score": 90,
-    "cost": 100000,
-    "range": 2200,
-    "warhead": 4500
-  },
-  {
-    "id": "101",
-    "name": "Su-27SK Flanker (Chinese)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia / China",
-    "speed": 2.35,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18500m",
-    "rcs": 4,
-    "visibility": "HIGH",
-    "score": 70,
-    "cost": 30000,
-    "range": 3530,
-    "warhead": 6000
-  },
-  {
-    "id": "102",
-    "name": "Su-30MKK Flanker-G",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Russia / China",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-17500m",
-    "rcs": 5,
-    "visibility": "HIGH",
-    "score": 76,
-    "cost": 38000,
-    "range": 3000,
-    "warhead": 8000
-  },
-  {
-    "id": "103",
-    "name": "Su-35S Flanker-E (Chinese)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "China",
-    "speed": 2.25,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18000m",
-    "rcs": 3.5,
-    "visibility": "HIGH",
-    "score": 82,
-    "cost": 85000,
-    "range": 3600,
-    "warhead": 8000
-  },
-  {
-    "id": "104",
-    "name": "F-15J Eagle (JASDF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Japan",
-    "speed": 2.5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18300m",
-    "rcs": 4,
-    "visibility": "HIGH",
-    "score": 76,
-    "cost": 60000,
-    "range": 1900,
-    "warhead": 7300
-  },
-  {
-    "id": "105",
-    "name": "F-15DJ Eagle (JASDF Trainer)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Japan",
-    "speed": 2.5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18300m",
-    "rcs": 4,
-    "visibility": "HIGH",
-    "score": 72,
-    "cost": 55000,
-    "range": 1900,
-    "warhead": 7000
-  },
-  {
-    "id": "106",
-    "name": "KF-5E/F Tiger II (ROKAF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "South Korea / USA",
-    "speed": 1.64,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15200m",
-    "rcs": 2.5,
-    "visibility": "HIGH",
-    "score": 50,
-    "cost": 8000,
-    "range": 1400,
-    "warhead": 3200
-  },
-  {
-    "id": "107",
-    "name": "F-16C/D Fighting Falcon (ROKAF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA / South Korea",
-    "speed": 2.05,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15240m",
-    "rcs": 1.2,
-    "visibility": "MEDIUM",
-    "score": 74,
-    "cost": 55000,
-    "range": 1760,
-    "warhead": 7700
-  },
-  {
-    "id": "108",
-    "name": "FA-50 Golden Eagle",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "South Korea",
-    "speed": 1.5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-14600m",
-    "rcs": 1,
-    "visibility": "MEDIUM",
-    "score": 62,
-    "cost": 30000,
-    "range": 1800,
-    "warhead": 1980
-  },
-  {
-    "id": "109",
-    "name": "F-35A Lightning II (ROKAF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "USA / South Korea",
-    "speed": 1.6,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18300m",
-    "rcs": 0.001,
-    "visibility": "STEALTH",
-    "score": 93,
-    "cost": 80000,
-    "range": 2200,
-    "warhead": 8165
-  },
-  {
-    "id": "110",
-    "name": "Protector RG Mk1 (GA-ASI MQ-9B)",
-    "type": "UAV",
-    "country": "UK",
-    "speed": 0.37,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "100-13700m",
-    "rcs": 0.3,
-    "visibility": "LOW",
-    "score": 55,
-    "cost": 15000,
-    "range": 8000,
-    "warhead": 1700
-  },
-  {
-    "id": "111",
-    "name": "F-35A Lightning II (JASDF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Japan",
-    "speed": 1.6,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18300m",
-    "rcs": 0.001,
-    "visibility": "STEALTH",
-    "score": 93,
-    "cost": 80000,
-    "range": 2200,
-    "warhead": 8165
-  },
-  {
-    "id": "112",
-    "name": "F-35B Lightning II (JASDF STOVL)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Japan",
-    "speed": 1.6,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15240m",
-    "rcs": 0.0015,
-    "visibility": "STEALTH",
-    "score": 91,
-    "cost": 95000,
-    "range": 1670,
-    "warhead": 6800
-  },
-  {
-    "id": "113",
-    "name": "F-2A Viper Zero (JASDF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Japan",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18000m",
-    "rcs": 1.2,
-    "visibility": "MEDIUM",
-    "score": 75,
-    "cost": 100000,
-    "range": 830,
-    "warhead": 8000
-  },
-  {
-    "id": "114",
-    "name": "RQ-4B Global Hawk (JASDF)",
-    "type": "UAV",
-    "country": "Japan",
-    "speed": 0.5,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "100-18000m",
-    "rcs": 0.25,
-    "visibility": "LOW",
-    "score": 55,
-    "cost": 120000,
-    "range": 22000,
-    "warhead": 0
-  },
-  {
-    "id": "115",
-    "name": "KF-21 Boramae (ROKAF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "South Korea",
-    "speed": 1.8,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-16700m",
-    "rcs": 0.05,
-    "visibility": "LOW",
-    "score": 85,
-    "cost": 65000,
-    "range": 2900,
-    "warhead": 7700
-  },
-  {
-    "id": "116",
-    "name": "F-15K Slam Eagle (ROKAF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "South Korea",
-    "speed": 2.5,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18300m",
-    "rcs": 4.2,
-    "visibility": "HIGH",
-    "score": 83,
-    "cost": 100000,
-    "range": 1800,
-    "warhead": 10400
-  },
-  {
-    "id": "117",
-    "name": "RQ-4 Block 30 Global Hawk (ROKAF)",
-    "type": "UAV",
-    "country": "South Korea",
-    "speed": 0.5,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "100-18000m",
-    "rcs": 0.25,
-    "visibility": "LOW",
-    "score": 55,
-    "cost": 120000,
-    "range": 22000,
-    "warhead": 0
-  },
-  {
-    "id": "118",
-    "name": "Eurofighter Typhoon FGR4 (RAF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "UK",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-19800m",
-    "rcs": 1,
-    "visibility": "LOW",
-    "score": 85,
-    "cost": 90000,
-    "range": 2900,
-    "warhead": 7500
-  },
-  {
-    "id": "119",
-    "name": "F-35B Lightning II (RAF)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "UK",
-    "speed": 1.6,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15240m",
-    "rcs": 0.0015,
-    "visibility": "STEALTH",
-    "score": 92,
-    "cost": 95000,
-    "range": 1670,
-    "warhead": 6800
-  },
-  {
-    "id": "120",
-    "name": "MQ-9A Reaper (RAF)",
-    "type": "UAV",
-    "country": "UK",
-    "speed": 0.4,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "100-15240m",
-    "rcs": 0.28,
-    "visibility": "LOW",
-    "score": 58,
-    "cost": 16000,
-    "range": 1850,
-    "warhead": 1700
-  },
-  {
-    "id": "121",
-    "name": "Rafale C (French Air Force)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "France",
-    "speed": 1.8,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15800m",
-    "rcs": 0.5,
-    "visibility": "LOW",
-    "score": 85,
-    "cost": 85000,
-    "range": 3700,
-    "warhead": 9500
-  },
-  {
-    "id": "122",
-    "name": "Rafale M (French Navy)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "France",
-    "speed": 1.8,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-15800m",
-    "rcs": 0.52,
-    "visibility": "LOW",
-    "score": 86,
-    "cost": 90000,
-    "range": 3700,
-    "warhead": 9500
-  },
-  {
-    "id": "123",
-    "name": "Mirage 2000-5F (French Air Force)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "France",
-    "speed": 2.2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-18000m",
-    "rcs": 1.5,
-    "visibility": "MEDIUM",
-    "score": 72,
-    "cost": 40000,
-    "range": 1550,
-    "warhead": 6300
-  },
-  {
-    "id": "124",
-    "name": "nEUROn UCAV (Stealth Drone)",
-    "type": "UAV",
-    "country": "France",
-    "speed": 0.85,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-14000m",
-    "rcs": 0.005,
-    "visibility": "STEALTH",
-    "score": 75,
-    "cost": 25000,
-    "range": 2000,
-    "warhead": 1000
-  },
-  {
-    "id": "125",
-    "name": "Eurofighter Typhoon (Luftwaffe)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Germany",
-    "speed": 2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "50-19800m",
-    "rcs": 1,
-    "visibility": "LOW",
-    "score": 84,
-    "cost": 90000,
-    "range": 2900,
-    "warhead": 7500
-  },
-  {
-    "id": "126",
-    "name": "Panavia Tornado IDS (Luftwaffe)",
-    "type": "FIGHTER_AIRCRAFT",
-    "country": "Germany",
-    "speed": 2.2,
-    "speedClass": "SUPERSONIC",
-    "altClass": "HIGH",
-    "altitude": "30-15000m",
-    "rcs": 6,
-    "visibility": "HIGH",
-    "score": 68,
-    "cost": 35000,
-    "range": 1390,
-    "warhead": 9000
-  },
-  {
-    "id": "127",
-    "name": "Heron TP (Luftwaffe UAV)",
-    "type": "UAV",
-    "country": "Germany",
-    "speed": 0.35,
-    "speedClass": "SUBSONIC",
-    "altClass": "HIGH",
-    "altitude": "100-13700m",
-    "rcs": 0.35,
-    "visibility": "LOW",
-    "score": 52,
-    "cost": 12000,
-    "range": 7400,
-    "warhead": 450
-  }
-];
+// lookup map for real-world ranges (km) and warheads (kg) for core threat assets
+const REAL_WORLD_SPECS: Record<string, { range: number; warhead: number }> = {
+  'Shaheen-III': { range: 2750, warhead: 500 },
+  'Ghauri-II': { range: 1800, warhead: 700 },
+  'Babur-3': { range: 450, warhead: 300 },
+  'Ra\'ad-II ALCM': { range: 600, warhead: 250 },
+  'JF-17 Thunder Block III': { range: 1350, warhead: 1200 },
+  'JF-17 Thunder Block II': { range: 1350, warhead: 1200 },
+  'J-10C (Educational Reference)': { range: 1850, warhead: 1000 },
+  'Nasr (Hatf-IX)': { range: 90, warhead: 150 },
+  'Shahpar-2': { range: 1000, warhead: 120 },
+  'Burraq UAV': { range: 1000, warhead: 100 },
+  'Akinci UCAV (PAF)': { range: 7500, warhead: 1350 },
+  'Bayraktar TB2 (UCAV)': { range: 300, warhead: 150 },
+  'Mirage III (PAF)': { range: 1200, warhead: 1000 },
+  'Mirage 5 (PAF)': { range: 1300, warhead: 1200 },
+  'Ababeel': { range: 2200, warhead: 1500 },
+  'Ghaznavi': { range: 290, warhead: 500 },
+  'Harbah': { range: 750, warhead: 300 },
+  'Fateh-1': { range: 140, warhead: 150 },
+  'Fateh-2': { range: 200, warhead: 200 },
+  'Taimoor ALCM': { range: 290, warhead: 200 },
+  'DF-21D (Educational Reference)': { range: 1770, warhead: 600 },
+  'CJ-20 ALCM (Educational Reference)': { range: 2000, warhead: 500 },
+  'Wing Loong II': { range: 1500, warhead: 480 },
+  'H-6K (Educational Reference)': { range: 6000, warhead: 12000 },
+  'CM-302': { range: 290, warhead: 250 },
+  'CH-901': { range: 15, warhead: 3.5 },
+  'C-802AK': { range: 180, warhead: 165 },
+  'C-705KD': { range: 140, warhead: 130 },
+  'DF-41 Heavy ICBM': { range: 13000, warhead: 2500 },
+  'DF-100 Supersonic LACM': { range: 1500, warhead: 500 },
+  'JH-7A': { range: 3100, warhead: 6500 },
+  'H-6K Strategic Bomber': { range: 6000, warhead: 12000 },
+  'H-6N': { range: 6500, warhead: 15000 },
+  'J-8II': { range: 1000, warhead: 2000 },
+  'J-11B': { range: 3500, warhead: 4000 },
+  'J-15 Flying Shark': { range: 3500, warhead: 4500 },
+  'J-35': { range: 2000, warhead: 2000 },
+  'Su-35S Flanker-E (Chinese)': { range: 3600, warhead: 8000 },
+  'J-20 Mighty Dragon': { range: 3400, warhead: 2500 },
+  'J-16': { range: 3900, warhead: 6000 },
+  'BrahMos Land-Attack': { range: 450, warhead: 300 },
+  'Nirbhay': { range: 1000, warhead: 450 },
+  'Agni-P (Agni-Prime)': { range: 2000, warhead: 1000 },
+  'Pralay': { range: 500, warhead: 400 },
+  'Su-30MKI': { range: 3000, warhead: 8000 },
+  'Rafale': { range: 3700, warhead: 6000 },
+  'Mirage 2000I': { range: 1550, warhead: 6300 },
+  'Tapas BH-201': { range: 1000, warhead: 350 },
+  'Archer ALFA': { range: 250, warhead: 50 },
+  'Pinaka Guided Rocket': { range: 90, warhead: 100 },
+  'ALS-50 Loitering Munition': { range: 50, warhead: 6 },
+  'Agni-I': { range: 900, warhead: 1000 },
+  'Agni-II': { range: 3000, warhead: 1000 },
+  'Agni-III': { range: 5000, warhead: 1500 },
+  'Agni-IV': { range: 4000, warhead: 1000 },
+  'Agni-V': { range: 8000, warhead: 1500 },
+  'Prithvi-I': { range: 150, warhead: 1000 },
+  'Prithvi-II': { range: 350, warhead: 500 },
+  'Prithvi-III': { range: 600, warhead: 1000 },
+  'Prahaar': { range: 150, warhead: 200 },
+  'Pragati': { range: 170, warhead: 200 },
+  'Suryastra Heavy MLRS': { range: 120, warhead: 150 },
+  'MiG-29UPG': { range: 2100, warhead: 4000 },
+  'Jaguar IS': { range: 1600, warhead: 4500 },
+  'MQ-9 Reaper (India)': { range: 1900, warhead: 1700 },
+  'IAI Heron TP (India)': { range: 1000, warhead: 450 },
+  'IAI Harop (India)': { range: 200, warhead: 23 },
+  'Minuteman III ICBM': { range: 13000, warhead: 1000 },
+  'PrSM Tactical Missile': { range: 500, warhead: 91 },
+  'F-16C/D Fighting Falcon (USA)': { range: 1500, warhead: 5000 },
+  'F-15C/D Eagle': { range: 1900, warhead: 0 },
+  'F-15E Strike Eagle': { range: 3900, warhead: 10400 },
+  'F-15EX Eagle II': { range: 3900, warhead: 13300 },
+  'F/A-18E/F Super Hornet': { range: 2300, warhead: 8000 },
+  'A-10C Warthog': { range: 1300, warhead: 7200 },
+  'B-1B Lancer': { range: 9400, warhead: 34000 },
+  'B-2A Spirit': { range: 11000, warhead: 23000 },
+  'B-52H Stratofortress': { range: 16000, warhead: 32000 },
+  'F-35A Lightning II (USA)': { range: 2200, warhead: 8100 },
+  'F-22 Raptor (USA)': { range: 2000, warhead: 2000 },
+  '3M22 Zircon Hypersonic LACM': { range: 1000, warhead: 400 },
+  'Tu-160M White Swan Bomber': { range: 12300, warhead: 40000 },
+  'Su-34 Fullback': { range: 4000, warhead: 12000 },
+  'MiG-31K Foxhound-D': { range: 2000, warhead: 800 },
+  'Tu-22M3 Backfire': { range: 6800, warhead: 24000 },
+  'Tu-95MS Bear': { range: 15000, warhead: 20000 },
+  'MiG-29SMT Fulcrum-E': { range: 1800, warhead: 4500 },
+  'MiG-35 Fulcrum-F': { range: 2000, warhead: 6000 },
+  'Su-27S Flanker-B': { range: 3500, warhead: 4430 },
+  'Su-30SM Flanker-H': { range: 3000, warhead: 8000 },
+  'MiG-31 Foxhound': { range: 1450, warhead: 0 },
+  'Su-35S Flanker-E': { range: 3600, warhead: 8000 },
+  'Su-57 Felon': { range: 3500, warhead: 6000 },
+  'Type-88 SSM Coastal Launcher': { range: 180, warhead: 225 },
+  'Type-93 ASM Airborne ALCM': { range: 170, warhead: 200 },
+  'F-15J Eagle (JASDF)': { range: 1900, warhead: 0 },
+  'F-15DJ Eagle (JASDF Trainer)': { range: 1900, warhead: 0 },
+  'F-35A Lightning II (JASDF)': { range: 2200, warhead: 8100 },
+  'F-35B Lightning II (JASDF STOVL)': { range: 1670, warhead: 6800 },
+  'F-2A Viper Zero (JASDF)': { range: 830, warhead: 6000 },
+  'RQ-4B Global Hawk (JASDF)': { range: 22000, warhead: 0 },
+  'Hyunmoo-5 Heavy Ballistic': { range: 300, warhead: 8000 },
+  'Hyunmoo-3C LACM': { range: 1500, warhead: 500 },
+  'FA-50 Block 20 / FA-50PL': { range: 1800, warhead: 4500 },
+  'KF-21 Boramae (ROKAF)': { range: 2900, warhead: 7700 },
+  'F-15K Slam Eagle (ROKAF)': { range: 3800, warhead: 10400 },
+  'RQ-4 Block 30 Global Hawk (ROKAF)': { range: 22000, warhead: 0 },
+  'SPEAR 3 Standoff ALCM': { range: 140, warhead: 40 },
+  'Protector RG Mk1 (GA-ASI MQ-9B)': { range: 11000, warhead: 1000 },
+  'Eurofighter Typhoon FGR4 (RAF)': { range: 2900, warhead: 7500 },
+  'F-35B Lightning II (RAF)': { range: 1670, warhead: 6800 },
+  'MQ-9A Reaper (RAF)': { range: 1850, warhead: 1700 },
+  'SCALP Naval (MdCN)': { range: 1400, warhead: 500 },
+  'AASM Hammer 1000 Glide Bomb': { range: 70, warhead: 1000 },
+  'Rafale C (French Air Force)': { range: 3700, warhead: 9500 },
+  'Rafale M (French Navy)': { range: 3700, warhead: 9500 },
+  'Mirage 2000-5F (French Air Force)': { range: 1550, warhead: 6300 },
+  'nEUROn UCAV (Stealth Drone)': { range: 2100, warhead: 500 },
+  'DeepStrike Missile (Standalone)': { range: 500, warhead: 200 },
+  'Eurofighter Typhoon (Luftwaffe)': { range: 2900, warhead: 7500 },
+  'Panavia Tornado IDS (Luftwaffe)': { range: 1390, warhead: 9000 },
+  'Heron TP (Luftwaffe UAV)': { range: 1000, warhead: 450 }
+};
+
+const mapCountry = (c: string): string => {
+  const mapping: Record<string, string> = {
+    'india': 'India',
+    'pakistan': 'Pakistan',
+    'usa': 'USA',
+    'china': 'China',
+    'russia': 'Russia',
+    'japan': 'Japan',
+    'south_korea': 'South Korea',
+    'uk': 'UK',
+    'france': 'France',
+    'germany': 'Germany',
+    'generic': 'Generic'
+  };
+  return mapping[c.toLowerCase()] || c.charAt(0).toUpperCase() + c.slice(1);
+};
+
+const mapType = (t: string): string => {
+  const mapping: Record<string, string> = {
+    'BALLISTIC': 'BALLISTIC_MISSILE',
+    'CRUISE': 'CRUISE_MISSILE',
+    'FIGHTER': 'FIGHTER_AIRCRAFT',
+    'UAV': 'UAV',
+    'SWARM': 'DRONE_SWARM',
+    'LOITERING_MUNITION': 'LOITERING_MUNITION',
+    'TACTICAL_MISSILE': 'TACTICAL_MISSILE',
+    'HYPERSONIC': 'HYPERSONIC'
+  };
+  return mapping[t] || t;
+};
+
+// Dynamically generate the THREATS list from the simulator catalog
+export const THREATS = mergedThreats.map((t: any, index: number) => {
+  const typeStr = mapType(t.type);
+  const countryStr = mapCountry(t.country);
+  
+  // Real world specs lookup or fallback
+  const lookup = REAL_WORLD_SPECS[t.name] || {
+    range: t.type === 'BALLISTIC' ? 1500 : t.type === 'CRUISE' ? 800 : t.type === 'FIGHTER' ? 2000 : 300,
+    warhead: t.type === 'BALLISTIC' ? 600 : t.type === 'CRUISE' ? 300 : t.type === 'FIGHTER' ? 1500 : 100
+  };
+
+  const speedClass = t.speed >= 5 ? 'HYPERSONIC' : t.speed >= 1.2 ? 'SUPERSONIC' : 'SUBSONIC';
+  const altClass = t.altitude >= 100000 ? 'EXOATMOSPHERIC' : t.altitude >= 25000 ? 'HIGH' : t.altitude >= 6000 ? 'MEDIUM' : 'LOW';
+  
+  // Visibility based on RCS
+  let visibility = 'MEDIUM';
+  if (t.rcs >= 5.0) visibility = 'VERY_HIGH';
+  else if (t.rcs >= 1.0) visibility = 'HIGH';
+  else if (t.rcs <= 0.01) visibility = 'STEALTH';
+  else if (t.rcs <= 0.1) visibility = 'LOW';
+
+  return {
+    id: t.id || `thr-${index}`,
+    name: t.name,
+    type: typeStr,
+    country: countryStr,
+    speed: t.speed,
+    speedClass,
+    altClass,
+    altitude: `0-${t.altitude}m`,
+    rcs: t.rcs,
+    visibility,
+    score: t.threatScore,
+    cost: Math.round(t.cost * 1000), // Cost in thousands of USD
+    range: lookup.range,
+    warhead: lookup.warhead
+  };
+});
 
 const THREAT_TYPES = [
   { value: '', label: 'All Types' },
-  { value: 'BALLISTIC_MISSILE', label: 'Ballistic Missile', color: '#ef4444' },
-  { value: 'CRUISE_MISSILE', label: 'Cruise Missile', color: '#f97316' },
-  { value: 'UAV', label: 'UAV', color: '#eab308' },
-  { value: 'DRONE_SWARM', label: 'Drone Swarm', color: '#a3e635' },
-  { value: 'FIGHTER_AIRCRAFT', label: 'Fighter Aircraft', color: '#22d3ee' },
-  { value: 'BOMBER_AIRCRAFT', label: 'Bomber', color: '#818cf8' },
-  { value: 'ATTACK_HELICOPTER', label: 'Attack Helicopter', color: '#c084fc' },
-  { value: 'LOITERING_MUNITION', label: 'Loitering Munition', color: '#f472b6' },
-  { value: 'TACTICAL_MISSILE', label: 'Tactical Missile', color: '#fb923c' },
-  { value: 'HYPERSONIC', label: 'Hypersonic', color: '#ff0055' },
+  { value: 'BALLISTIC_MISSILE', label: 'Ballistic Missile', color: '#dc2626' },
+  { value: 'CRUISE_MISSILE', label: 'Cruise Missile', color: '#d97706' },
+  { value: 'UAV', label: 'UAV', color: '#ca8a04' },
+  { value: 'DRONE_SWARM', label: 'Drone Swarm', color: '#84cc16' },
+  { value: 'FIGHTER_AIRCRAFT', label: 'Fighter Aircraft', color: '#38bdf8' },
+  { value: 'LOITERING_MUNITION', label: 'Loitering Munition', color: '#ec4899' },
+  { value: 'TACTICAL_MISSILE', label: 'Tactical Missile', color: '#f97316' },
+  { value: 'HYPERSONIC', label: 'Hypersonic Weapon', color: '#be123c' },
 ];
 
-const getTypeColor = (type: string) => THREAT_TYPES.find(t => t.value === type)?.color || '#6b7280';
-const getTypeLabel = (type: string) => THREAT_TYPES.find(t => t.value === type)?.label || type;
+const getTypeColor = (type: string) => THREAT_TYPES.find(t => t.value === type)?.color || '#64748b';
+const getTypeLabel = (type: string) => THREAT_TYPES.find(t => t.value === type)?.label || type.replace('_', ' ');
 
 function getScoreColor(score: number) {
-  if (score >= 90) return '#ff0055';
-  if (score >= 75) return '#ef4444';
-  if (score >= 60) return '#f59e0b';
-  return '#00ff88';
+  if (score >= 90) return '#be123c';
+  if (score >= 75) return '#dc2626';
+  if (score >= 60) return '#d97706';
+  return '#4ade80';
 }
 
 export default function ThreatsPage() {
@@ -2083,10 +243,11 @@ export default function ThreatsPage() {
   }, [search, type, sortBy]);
 
   return (
-    <div className="space-y-6">
-      <div className="card p-6">
-        <h1 className="text-2xl font-bold text-white mb-1">Threat Encyclopedia</h1>
-        <p className="text-sm text-[#6b7280]">Threat database — educational reference data from public sources</p>
+    <div className="space-y-4">
+      {/* Top Header Panel */}
+      <div className="card p-4">
+        <h1 className="text-base font-bold text-[#cbd5e1] tracking-wide uppercase font-mono">Threat Database</h1>
+        <p className="text-[11px] text-[#475569] font-mono mt-0.5">Tactical threat index — operational parameters based on declassified wargaming catalogs</p>
       </div>
 
       {/* Category Stats */}
@@ -2097,81 +258,96 @@ export default function ThreatsPage() {
             <button
               key={tt.value}
               onClick={() => setType(type === tt.value ? '' : tt.value)}
-              className={`card p-3 text-center transition-all ${type === tt.value ? 'border-opacity-50' : ''}`}
-              style={{ borderColor: type === tt.value ? tt.color : undefined }}
+              className={`card p-2 text-center transition-colors hover:bg-[rgba(148,163,184,0.02)] ${type === tt.value ? 'border-opacity-100 border-[#38bdf8]' : 'border-[rgba(148,163,184,0.08)]'}`}
             >
-              <div className="text-xl font-bold font-mono" style={{ color: tt.color }}>{count}</div>
-              <div className="text-[10px] text-[#6b7280] uppercase">{tt.label}</div>
+              <div className="text-lg font-bold font-mono" style={{ color: tt.color }}>{count}</div>
+              <div className="text-[9px] text-[#64748b] font-mono uppercase tracking-[0.05em] mt-0.5">{tt.label.split(' ')[0]}</div>
             </button>
           );
         })}
       </div>
 
       {/* Filters */}
-      <div className="card p-4 flex flex-wrap items-center gap-4">
-        <input type="text" value={search} onChange={e => setSearch(e.target.value)} placeholder="Search threats..." className="input-field max-w-xs" />
-        <select value={type} onChange={e => setType(e.target.value)} className="input-field max-w-xs">
+      <div className="card p-3 flex flex-wrap items-center gap-3">
+        <input 
+          type="text" 
+          value={search} 
+          onChange={e => setSearch(e.target.value)} 
+          placeholder="Filter by designation or nation..." 
+          className="input-field max-w-xs text-[11px] font-mono" 
+        />
+        <select 
+          value={type} 
+          onChange={e => setType(e.target.value)} 
+          className="input-field max-w-[180px] text-[11px] font-mono"
+        >
           {THREAT_TYPES.map(t => <option key={t.value} value={t.value}>{t.label}</option>)}
         </select>
-        <select value={sortBy} onChange={e => setSortBy(e.target.value as any)} className="input-field max-w-[150px]">
-          <option value="score">Threat Score</option>
-          <option value="speed">Speed</option>
-          <option value="range">Range</option>
-          <option value="cost">Cost</option>
+        <select 
+          value={sortBy} 
+          onChange={e => setSortBy(e.target.value as any)} 
+          className="input-field max-w-[140px] text-[11px] font-mono"
+        >
+          <option value="score">Sort: Threat Index</option>
+          <option value="speed">Sort: Velocity (Mach)</option>
+          <option value="range">Sort: Strike Range</option>
+          <option value="cost">Sort: Unit Cost</option>
         </select>
-        <span className="text-xs text-[#4b5563] ml-auto">{filtered.length} threats</span>
+        <span className="text-[10px] font-mono text-[#475569] ml-auto uppercase">{filtered.length} targets identified</span>
       </div>
 
       {/* Threat Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
         {filtered.map((threat, i) => (
-          <div key={threat.id} className="card p-5 animate-fade-in-up hover:border-white/10 transition-all" style={{ animationDelay: `${i * 40}ms` }}>
-            <div className="flex items-start justify-between mb-3">
-              <div>
-                <h3 className="text-sm font-bold text-white">{threat.name}</h3>
-                <p className="text-xs text-[#6b7280]">{threat.country}</p>
+          <div key={threat.id} className="card p-3 flex flex-col justify-between">
+            <div>
+              <div className="flex items-start justify-between mb-2">
+                <div>
+                  <h3 className="text-[12px] font-bold text-white font-mono">{threat.name}</h3>
+                  <p className="text-[10px] text-[#64748b] font-mono">{threat.country}</p>
+                </div>
+                <div className="flex items-center px-1.5 py-0.5" style={{ backgroundColor: `${getScoreColor(threat.score)}15`, border: `1px solid ${getScoreColor(threat.score)}30` }}>
+                  <span className="text-xs font-bold font-mono" style={{ color: getScoreColor(threat.score) }}>{threat.score}</span>
+                </div>
               </div>
-              <div className="flex items-center gap-1.5 px-2 py-1 rounded-lg" style={{ backgroundColor: `${getScoreColor(threat.score)}15` }}>
-                <span className="text-lg font-bold font-mono" style={{ color: getScoreColor(threat.score) }}>{threat.score}</span>
+
+              <span className="badge text-[9px] mb-2.5" style={{ backgroundColor: `${getTypeColor(threat.type)}15`, color: getTypeColor(threat.type), border: `1px solid ${getTypeColor(threat.type)}25` }}>
+                {getTypeLabel(threat.type)}
+              </span>
+
+              <div className="grid grid-cols-3 gap-2 mt-2 text-[10px] font-mono border-t border-[rgba(148,163,184,0.04)] pt-2.5">
+                <div>
+                  <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Velocity</span>
+                  <div className="text-[#cbd5e1] font-semibold mt-0.5">M {threat.speed}</div>
+                </div>
+                <div>
+                  <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Range</span>
+                  <div className="text-[#cbd5e1] font-semibold mt-0.5">{threat.range} km</div>
+                </div>
+                <div>
+                  <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">RCS Profile</span>
+                  <div className="text-[#cbd5e1] font-semibold mt-0.5">{threat.rcs} m²</div>
+                </div>
+                <div>
+                  <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Ceiling</span>
+                  <div className="text-[#cbd5e1] font-semibold mt-0.5 text-[9px] truncate">{threat.altitude}</div>
+                </div>
+                <div>
+                  <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Warhead</span>
+                  <div className="text-[#cbd5e1] font-semibold mt-0.5">{threat.warhead > 0 ? `${threat.warhead} kg` : 'N/A'}</div>
+                </div>
+                <div>
+                  <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Unit Cost</span>
+                  <div className="text-[#cbd5e1] font-semibold mt-0.5">${(threat.cost / 1000).toFixed(1)}M</div>
+                </div>
               </div>
             </div>
 
-            <span className="badge text-[10px] mb-3" style={{ backgroundColor: `${getTypeColor(threat.type)}22`, color: getTypeColor(threat.type), border: `1px solid ${getTypeColor(threat.type)}44` }}>
-              {getTypeLabel(threat.type)}
-            </span>
-
-            <div className="grid grid-cols-3 gap-2 mt-3 text-xs">
-              <div>
-                <span className="text-[#4b5563]">Speed</span>
-                <div className="font-mono text-[#e5e7eb]">Mach {threat.speed}</div>
-              </div>
-              <div>
-                <span className="text-[#4b5563]">Range</span>
-                <div className="font-mono text-[#e5e7eb]">{threat.range} km</div>
-              </div>
-              <div>
-                <span className="text-[#4b5563]">RCS</span>
-                <div className="font-mono text-[#e5e7eb]">{threat.rcs} m²</div>
-              </div>
-              <div>
-                <span className="text-[#4b5563]">Altitude</span>
-                <div className="font-mono text-[#e5e7eb] text-[11px]">{threat.altitude}</div>
-              </div>
-              <div>
-                <span className="text-[#4b5563]">Warhead</span>
-                <div className="font-mono text-[#e5e7eb]">{threat.warhead} kg</div>
-              </div>
-              <div>
-                <span className="text-[#4b5563]">Cost</span>
-                <div className="font-mono text-[#e5e7eb]">${threat.cost}K</div>
-              </div>
-            </div>
-
-            {/* Threat Level Bar */}
-            <div className="mt-3">
-              <div className="flex justify-between text-[10px] mb-1">
-                <span className="text-[#4b5563]">THREAT LEVEL</span>
-                <span style={{ color: getScoreColor(threat.score) }}>{threat.score}/100</span>
+            {/* Threat Index Level Bar */}
+            <div className="mt-3 border-t border-[rgba(148,163,184,0.04)] pt-2.5">
+              <div className="flex justify-between text-[8px] font-mono mb-1">
+                <span className="text-[#475569] uppercase tracking-[0.05em]">Threat Severity Profile</span>
+                <span style={{ color: getScoreColor(threat.score) }}>{threat.score}%</span>
               </div>
               <div className="progress-bar">
                 <div className="progress-fill" style={{ width: `${threat.score}%`, background: getScoreColor(threat.score) }} />

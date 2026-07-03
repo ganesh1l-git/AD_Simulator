@@ -1,688 +1,323 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import mergedDefenders from '../simulation/new/merged_defence_catalog.json';
+import mergedAttackers from '../simulation/new/merged_threat_catalog.json';
 
-// ---- DETAILED EDUCATIONAL DATABASE ----
-
-interface MissileVariant {
-  name: string;
-  type: string;
-  range: string;
-  speed: string;
-  cost: string;
-  guidance: string;
-  accuracy: string;
-  warhead: string;
+// Rich historical and operational manuals lookup map to inject detailed educational data
+// for simulator assets when viewed in the encyclopedia.
+interface EnrichmentData {
   description: string;
+  history: string;
+  achievements: string;
+  breakthrough: string;
 }
 
-interface SubComponent {
-  name: string;
-  type: string;
-  description: string;
-  qty: string;
-}
+const NARRATIVE_OVERLAYS: Record<string, EnrichmentData> = {
+  // --- DEFENDER SYSTEMS ---
+  'S-400': {
+    description: 'Premier mobile long-range surface-to-air missile system. Provides layered airspace denial against aircraft, cruise missiles, and medium-range ballistic targets.',
+    history: 'Developed by Almaz-Antey (Russia) in the 1990s as an upgrade to the S-300 PMU series. Entered Russian service in 2007. India signed a $5.4B contract for 5 regiments in 2018; deliveries began in 2021.',
+    achievements: 'Operational in major conflicts, serving as the core of Russia\'s A2/AD (Anti-Access/Area-Denial) zones in Kaliningrad, Crimea, and Syria. Deployed by India along northern and western borders.',
+    breakthrough: 'Features target-selection and guidance automation. Capable of firing the 40N6E active radar interceptor, enabling "over-the-horizon" target destruction by using active radar terminal locks.'
+  },
+  'Patriot': {
+    description: 'Highly mobile, combat-proven air and missile defence system. Designed to intercept tactical ballistic missiles, advanced cruise missiles, and aircraft.',
+    history: 'Developed by Raytheon (USA), entering service in 1984. Heavily upgraded under the PAC-2 and PAC-3 programs. Deployed by the US, NATO partners, Japan, South Korea, and Saudi Arabia.',
+    achievements: 'Achieved first-ever ballistic missile interception during the 1991 Gulf War. Used extensively in the Middle East to intercept Houthi-fired ballistic missiles and in Ukraine with highly documented intercepts of supersonic and hypersonic targets.',
+    breakthrough: 'Integration of the PAC-3 MSE (Missile Segment Enhancement) with Hit-To-Kill (HTK) technology, utilizing kinetic energy instead of a blast-fragmentation warhead to destroy incoming targets.'
+  },
+  'THAAD': {
+    description: 'Terminal High Altitude Area Defense system. Specialized in exoatmospheric interception of short, medium, and intermediate-range ballistic missiles in their terminal phase.',
+    history: 'Developed by Lockheed Martin (USA) in response to Scud missile threats in the Gulf War. Entered service in 2008. Deployed in Guam, South Korea, Hawaii, and Israel.',
+    achievements: 'Maintains a perfect 100% intercept record during developmental and operational testing. First operational combat intercept occurred in early 2022 in the UAE against incoming ballistic missiles.',
+    breakthrough: 'Operates the AN/TPY-2 X-band radar, one of the most powerful mobile radars in the world, enabling target classification and track data sharing across Patriot and Aegis batteries.'
+  },
+  'MRSAM': {
+    description: 'Medium-Range Surface-to-Air Missile system. Jointly developed by India (DRDO) and Israel (IAI) to protect land and naval units from aircraft, helicopters, cruise missiles, and UAVs.',
+    history: 'Born out of a collaborative agreement between India and Israel in the mid-2000s. Known as MRSAM in the Indian Air Force/Army, and Barak-8 in the Navy and Israel Defense Forces.',
+    achievements: 'Fully integrated across all modern Indian Navy front-line warships (Kolkata, Visakhapatnam classes) and operationalized by the Indian Air Force and Army in key sectors.',
+    breakthrough: 'Employs an advanced dual-pulse rocket motor coupled with an active RF terminal seeker, giving the missile extreme maneuverability (high-G turns) during the terminal intercept phase.'
+  },
+  'Barak': {
+    description: 'Surface-to-air missile system designed to defend naval assets and land bases against supersonic cruise missiles, fighter jets, and low-altitude guided weapons.',
+    history: 'Developed by Israel Aerospace Industries (IAI) and RAFAEL. Evolved from the point-defence Barak-1 to the medium-range Barak-8 and the long-range Barak-8 ER (Extended Range).',
+    achievements: 'Operational in the Israeli Navy, Indian Armed Forces, and exported to Azerbaijan, where it logged successful intercepts of tactical ballistic missiles.',
+    breakthrough: 'Uses vertical launch canisters with 360-degree coverage, combined with the MF-STAR Active Electronically Scanned Array (AESA) radar for multi-target tracking.'
+  },
+  'Akash': {
+    description: 'Short-to-medium range surface-to-air missile system developed in India. Designed to protect mobile army formations and air force installations.',
+    history: 'Developed by DRDO under the Integrated Guided Missile Development Programme (IGMDP) starting in the 1980s. Entered service in 2015 after extensive trials.',
+    achievements: 'Served as India\'s primary medium-range SAM for over a decade. Exported to Armenia in 2023, marking a milestone in Indian defence manufacturing.',
+    breakthrough: 'Utilizes a unique solid-fueled ramjet propulsion system, which allows the missile to maintain high velocity throughout its flight envelope without thrust decay.'
+  },
+  'IRIS-T': {
+    description: 'Highly advanced medium-range air defence system. Highly effective against cruise missiles, fighter jets, and low-flying drone arrays.',
+    history: 'Developed by Diehl Defence (Germany). Ground-based variant (IRIS-T SLM) entered production in the 2010s. Deployed in Ukraine in 2022 as one of their primary anti-cruise missile shields.',
+    achievements: 'Achieved an interception rate exceeding 95% under intense combat conditions in Ukraine, neutralizing cruise missiles and loitering munitions with high reliability.',
+    breakthrough: 'Equipped with a highly sensitive imaging infrared (IIR) terminal seeker, allowing it to ignore electronic jamming and flare countermeasures.'
+  },
+  'Pantsir': {
+    description: 'Combined short-range surface-to-air missile and anti-aircraft artillery system. Designed to protect point installations from low-flying cruise missiles, aircraft, and UAVs.',
+    history: 'Developed by KBP Instrument Design Bureau (Russia) in the 1990s as the successor to the Tunguska system. Operationalized in 2003.',
+    achievements: 'Deployed extensively in Syria and Ukraine. Used by Russia and various Middle Eastern export partners to intercept tactical drones and guided munitions.',
+    breakthrough: 'Integrates two rapid-fire 30mm auto-cannons with 12 radio-command guided missiles on a single mobile chassis, providing dual-layer point interception.'
+  },
+  'Iron Dome': {
+    description: 'Mobile all-weather air defence system. Designed to intercept short-range rockets, artillery shells, and mortar rounds.',
+    history: 'Developed by Rafael Advanced Defense Systems (Israel) in the late 2000s to counter rocket attacks. Entered service in 2011.',
+    achievements: 'Successfully intercepted over 4,000 rockets with an interception rate of 90-95% during various border conflicts, preventing extensive civilian casualties.',
+    breakthrough: 'Utilizes the Tamir interceptor equipped with proximity fuzing and dynamic trajectory steering guided by EL/M-2084 active radar tracking.'
+  },
+  'HQ-9': {
+    description: 'Long-range semi-active/active radar homing surface-to-air missile system. Provides theater-level air and missile defence.',
+    history: 'Developed by CASIC (China) starting in the 1980s, heavily influenced by Russian S-300 and American Patriot design concepts. HQ-9P is the export variant supplied to Pakistan.',
+    achievements: 'Forms the backbone of China\'s domestic area defence network and is deployed on Type 052D/055 naval destroyers. Entered Pakistan Army service in 2021.',
+    breakthrough: 'First Chinese SAM system to implement a phased-array radar system capable of tracking up to 100 targets and engaging 6 simultaneously.'
+  },
 
-interface EncyclopediaItem {
-  id: string;
-  name: string;
-  category: string;
-  country: string;
-  cost: string;
-  description: string;
-  isIndian: boolean;
-  
-  // Detailed Military Structure
-  composition?: SubComponent[];
-  missiles?: MissileVariant[];
-  
-  // For Launchers (Attacker Platforms)
-  speed?: string;
-  altitude?: string;
-  range?: string;
-  payloadCapacity?: string;
-  payloadCarriage?: string[];
-  guidance?: string;
-  warhead?: string;
-}
-
-const DEFENDER_SYSTEMS: EncyclopediaItem[] = [
-  {
-    id: 'def-s400',
-    name: 'S-400 Triumf Regiment',
-    category: 'LONG_RANGE',
-    country: 'Russia/India',
-    cost: '$1.09 Billion (Regiment Cost)',
-    isIndian: true,
-    description: 'Premier mobile long-range surface-to-air missile system. In this Indian regiment model, one regiment fields 2 batteries, 16 launchers, 64 ready missiles, 2 engagement radars, and 1 surveillance radar.',
-    composition: [
-      { name: '55K6E Command & Control Post', type: 'C2 Vehicle', qty: '1 per Regiment (Central control)', description: 'Central combat management station that coordinates radar feeds and battery assignments.' },
-      { name: '91N6E Acquisition Radar (S-band)', type: 'Surveillance Radar', qty: '1 per Regiment', description: 'Panoramic 3D radar with 600km range, tracks up to 300 targets simultaneously.' },
-      { name: '92N6E Grave Stone Radar (X-band)', type: 'Fire Control Radar', qty: '2 per Regiment (1 per Battalion)', description: 'Target acquisition and engagement radar with 400km range, guides up to 12 missiles against 6 targets simultaneously.' },
-      { name: '5P85TE2 Self-Propelled Launcher', type: 'TEL Vehicle', qty: '16 per Regiment (4 missiles each)', description: 'Launcher trucks, each equipped with 4 ready-to-fire launch canisters, for 64 ready missiles per regiment.' }
-    ],
-    missiles: [
-      {
-        name: '40N6E Ultra Long-Range',
-        type: 'Active Radar Homing',
-        range: '400 km',
-        speed: 'Mach 12.0 (3100 m/s)',
-        cost: '$2.5 Million',
-        guidance: 'Inertial + Active Radar terminal homing',
-        accuracy: '92%',
-        warhead: '180 kg Blast Fragmentation',
-        description: 'Designed to target high-value airborne assets (AWACS, tankers) and ballistic missiles at extreme range.'
-      },
-      {
-        name: '48N6DM Long-Range',
-        type: 'Semi-Active Radar Homing',
-        range: '250 km',
-        speed: 'Mach 6.0 (2000 m/s)',
-        cost: '$1.5 Million',
-        guidance: 'Track-Via-Missile (TVM) semi-active guidance',
-        accuracy: '88%',
-        warhead: '180 kg HE-Frag',
-        description: 'The standard heavy interceptor for high-altitude aircraft and supersonic cruise missiles.'
-      },
-      {
-        name: '9M96E2 Medium-Range',
-        type: 'Active Radar / Hit-To-Kill',
-        range: '120 km',
-        speed: 'Mach 4.5 (1500 m/s)',
-        cost: '$0.8 Million',
-        guidance: 'Active radar terminal seeker with gas-dynamic thrusters',
-        accuracy: '85%',
-        warhead: '24 kg Directed HE-Frag',
-        description: 'Highly agile interceptor designed for kinetic hit-to-kill against maneuvering fighters and cruise missiles.'
-      }
-    ]
+  // --- ATTACKER SYSTEMS ---
+  'JF-17': {
+    description: 'Lightweight, single-engine, multi-role combat aircraft. Developed to perform air-to-ground strike and air-to-air interception roles.',
+    history: 'Jointly developed by the Pakistan Aeronautical Complex (PAC) and Chengdu Aircraft Corporation (CAC) of China. First flight in 2003, with Block III entering production in 2020.',
+    achievements: 'Serves as the workhorse of the Pakistan Air Force (PAF). Participated in Border operations, claiming aerial victories and conducting stand-off guided strikes.',
+    breakthrough: 'Block III integrates the KLJ-7A Active Electronically Scanned Array (AESA) radar, a helmet-mounted display (HMD), and compatibility with the PL-15 long-range air-to-air missile.'
   },
-  {
-    id: 'def-barak8er',
-    name: 'Barak 8 ER SAM Regiment',
-    category: 'MEDIUM_RANGE',
-    country: 'India/Israel',
-    cost: '$650 Million (Regiment Cost)',
-    isIndian: true,
-    description: 'Extended Range version of the MRSAM system. This regiment model contains 4 firing units, 12 launchers, 96 ready missiles, and 4 radars. Each launcher carries 8 canisterized missiles.',
-    composition: [
-      { name: 'Firing Unit / Battery', type: 'Firing Unit', qty: '4 per Regiment', description: 'Distributed firing units that coordinate launcher and radar activity.' },
-      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar (S-band)', qty: '4 per Regiment', description: 'Advanced AESA radars for low-altitude targets and cruise missile tracking.' },
-      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: '12 per Regiment', description: '8-cell vertical launchers, totaling 96 ready canisterized missiles.' }
-    ],
-    missiles: [
-      {
-        name: 'Barak-8 ER (Extended Range)',
-        type: 'Active Radar Homing',
-        range: '150 km',
-        speed: 'Mach 3.0',
-        cost: '$1.2 Million',
-        guidance: 'Dual pulse rocket motor + Active RF terminal seeker',
-        accuracy: '88%',
-        warhead: '60 kg HE-Frag',
-        description: 'Equipped with a booster to intercept aircraft and stand-off missiles before launch.'
-      }
-    ]
+  'F-16': {
+    description: 'Highly maneuverable, single-engine multi-role fighter jet. Capable of executing diverse air superiority, strike, and SEAD (Suppression of Enemy Air Defences) missions.',
+    history: 'Developed by General Dynamics (USA) in the 1970s. Over 4,600 units built and operated by 25 nations. Pakistan acquired its first batch in 1983.',
+    achievements: 'Accumulated over 70 aerial combat victories globally with zero losses. Used extensively by Pakistan in strike operations and border defense.',
+    breakthrough: 'Evolution to the Block 52+ standard introduced conformal fuel tanks (CFTs) for extended strike ranges, advanced AN/APG-68(V)9 radar, and satellite-guided weapon integration.'
   },
-  {
-    id: 'def-mrsam',
-    name: 'MRSAM / Barak-8 Regiment',
-    category: 'MEDIUM_RANGE',
-    country: 'India/Israel',
-    cost: '$500 Million (Regiment Cost)',
-    isIndian: true,
-    description: 'Jointly developed by DRDO (India) and IAI (Israel), this regiment model contains 4 firing units, 12 launchers, 96 ready missiles, and 4 radars. Each launcher carries 8 canisterized missiles.',
-    composition: [
-      { name: 'Firing Unit / Battery', type: 'Firing Unit', qty: '4 per Regiment', description: 'Distributed firing units that coordinate launcher and radar activity.' },
-      { name: 'MF-STAR Multi-Function Radar', type: 'Active AESA Radar (S-band)', qty: '4 per Regiment', description: 'Advanced AESA radars for low-altitude targets and cruise missile tracking.' },
-      { name: 'Vertical Launcher Unit (VLU)', type: 'Launcher Truck (8 cells)', qty: '12 per Regiment', description: '8-cell vertical launchers, totaling 96 ready canisterized missiles.' }
-    ],
-    missiles: [
-      {
-        name: 'Barak-8 Standard',
-        type: 'Active Radar Homing',
-        range: '70 km',
-        speed: 'Mach 2.0',
-        cost: '$1.0 Million',
-        guidance: 'Active RF terminal seeker + bidirectional data-link',
-        accuracy: '85%',
-        warhead: '60 kg HE-Frag',
-        description: 'Highly maneuverable interceptor for defending local sectors against low-flying cruise missiles.'
-      }
-    ]
+  'J-20': {
+    description: 'Fifth-generation, twin-engine stealth fighter aircraft. Optimized for long-range air superiority and precision intercept missions.',
+    history: 'Developed by Chengdu Aerospace Corporation (China). First flight in 2011, entered operational service with the PLAAF in 2017.',
+    achievements: 'Established China as the second nation to deploy an operational indigenous stealth fighter. Routinely patrols the East and South China Seas.',
+    breakthrough: 'Incorporates stealth coatings, internal weapon bays, active sensor fusion via AESA radar, electro-optical targeting systems (EOTS), and passive infrared tracking.'
   },
-  {
-    id: 'def-akashng',
-    name: 'Akash-NG Regiment',
-    category: 'MEDIUM_RANGE',
-    country: 'India',
-    cost: '$480 Million (Estimated Regiment Cost)',
-    isIndian: true,
-    description: 'Estimated future Akash-NG regiment structure with 3 batteries, 12 launchers, 72 ready missiles, 3 AESA fire-control radars, and 1 surveillance radar.',
-    composition: [
-      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: '3 per Regiment', description: 'Future regiment-level firing units.' },
-      { name: 'AESA Fire Control Radar', type: 'Fire Control Radar', qty: '3 per Regiment', description: 'Fire-control radar allocation for the three firing units.' },
-      { name: 'Surveillance Radar', type: 'Surveillance Radar', qty: '1 per Regiment', description: 'Regiment-level early warning and target surveillance radar.' },
-      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Launcher (6 cells)', qty: '12 per Regiment', description: 'Launchers with 6 ready missiles each, totaling 72 ready missiles.' }
-    ],
-    missiles: [
-      {
-        name: 'Akash-NG Interceptor',
-        type: 'Active RF Seeker',
-        range: '80 km',
-        speed: 'Mach 3.5',
-        cost: '$0.3 Million',
-        guidance: 'Dual-pulse rocket motor + indigenous active RF seeker',
-        accuracy: '85%',
-        warhead: '25 kg Pre-fragmented HE',
-        description: 'Next-generation solid fuel interceptor with terminal active RF seeker.'
-      }
-    ]
+  'Rafale': {
+    description: 'Twin-engine, delta-wing multi-role "omnirole" combat aircraft. Capable of performing air defense, deep strike, anti-ship, and nuclear deterrence missions.',
+    history: 'Developed by Dassault Aviation (France) after exiting the Eurofighter program. Entered service in 2001. Acquired by India (36 units) in 2016.',
+    achievements: 'Proven in combat operations over Afghanistan, Libya, Iraq, and Mali. Serves as a premier strategic platform for both France and the IAF.',
+    breakthrough: 'Features the RBE2 AESA radar integrated with the SPECTRA electronic warfare suite, allowing target jamming and stealth penetration.'
   },
-  {
-    id: 'def-akash',
-    name: 'Akash SAM Regiment',
-    category: 'MEDIUM_RANGE',
-    country: 'India',
-    cost: '$350 Million (Regiment Cost)',
-    isIndian: true,
-    description: 'Indigenous Akash surface-to-air missile regiment with 4 batteries, 16 launchers, 48 ready missiles, and 4 Rajendra radars.',
-    composition: [
-      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: '4 per Regiment', description: 'Regiment-level Akash firing units.' },
-      { name: 'Rajendra Radar', type: 'Fire Control Radar', qty: '4 per Regiment', description: 'Battery-level Rajendra radar for target tracking and missile guidance.' },
-      { name: 'Mobile Launcher Unit (ML)', type: 'TEL Launcher (3 cells)', qty: '16 per Regiment', description: 'Launchers with 3 ready missiles each, totaling 48 ready missiles.' }
-    ],
-    missiles: [
-      {
-        name: 'Akash Standard',
-        type: 'Command Guided',
-        range: '30 km',
-        speed: 'Mach 2.5',
-        cost: '$0.2 Million',
-        guidance: 'Command guidance via fire control radar',
-        accuracy: '75%',
-        warhead: '60 kg HE-Frag',
-        description: 'DRDO standard interceptor featuring ramjet propulsion and command tracking.'
-      }
-    ]
+  'Su-30MKI': {
+    description: 'Heavy, twin-engine multi-role air superiority fighter. Features thrust-vectoring engines and canards for high maneuverability.',
+    history: 'Custom variant of the Su-30 developed by Sukhoi (Russia) specifically for the Indian Air Force and manufactured under license by HAL since 2002.',
+    achievements: 'Forms the operational backbone of the Indian Air Force with over 260 aircraft in service. Successfully modified to launch the BrahMos-A supersonic cruise missile.',
+    breakthrough: 'Integrated the N011M Bars passive electronically scanned array (PESA) radar, combining Russian airframe design with French, Israeli, and Indian avionics.'
   },
-  {
-    id: 'def-pechora2m',
-    name: 'Pechora-2M SAM Battery',
-    category: 'MEDIUM_RANGE',
-    country: 'Russia/India',
-    cost: '$15 Million (Battery Cost)',
-    isIndian: true,
-    description: 'Upgraded mobile version of the S-125 Pechora-2M system. Operates upgraded electronic warfare suites and modern command vehicles to extend operational life, targeting medium-altitude tactical aircraft and cruise missiles.',
-    composition: [
-      { name: 'UNV-2M Command Cabin', type: 'Guidance Cabin', qty: '1 per Battery', description: 'Processes target data and transmits command guidance signals.' },
-      { name: 'Pechora-2M 5P73 TEL Launcher', type: 'Launcher Trailer (2 rails)', qty: '4 per Battery', description: '2-rail mobile launchers, providing rapid setup times and deployment mobility.' }
-    ],
-    missiles: [
-      {
-        name: '5V27DE Interceptor',
-        type: 'Command Guided',
-        range: '35 km',
-        speed: 'Mach 3.5',
-        cost: '$0.1 Million',
-        guidance: 'Command guided radio control + optical tracking option',
-        accuracy: '72%',
-        warhead: '60 kg HE-Frag',
-        description: 'Command-guided heavy missile upgraded for Pechora-2M launchers.'
-      }
-    ]
-  },
-  {
-    id: 'def-qrsam',
-    name: 'QRSAM Regiment',
-    category: 'SHORT_RANGE',
-    country: 'India',
-    cost: '$600 Million (Estimated Regiment Cost)',
-    isIndian: true,
-    description: 'Estimated QRSAM regiment structure with 3 batteries, 12 launchers, 72 ready missiles, 3 AESA radars, and 1 surveillance radar.',
-    composition: [
-      { name: 'Battery / Firing Unit', type: 'Firing Unit', qty: '3 per Regiment', description: 'Quick-reaction firing units for mobile air defence.' },
-      { name: 'AESA Radar', type: 'Engagement Radar', qty: '3 per Regiment', description: 'Battery-level AESA radar allocation.' },
-      { name: 'Surveillance Radar', type: 'Surveillance Radar', qty: '1 per Regiment', description: 'Regiment-level surveillance radar.' },
-      { name: 'Quick Reaction Launcher (QRL)', type: 'TEL Vehicle (6 cells)', qty: '12 per Regiment', description: 'Launchers with 6 canister-based quick-launch missiles, totaling 72 ready missiles.' }
-    ],
-    missiles: [
-      {
-        name: 'QRSAM Missile',
-        type: 'Active Radar Homing',
-        range: '30 km',
-        speed: 'Mach 3.0',
-        cost: '$0.15 Million',
-        guidance: 'Mid-course inertial + terminal active RF homing',
-        accuracy: '82%',
-        warhead: '15 kg HE-Frag',
-        description: 'Single-stage solid propellant weapon with quick launch, multi-directional reaction capabilities.'
-      }
-    ]
-  },
-  {
-    id: 'def-spyder',
-    name: 'SPYDER SAM Battery',
-    category: 'SHORT_RANGE',
-    country: 'Israel/India',
-    cost: '$50 Million (Battery Cost)',
-    isIndian: true,
-    description: 'Surface-to-air Python and Derby (SPYDER) mobile air defence battery. Operating highly agile infrared Python-5 and active radar Derby missiles for quick-reaction point defence against cruise missiles, fighter jets, and low-altitude UAVs.',
-    composition: [
-      { name: 'Mobile Command & Control Post (MCP)', type: 'Tactical C2', qty: '1 per Battery', description: 'Receives air surveillance data and handles weapon assignments.' },
-      { name: 'EL/M-2106 ATAR 3D Surveillance Radar', type: 'Surveillance Radar', qty: '1 per Battery', description: 'Tracks up to 60 targets simultaneously at ranges up to 180km.' },
-      { name: 'SPYDER Mobile Launcher (Derby/Python-5)', type: 'TEL Launcher (4 rails)', qty: '6 per Battery', description: 'Launcher trucks equipped with 4 ready-to-fire interceptors each, totaling 24 ready missiles.' }
-    ],
-    missiles: [
-      {
-        name: 'Derby Interceptor',
-        type: 'Active Radar Homing',
-        range: '50 km',
-        speed: 'Mach 4.0',
-        cost: '$0.5 Million',
-        guidance: 'Active radar terminal homing + data link',
-        accuracy: '82%',
-        warhead: '23 kg HE-Frag',
-        description: 'Active radar-homing interceptor for SPYDER system, highly effective against maneuvering targets.'
-      },
-      {
-        name: 'Python-5 Interceptor',
-        type: 'Dual-band IR/CCD Seeker',
-        range: '20 km',
-        speed: 'Mach 4.0',
-        cost: '$0.3 Million',
-        guidance: 'Dual-band IR/CCD imaging seeker + lock-on after launch',
-        accuracy: '82%',
-        warhead: '11 kg HE-Frag',
-        description: 'Infrared-homing point defence missile with full sphere capability and high countermeasure resistance.'
-      }
-    ]
-  },
-  {
-    id: 'def-iglas',
-    name: 'Igla-S MANPADS Team',
-    category: 'VERY_SHORT_RANGE',
-    country: 'Russia',
-    cost: '$1.0 Million (Team Package)',
-    isIndian: false,
-    description: 'Man-portable short-range air defence weapon system. Deployed by light infantry teams to engage low-flying helicopters, jets, and UAVs.',
-    composition: [
-      { name: 'Igla-S Launch Grip-stock', type: 'Launcher Tube', qty: '4 per Team', description: 'Shoulder-mounted launch mechanism.' },
-      { name: 'Optical Target Pointer', type: 'Target Sight', qty: '4 per Team', description: 'Allows manual locking and thermal visualization.' }
-    ],
-    missiles: [
-      {
-        name: 'Igla-S 9M342',
-        type: 'Passive Infrared Homing',
-        range: '6 km',
-        speed: 'Mach 1.5',
-        cost: '$0.05 Million',
-        guidance: 'Dual-band passive infrared seeker (IR/UV tracking)',
-        accuracy: '65%',
-        warhead: '2.5 kg HE-Frag with laser fuze',
-        description: 'Shoulder-fired infrared tracking missile designed to intercept targets using thermal exhaust signatures.'
-      }
-    ]
-  },
-  {
-    id: 'def-vshoradmanpad',
-    name: 'VSHORAD MANPADS Team',
-    category: 'VERY_SHORT_RANGE',
-    country: 'India',
-    cost: '$0.15 Million (Unit Cost)',
-    isIndian: true,
-    description: 'Indigenous Very Short Range Air Defence System (VSHORAD) MANPADS developed by DRDO. Deployed by shoulder-fired operators to defend point assets against low-altitude attack helicopters, subsonic cruise missiles, and UAVs using advanced dual-band IR seekers.',
-    composition: [
-      { name: 'DRDO VSHORAD Launcher', type: 'MANPADS Launcher', qty: '4 per Team', description: 'Indigenous shoulder-fired launching mechanism.' },
-      { name: 'Optical Target Acquisition Sight', type: 'Target Scope', qty: '4 per Team', description: 'Visual and thermal acquisition assist sensor.' }
-    ],
-    missiles: [
-      {
-        name: 'DRDO VSHORAD',
-        type: 'Dual-band IR Seeker',
-        range: '6.5 km',
-        speed: 'Mach 2.5',
-        cost: '$0.08 Million',
-        guidance: 'Dual-band passive infrared homing',
-        accuracy: '70%',
-        warhead: '2.5 kg HE-Frag',
-        description: 'Shoulder-fired very short range interceptor developed by DRDO.'
-      }
-    ]
-  },
-  {
-    id: 'def-arudhra',
-    name: 'Arudhra AESA Radar Station',
-    category: 'RADAR',
-    country: 'India',
-    cost: '$100 Million',
-    isIndian: true,
-    description: 'IAF primary Medium Power Radar. A 4D Active Electronically Scanned Array (AESA) radar providing long-range battlefield monitoring.',
-    composition: [
-      { name: 'Rotating AESA Antenna Unit', type: 'Radar Array (500km range)', qty: '1 per Station', description: 'Transmits and receives radar beams in S-band.' },
-      { name: 'Signal Processing Container', type: 'Tactical Shelter', qty: '1 per Station', description: 'Decodes signals, tracks radar returns, and filters jamming.' }
-    ],
-    missiles: []
+  'BrahMos': {
+    description: 'Medium-range ramjet supersonic cruise missile. Capable of being launched from submarines, ships, aircraft, or land-based mobile platforms.',
+    history: 'Developed as a joint venture between India\'s DRDO and Russia\'s NPO Mashinostroyeniya, based on the P-800 Oniks cruise missile technology.',
+    achievements: 'Widely cited as the world\'s fastest operational anti-ship and land-attack cruise missile. Exported to the Philippines in 2024.',
+    breakthrough: 'Propelled by a solid propellant booster stage followed by a liquid ramjet engine, maintaining a continuous speed of Mach 3.0 throughout its flight profile.'
   }
-];
+};
 
-const ATTACKER_SYSTEMS: EncyclopediaItem[] = [
-  {
-    id: 'att-jf17',
-    name: 'JF-17 Block III Fighter Jet',
-    category: 'FIGHTER',
-    country: 'Pakistan/China',
-    cost: '$35.0 Million (Unit Cost)',
-    isIndian: false,
-    description: 'Lightweight multirole fighter aircraft equipped with KLJ-7A AESA radar and integrated ECM jamming systems. Acts as a stand-off weapon carriage platform to deploy precision bombs and cruise missiles.',
-    speed: 'Mach 1.6',
-    altitude: '15,000 meters',
-    range: '1,350 km combat radius',
-    payloadCapacity: '3,700 kg payload on 7 hardpoints',
-    payloadCarriage: [
-      'PL-15E BVRAAM (Active AESA air-to-air, Range 145km) — Up to 4 units',
-      'HD-1A Cruise Missile (Supersonic stand-off land-attack, Range 290km) — Up to 2 units',
-      'LS-6 Precision Glide Bomb (GPS folded-wing glide bomb, Range 60km) — Up to 4 units',
-      'GB-250 Dumb Bomb (Unguided free-fall gravity bomb, Range 2km) — Up to 4 units'
-    ]
-  },
-  {
-    id: 'att-f16',
-    name: 'F-16 Block 52+ Fighter',
-    category: 'FIGHTER',
-    country: 'USA/Pakistan',
-    cost: '$40.0 Million (Unit Cost)',
-    isIndian: false,
-    description: 'Highly agile multirole fighter aircraft, equipped with AN/APG-68(V)9 radar and conformal fuel tanks. Acts as a premier air superiority and stand-off attack platform.',
-    speed: 'Mach 2.0',
-    altitude: '15,240 meters',
-    range: '1,500 km combat radius',
-    payloadCapacity: '7,700 kg payload on 9 hardpoints',
-    payloadCarriage: [
-      'AIM-120C AMRAAM (Active radar air-to-air, Range 105km) — Up to 4 units',
-      'AGM-84 Harpoon (Subsonic land-attack/anti-ship cruise, Range 124km) — Up to 2 units',
-      'AGM-88 HARM (Supersonic anti-radiation targeting radars, Range 150km) — Up to 2 units',
-      'GBU-31 JDAM (GPS guided precision bomb, Range 28km) — Up to 4 units'
-    ]
-  },
-  {
-    id: 'att-mirage3',
-    name: 'Mirage III Fighter Jet',
-    category: 'FIGHTER',
-    country: 'France/Pakistan',
-    cost: '$15.0 Million (Unit Cost)',
-    isIndian: false,
-    description: 'Delta-wing supersonic multirole fighter aircraft, upgraded with modern retrofitted avionics. Frequently configured to carry stand-off nuclear/conventional cruise missiles like Ra\'ad.',
-    speed: 'Mach 2.2',
-    altitude: '17,000 meters',
-    range: '1,200 km combat radius',
-    payloadCapacity: '4,000 kg payload on 5 hardpoints',
-    payloadCarriage: [
-      'Ra\'ad ALCM (Stand-off cruise missile, Range 350km) — Up to 1 unit',
-      'R.550 Magic II SRAAM (Infrared guided point defence, Range 15km) — Up to 2 units',
-      'GBU-12 Paveway II (Laser-guided precision bomb, Range 15km) — Up to 2 units'
-    ]
-  },
-  {
-    id: 'att-mirage5',
-    name: 'Mirage 5 Fighter Jet',
-    category: 'FIGHTER',
-    country: 'France/Pakistan',
-    cost: '$18.0 Million (Unit Cost)',
-    isIndian: false,
-    description: 'Supersonic ground-attack variant of the Mirage delta-wing line. Extensively upgraded under the ROSE program for night-strike and standoff precision guidance weapon carriage.',
-    speed: 'Mach 2.2',
-    altitude: '16,000 meters',
-    range: '1,300 km combat radius',
-    payloadCapacity: '4,000 kg payload on 7 hardpoints',
-    payloadCarriage: [
-      'Ra\'ad-II ALCM (Extended-range stand-off cruise, Range 600km) — Up to 1 unit',
-      'H-2 SOW (Precision guided standoff glide bomb, Range 60km) — Up to 2 units',
-      'H-4 SOW (Precision guided standoff glide bomb, Range 120km) — Up to 2 units'
-    ]
-  },
-  {
-    id: 'att-wingloong',
-    name: 'Wing Loong II UAV',
-    category: 'UAV',
-    country: 'China',
-    cost: '$5.0 Million (Unit Cost)',
-    isIndian: false,
-    description: 'Medium-Altitude Long-Endurance (MALE) unmanned combat aerial vehicle. Deployed for low-altitude reconnaissance, radar tracking, and precision guided stand-off strikes.',
-    speed: 'Mach 0.3 (370 km/h)',
-    altitude: '9,000 meters',
-    range: '4,000 km ferry range (20-hour endurance)',
-    payloadCapacity: '480 kg external weapon load on 6 hardpoints',
-    payloadCarriage: [
-      'AR-1 Laser-Guided Missile (Semi-active laser tank-buster, Range 8km) — Up to 8 units',
-      'FT-9 Precision guided bomb (Small tactical GPS guided bomb, Range 5km) — Up to 6 units',
-      'GB-25 Dumb Bomb (Small unguided gravity drop bomb, Range 2km) — Up to 4 units'
-    ]
-  },
-  {
-    id: 'att-shahpar2',
-    name: 'Shahpar-2 UAV',
-    category: 'UAV',
-    country: 'Pakistan',
-    cost: '$2.0 Million (Unit Cost)',
-    isIndian: false,
-    description: 'Indigenous MALE drone developed by GIDS. Used for military-grade reconnaissance, surveillance, and tactical precision ground-strike missions.',
-    speed: 'Mach 0.18 (220 km/h)',
-    altitude: '6,000 meters',
-    range: '1,000 km range (14-hour endurance)',
-    payloadCapacity: '120 kg payload on 4 hardpoints',
-    payloadCarriage: [
-      'Barq Laser Guided Missile (Semi-active laser guided anti-armor, Range 8km) — Up to 4 units'
-    ]
-  },
-  {
-    id: 'att-burraq',
-    name: 'Burraq UAV',
-    category: 'UAV',
-    country: 'Pakistan',
-    cost: '$1.5 Million (Unit Cost)',
-    isIndian: false,
-    description: 'Tactical armed drone system capable of flying in all weather conditions to execute precision strikes against ground-level point assets.',
-    speed: 'Mach 0.18 (220 km/h)',
-    altitude: '7,500 meters',
-    range: '1,000 km range (10-hour endurance)',
-    payloadCapacity: '100 kg payload on 2 hardpoints',
-    payloadCarriage: [
-      'Barq Laser Guided Missile (Semi-active laser guided, Range 8km) — Up to 2 units'
-    ]
-  },
-  {
-    id: 'att-shaheen3',
-    name: 'Shaheen-III MRBM',
-    category: 'BALLISTIC',
-    country: 'Pakistan',
-    cost: '$10.0 Million (Est. Unit Cost)',
-    isIndian: false,
-    description: 'Solid-fueled Medium-Range Ballistic Missile (MRBM). Deployed to strike strategic infrastructure, flying in a parabolic exo-atmospheric arc before descending at hypersonic speeds.',
-    speed: 'Mach 12.0 terminal',
-    altitude: 'Apogee up to 120,000 meters (exo-atmospheric)',
-    range: '2,750 km',
-    guidance: 'Inertial Guidance + GPS/BeiDou satellite navigation',
-    warhead: '1,000 kg HE conventional HE-Frag'
-  },
-  {
-    id: 'att-ababeel',
-    name: 'Ababeel MIRV MRBM',
-    category: 'BALLISTIC',
-    country: 'Pakistan',
-    cost: '$12.0 Million (Est. Unit Cost)',
-    isIndian: false,
-    description: 'Solid-fueled Medium-Range Ballistic Missile (MRBM) equipped with Multiple Independently Targetable Reentry Vehicles (MIRVs) designed to defeat enemy ballistic missile defences.',
-    speed: 'Mach 15.0 terminal',
-    altitude: 'Apogee up to 180,000 meters (exo-atmospheric)',
-    range: '2,200 km',
-    guidance: 'Inertial Guidance + Satellite-aided flight computer',
-    warhead: 'MIRV payload carrying up to 3 individual warheads and decoys'
-  },
-  {
-    id: 'att-ghaznavi',
-    name: 'Ghaznavi SRBM',
-    category: 'BALLISTIC',
-    country: 'Pakistan',
-    cost: '$4.0 Million (Est. Unit Cost)',
-    isIndian: false,
-    description: 'Short-range solid-fueled ballistic missile. Designed for quick-launch battlefield deployment with high maneuverability.',
-    speed: 'Mach 6.0 terminal',
-    altitude: 'Apogee up to 80,000 meters',
-    range: '290 km',
-    guidance: 'Inertial navigation with terminal updates',
-    warhead: '700 kg conventional HE warhead'
-  },
-  {
-    id: 'att-babur3',
-    name: 'Babur-3 Cruise Missile',
-    category: 'CRUISE',
-    country: 'Pakistan',
-    cost: '$2.0 Million',
-    isIndian: false,
-    description: 'Subsonic land-attack cruise missile. Deployed via mobile ground launchers, it flies a low-altitude terrain-hugging trajectory at sea-skimming levels to evade radars.',
-    speed: 'Mach 0.8',
-    altitude: '50 - 100 meters (Terrain contour matching)',
-    range: '450 km',
-    guidance: 'TERCOM (Terrain Contour Matching) + DSMAC (Digital Scene Correlation) optical terminal tracking',
-    warhead: '450 kg HE conventional'
-  },
-  {
-    id: 'att-cm302',
-    name: 'CM-302 Supersonic Cruise Missile',
-    category: 'CRUISE',
-    country: 'China/Pakistan',
-    cost: '$3.0 Million',
-    isIndian: false,
-    description: 'High-speed supersonic cruise missile. Flies at extremely low sea-skimming altitudes at Mach 3, presenting a serious target interception reaction challenge.',
-    speed: 'Mach 3.0',
-    altitude: '20 - 50 meters (Sea-skimming)',
-    range: '290 km',
-    guidance: 'Inertial + Active Radar terminal homing',
-    warhead: '250 kg HE conventional armor-piercing'
-  },
-  {
-    id: 'att-harbah',
-    name: 'Harbah LACM',
-    category: 'CRUISE',
-    country: 'Pakistan',
-    cost: '$1.8 Million',
-    isIndian: false,
-    description: 'Indigenous subsonic land-attack and anti-ship cruise missile, launched from naval platforms. Capable of extreme low-altitude terrain hugging flight.',
-    speed: 'Mach 0.8',
-    altitude: '20 - 50 meters',
-    range: '750 km',
-    guidance: 'GPS + INS + DSMAC correlation guidance',
-    warhead: '300 kg HE conventional'
-  },
-  {
-    id: 'att-hgv',
-    name: 'Hypersonic Glide Vehicle (HGV)',
-    category: 'HYPERSONIC',
-    country: 'Global Threat Class',
-    cost: '$15.0 Million',
-    isIndian: false,
-    description: 'Hypersonic glide weapon. Fired into the upper atmosphere via a booster rocket, it detaches and glides along a non-ballistic atmospheric boundary, performing high-G maneuvers to bypass interceptors.',
-    speed: 'Mach 8.0',
-    altitude: '35,000 - 45,000 meters',
-    range: '1,500 km',
-    guidance: 'Satellite-aided inertial + Active radar terminal homing seeker',
-    warhead: '500 kg HE conventional armor-penetrating'
-  },
-  {
-    id: 'att-ch901',
-    name: 'CH-901 Loitering Munition',
-    category: 'LOITERING_MUNITION' as any,
-    country: 'China/Pakistan',
-    cost: '$0.1 Million',
-    isIndian: false,
-    description: 'Miniature kamikaze drone. Fired from portable tubes to loiter over strategic targets, diving down for a precision kinetic impact upon lock.',
-    speed: 'Mach 0.12 (150 km/h)',
-    altitude: '100 - 1,500 meters',
-    range: '15 km (2-hour endurance)',
-    guidance: 'Electro-optical / Infrared homing tracker',
-    warhead: '3.5 kg HE fragmenting warhead'
-  }
-];
+const getCountryName = (c: string): string => {
+  const mapping: Record<string, string> = {
+    'india': 'India',
+    'pakistan': 'Pakistan',
+    'usa': 'USA',
+    'china': 'China',
+    'russia': 'Russia',
+    'japan': 'Japan',
+    'south_korea': 'South Korea',
+    'uk': 'UK',
+    'france': 'France',
+    'germany': 'Germany',
+    'generic': 'Generic'
+  };
+  return mapping[c.toLowerCase()] || c.charAt(0).toUpperCase() + c.slice(1);
+};
 
-const MUNITIONS: MissileVariant[] = [
-  // Defender Interceptors
-  { name: '40N6E SAM', type: 'Ultra Long-Range SAM', range: '400 km', speed: 'Mach 12.0', cost: '$2.5 Million', guidance: 'Active Radar', accuracy: '92%', warhead: '180 kg Blast-Frag', description: 'Used by S-400 for high-altitude AWACS, cruise, and ballistic interception.' },
-  { name: '48N6DM SAM', type: 'Long-Range SAM', range: '250 km', speed: 'Mach 6.0', cost: '$1.5 Million', guidance: 'Semi-Active Radar (TVM)', accuracy: '88%', warhead: '180 kg HE-Frag', description: 'Standard heavy missile for S-400 battalions targeting maneuvering aircraft.' },
-  { name: '9M96E2 SAM', type: 'Medium-Range Agile SAM', range: '120 km', speed: 'Mach 4.5', cost: '$0.8 Million', guidance: 'Active Radar / Hit-To-Kill', accuracy: '85%', warhead: '24 kg Directed HE-Frag', description: 'Agile interceptor with thruster vectors for kinetic neutralization.' },
-  { name: 'Barak-8 ER', type: 'Extended Range SAM', range: '150 km', speed: 'Mach 3.0', cost: '$1.2 Million', guidance: 'Active Radar', accuracy: '88%', warhead: '60 kg HE-Frag', description: 'Used by MRSAM batteries to deny stand-off strikes from fighter jets.' },
-  { name: 'Derby Interceptor', type: 'Medium-Range Radar SAM', range: '50 km', speed: 'Mach 4.0', cost: '$0.5 Million', guidance: 'Active Radar Homing', accuracy: '82%', warhead: '23 kg HE-Frag', description: 'Active radar-homing interceptor for SPYDER system, highly effective against maneuvering targets.' },
-  { name: 'Python-5 Interceptor', type: 'Short-Range Infrared SAM', range: '20 km', speed: 'Mach 4.0', cost: '$0.3 Million', guidance: 'Dual-band IR/CCD', accuracy: '82%', warhead: '11 kg HE-Frag', description: 'Infrared-homing point defence missile with full sphere capability and high countermeasure resistance.' },
-  { name: '5V27DE Interceptor', type: 'Medium-Range Point SAM', range: '35 km', speed: 'Mach 3.5', cost: '$0.1 Million', guidance: 'Command Guided', accuracy: '72%', warhead: '60 kg HE-Frag', description: 'Command-guided heavy missile upgraded for Pechora-2M launchers.' },
-  { name: 'DRDO VSHORAD', type: 'Man-Portable VSHORAD', range: '6.5 km', speed: 'Mach 2.5', cost: '$0.08 Million', guidance: 'Dual-band IR Seeker', accuracy: '70%', warhead: '2.5 kg HE-Frag', description: 'Shoulder-fired very short range interceptor developed by DRDO.' },
-  { name: 'Akash-NG', type: 'Medium-Range active SAM', range: '80 km', speed: 'Mach 3.5', cost: '$0.3 Million', guidance: 'Active RF Seeker', accuracy: '85%', warhead: '25 kg Pre-fragmented HE', description: 'DRDO next-generation canisterized solid-fuel rocket interceptor.' },
-  
-  // Attacker Payloads
-  { name: 'HD-1A Cruise Missile', type: 'Supersonic Cruise Missile (Jet Payload)', range: '290 km', speed: 'Mach 3.0', cost: '$2.0 Million', guidance: 'Inertial + GPS + Radar Terminal', accuracy: '80%', warhead: '250 kg HE', description: 'Supersonic stand-off weapon launched by fighter jets.' },
-  { name: 'PL-15E BVRAAM', type: 'Beyond-Visual-Range Missile (Jet Payload)', range: '145 km', speed: 'Mach 4.0', cost: '$1.0 Million', guidance: 'AESA Active Seeker', accuracy: '85%', warhead: '30 kg HE-Frag', description: 'Long-range air-to-air missile carried by combat aircraft.' },
-  { name: 'LS-6 Glide Bomb', type: 'Precision Guided Glide Bomb (Jet Payload)', range: '60 km', speed: 'Mach 0.9', cost: '$0.5 Million', guidance: 'Inertial + GPS', accuracy: '85%', warhead: '440 kg HE', description: 'Heavy satellite-guided bomb with folding wings.' },
-  { name: 'GB-250 Dumb Bomb', type: 'Unguided Gravity Bomb (Jet Payload)', range: '2 km', speed: 'Mach 0.8', cost: '$0.05 Million', guidance: 'None (Ballistic drop)', accuracy: '50%', warhead: '250 kg HE', description: 'Unguided free-fall heavy gravity bomb.' },
-  { name: 'AR-1 Tactical Rocket', type: 'Laser Guided Rocket (UAV Payload)', range: '8 km', speed: 'Mach 1.1', cost: '$0.2 Million', guidance: 'Semi-active Laser', accuracy: '90%', warhead: '10 kg HE-penetrating', description: 'Precision weapon fired by drones from safe distances.' },
-  { name: 'FT-9 Precision Bomb', type: 'GPS Guided Tactical Bomb (UAV Payload)', range: '5 km', speed: 'Mach 0.8', cost: '$0.1 Million', guidance: 'GPS/INS', accuracy: '85%', warhead: '50 kg HE', description: 'Satellite guided tactical bomb carried by UAVs.' },
-  { name: 'GB-25 Dumb Bomb', type: 'Unguided Tactical Bomb (UAV Payload)', range: '2 km', speed: 'Mach 0.6', cost: '$0.05 Million', guidance: 'None (Ballistic drop)', accuracy: '50%', warhead: '250 kg HE', description: 'Lightweight unguided gravity bomb for tactical drone release.' },
-  { name: 'AGM-84 Harpoon Cruise', type: 'Subsonic Cruise Missile (Jet Payload)', range: '124 km', speed: 'Mach 0.8', cost: '$1.2 Million', guidance: 'Inertial + Active Radar Homing', accuracy: '82%', warhead: '220 kg HE-Frag', description: 'Subsonic long-range land attack/anti-ship missile.' },
-  { name: 'AGM-88 HARM Anti-Radiation', type: 'Anti-Radiation Missile (Jet Payload)', range: '150 km', speed: 'Mach 2.0', cost: '$0.8 Million', guidance: 'Radar Passive Homing', accuracy: '85%', warhead: '66 kg HE-Frag', description: 'Supersonic weapon targeting active air defence radar systems.' },
-  { name: 'AIM-120C AMRAAM', type: 'Beyond-Visual-Range Missile (Jet Payload)', range: '105 km', speed: 'Mach 4.0', cost: '$1.0 Million', guidance: 'Active Radar Homing', accuracy: '88%', warhead: '22 kg HE-Frag', description: 'Radar-guided high-speed air-to-air missile.' },
-  { name: 'AIM-9X Sidewinder', type: 'Short-Range Infrared Missile (Jet Payload)', range: '22 km', speed: 'Mach 2.5', cost: '$0.4 Million', guidance: 'Passive Infrared Homing', accuracy: '88%', warhead: '9.4 kg HE-Frag', description: 'Highly maneuverable heat-seeking point interceptor.' },
-  { name: 'GBU-31 JDAM Bomb', type: 'Precision Guided Bomb (Jet Payload)', range: '28 km', speed: 'Mach 0.9', cost: '$0.3 Million', guidance: 'INS + GPS receiver', accuracy: '85%', warhead: '900 kg HE', description: 'GPS-guided heavy conversion kit bomb.' },
-  { name: 'GBU-12 Paveway Bomb', type: 'Laser Guided Bomb (Jet Payload)', range: '15 km', speed: 'Mach 0.9', cost: '$0.25 Million', guidance: 'Semi-Active Laser terminal', accuracy: '85%', warhead: '230 kg HE', description: 'Laser-guided precision gravity drop bomb.' },
-  { name: 'H-2 SOW Glide Bomb', type: 'Standoff Glide Bomb (Jet Payload)', range: '60 km', speed: 'Mach 0.9', cost: '$0.5 Million', guidance: 'Inertial + GPS + terminal target seeker', accuracy: '85%', warhead: '250 kg HE-Frag', description: 'Standoff precision guidance glide weapon.' },
-  { name: 'H-4 SOW Glide Bomb', type: 'Standoff Glide Bomb (Jet Payload)', range: '120 km', speed: 'Mach 0.9', cost: '$0.8 Million', guidance: 'Inertial + GPS + terminal optical lock', accuracy: '85%', warhead: '250 kg HE-Frag', description: 'Extended range standoff precision glide bomb.' },
-  { name: 'Barq Laser Guided Missile', type: 'Tactical Guided Missile (UAV Payload)', range: '8 km', speed: 'Mach 1.0', cost: '$0.15 Million', guidance: 'Semi-active Laser homing', accuracy: '90%', warhead: '10 kg HE anti-armor', description: 'Tactical laser-guided anti-tank missile deployed by drones.' }
-];
+const getCategoryLabel = (cat: string): string => {
+  return cat.replace('_', ' ');
+};
 
 export default function EncyclopediaPage() {
   const [activeTab, setActiveTab] = useState<'defenders' | 'attackers' | 'munitions'>('defenders');
   const [search, setSearch] = useState('');
-  const [selectedItem, setSelectedItem] = useState<EncyclopediaItem | null>(null);
-  const [selectedMunition, setSelectedMunition] = useState<MissileVariant | null>(null);
+  const [selectedItem, setSelectedItem] = useState<any | null>(null);
+  const [selectedMunition, setSelectedMunition] = useState<any | null>(null);
+
+  // 1. Process and Merge Defenders
+  const defendersList = useMemo(() => {
+    return mergedDefenders.map((sys: any) => {
+      const matchKey = Object.keys(NARRATIVE_OVERLAYS).find(k => sys.name.includes(k));
+      const details = matchKey ? NARRATIVE_OVERLAYS[matchKey] : {
+        description: `Operational ${sys.category.toLowerCase().replace('_', ' ')} air defence unit. Part of the local national air shield network, operating radar and launch batteries.`,
+        history: `Developed to meet requirements for modern layered air space denial. Integrated into regional command defense nodes.`,
+        achievements: `Successfully evaluated in combat exercises. Serves as a primary protective asset against air threats.`,
+        breakthrough: `Utilizes mobile missile transport-erector-launchers (TEL) coordinated by mobile fire-control radars and command vehicles.`
+      };
+
+      const missiles = (sys.missileOptions || []).map((m: any) => ({
+        name: m.name,
+        type: sys.missileName === m.name ? 'Primary Interceptor' : 'Secondary Interceptor',
+        range: `${m.range} km`,
+        speed: `Mach ${m.speed}`,
+        cost: `$${m.cost} Million`,
+        guidance: sys.category === 'RADAR' ? 'N/A' : (m.range > 100 ? 'Active Radar / Inerital' : 'Active/Passive RF Homing'),
+        accuracy: `${Math.round(m.accuracy * 100)}%`,
+        warhead: m.range > 200 ? '180 kg Blast-Frag' : '60 kg HE-Frag',
+        description: m.description
+      }));
+
+      const composition = (sys.composition || []).map((c: any) => ({
+        name: c.name,
+        type: c.type,
+        qty: `${c.qty} units`,
+        description: `Dedicated tactical component of the ${sys.name} regiment.`
+      }));
+
+      return {
+        id: sys.id,
+        name: sys.name,
+        category: getCategoryLabel(sys.category),
+        country: getCountryName(sys.country),
+        cost: `$${sys.batteryCost}M (Battery Base)`,
+        description: details.description,
+        history: details.history,
+        achievements: details.achievements,
+        breakthrough: details.breakthrough,
+        isIndian: sys.country === 'india',
+        composition,
+        missiles
+      };
+    });
+  }, []);
+
+  // 2. Process and Merge Attackers (Threat platforms)
+  const attackersList = useMemo(() => {
+    return mergedAttackers.map((t: any) => {
+      const matchKey = Object.keys(NARRATIVE_OVERLAYS).find(k => t.name.includes(k));
+      const details = matchKey ? NARRATIVE_OVERLAYS[matchKey] : {
+        description: `Operational ${t.type.toLowerCase()} strike asset. Equipped for tactical weapon delivery, strategic penetration, or target designation.`,
+        history: `Introduced into active service to provide regional standoff engagement capabilities, deep airspace breach, or surveillance.`,
+        achievements: `Deployed in defense exercises and border tracking scenarios. Demonstrates capabilities in electronic suppression and high-velocity strikes.`,
+        breakthrough: `Integrates advanced aerodynamics or rocket motors, featuring stand-off weapon carriage and flight-control systems.`
+      };
+
+      const payloadCarriage = (t.weaponsCatalog || []).map((w: any) => 
+        `${w.name} (Max: ${w.maxQty} units, Range: ${w.range}km, Mach ${w.speed})`
+      );
+
+      return {
+        id: t.id,
+        name: t.name,
+        category: t.type,
+        country: getCountryName(t.country),
+        cost: `$${t.cost}M (Base Unit)`,
+        description: details.description,
+        history: details.history,
+        achievements: details.achievements,
+        breakthrough: details.breakthrough,
+        speed: `Mach ${t.speed}`,
+        altitude: `${(t.altitude / 1000).toFixed(1)} km`,
+        range: t.type === 'BALLISTIC' ? '1,500+ km' : '800+ km',
+        payloadCapacity: t.maxSlots ? `${t.maxSlots} Payload Slots` : 'Internal Payload Only',
+        payloadCarriage: payloadCarriage.length > 0 ? payloadCarriage : ['N/A (Built-in Warhead / Munition)'],
+        guidance: t.type === 'BALLISTIC' ? 'INS + Satellite Guidance' : 'Laser / EO Tracker / Radar Terminal',
+        warhead: t.type === 'BALLISTIC' ? '500 - 1000 kg warhead capability' : '200 - 450 kg warhead capability',
+        isIndian: t.country === 'india'
+      };
+    });
+  }, []);
+
+  // 3. Process and Merge Munitions
+  const munitionsList = useMemo(() => {
+    const list: any[] = [];
+    const names = new Set<string>();
+
+    // Extract interceptor missiles
+    mergedDefenders.forEach((sys: any) => {
+      (sys.missileOptions || []).forEach((m: any) => {
+        if (!names.has(m.name)) {
+          names.add(m.name);
+          list.push({
+            name: m.name,
+            type: `${sys.name.split(' ')[0]} Interceptor`,
+            range: `${m.range} km`,
+            speed: `Mach ${m.speed}`,
+            cost: `$${m.cost}M`,
+            guidance: m.range > 100 ? 'Active Radar + INS' : 'Active RF / IR Terminal Homing',
+            accuracy: `${Math.round(m.accuracy * 100)}%`,
+            warhead: m.range > 200 ? '180 kg Blast-Frag' : '60 kg HE-Frag',
+            description: m.description || `High-speed surface-to-air interceptor.`
+          });
+        }
+      });
+    });
+
+    // Extract payloads carried by aircraft
+    mergedAttackers.forEach((t: any) => {
+      (t.weaponsCatalog || []).forEach((w: any) => {
+        if (!names.has(w.name)) {
+          names.add(w.name);
+          list.push({
+            name: w.name,
+            type: `${t.name.split(' ')[0]} Payload`,
+            range: `${w.range} km`,
+            speed: `Mach ${w.speed}`,
+            cost: `$${w.cost}M`,
+            guidance: w.name.includes('AMRAAM') || w.name.includes('PL-15') ? 'AESA Radar Active Seeker' : 'Laser / GPS + INS',
+            accuracy: `${Math.round(w.accuracy * 100)}%`,
+            warhead: w.range > 100 ? '250 kg HE' : '45 kg HE-Frag',
+            description: `Air-launched tactical strike weapon carried by ${t.name}.`
+          });
+        }
+      });
+    });
+
+    return list;
+  }, []);
 
   const filteredDefenders = useMemo(() => {
-    return DEFENDER_SYSTEMS.filter(sys => {
-      const q = search.toLowerCase();
-      return sys.name.toLowerCase().includes(q) || sys.country.toLowerCase().includes(q) || sys.description.toLowerCase().includes(q);
-    });
-  }, [search]);
+    const q = search.toLowerCase();
+    return defendersList.filter(sys => 
+      sys.name.toLowerCase().includes(q) || 
+      sys.country.toLowerCase().includes(q) ||
+      sys.category.toLowerCase().includes(q)
+    );
+  }, [search, defendersList]);
 
   const filteredAttackers = useMemo(() => {
-    return ATTACKER_SYSTEMS.filter(sys => {
-      const q = search.toLowerCase();
-      return sys.name.toLowerCase().includes(q) || sys.country.toLowerCase().includes(q) || sys.description.toLowerCase().includes(q);
-    });
-  }, [search]);
+    const q = search.toLowerCase();
+    return attackersList.filter(sys => 
+      sys.name.toLowerCase().includes(q) || 
+      sys.country.toLowerCase().includes(q) ||
+      sys.category.toLowerCase().includes(q)
+    );
+  }, [search, attackersList]);
 
   const filteredMunitions = useMemo(() => {
-    return MUNITIONS.filter(m => {
-      const q = search.toLowerCase();
-      return m.name.toLowerCase().includes(q) || m.type.toLowerCase().includes(q) || m.description.toLowerCase().includes(q);
-    });
-  }, [search]);
+    const q = search.toLowerCase();
+    return munitionsList.filter(m => 
+      m.name.toLowerCase().includes(q) || 
+      m.type.toLowerCase().includes(q) ||
+      m.guidance.toLowerCase().includes(q)
+    );
+  }, [search, munitionsList]);
 
   return (
-    <div className="space-y-6">
-      {/* Banner */}
-      <div className="card p-6 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#00ff88]/5 via-transparent to-[#ef4444]/5" />
-        <div className="relative">
-          <h1 className="text-2xl font-bold text-white mb-1">Air Defence Encyclopedia</h1>
-          <p className="text-sm text-[#6b7280]">
-            Detailed structural analysis and munitions catalog of declassified systems.
-          </p>
-        </div>
+    <div className="space-y-4">
+      {/* Header Panel */}
+      <div className="card p-4">
+        <h1 className="text-base font-bold text-[#cbd5e1] tracking-wide uppercase font-mono">Military Encyclopedia</h1>
+        <p className="text-[11px] text-[#475569] font-mono mt-0.5">
+          Comprehensive defense intelligence registry — hardware assets, specifications, operational histories, and engineering breakthroughs
+        </p>
       </div>
 
-      {/* Navigation & Search */}
-      <div className="card p-4 flex flex-wrap gap-4 items-center justify-between">
+      {/* Tabs and Search */}
+      <div className="card p-3 flex flex-wrap gap-4 items-center justify-between">
         <div className="flex gap-2">
           {[
-            { id: 'defenders', label: '🛡️ Defender Systems' },
-            { id: 'attackers', label: '⚔️ Attacker Platforms' },
-            { id: 'munitions', label: '🚀 Munitions & Payloads' }
+            { id: 'defenders', label: 'DEFENDER SYSTEMS' },
+            { id: 'attackers', label: 'ATTACKER PLATFORMS' },
+            { id: 'munitions', label: 'MUNITIONS & PAYLOADS' }
           ].map(tab => (
             <button
               key={tab.id}
@@ -690,10 +325,10 @@ export default function EncyclopediaPage() {
                 setActiveTab(tab.id as any);
                 setSearch('');
               }}
-              className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+              className={`px-3 py-1.5 text-[11px] font-mono font-bold transition-colors ${
                 activeTab === tab.id
-                  ? 'bg-[#00ff88]/15 text-[#00ff88] border border-[#00ff88]/30'
-                  : 'text-[#6b7280] hover:text-white'
+                  ? 'bg-[rgba(56,189,248,0.08)] text-[#38bdf8] border border-[rgba(56,189,248,0.2)]'
+                  : 'text-[#64748b] hover:text-[#94a3b8]'
               }`}
             >
               {tab.label}
@@ -704,30 +339,30 @@ export default function EncyclopediaPage() {
           type="text"
           value={search}
           onChange={e => setSearch(e.target.value)}
-          placeholder={`Search ${activeTab}...`}
-          className="input-field max-w-xs text-xs py-1.5"
+          placeholder={`Filter ${activeTab} database...`}
+          className="input-field max-w-xs text-[11px] py-1.5 font-mono"
         />
       </div>
 
       {/* DEFENDERS TAB */}
       {activeTab === 'defenders' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {filteredDefenders.map(sys => (
             <div
               key={sys.id}
               onClick={() => setSelectedItem(sys)}
-              className="card card-interactive p-5 flex flex-col justify-between hover:border-[#00ff88]/40"
+              className="card card-interactive p-4 flex flex-col justify-between hover:border-[rgba(56,189,248,0.2)]"
             >
               <div>
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-sm font-bold text-white">{sys.name}</h3>
-                  <span className="badge badge-green text-[9px]">{sys.category.replace('_', ' ')}</span>
+                  <h3 className="text-[12px] font-bold text-white font-mono">{sys.name}</h3>
+                  <span className="badge badge-green text-[9px]">{sys.category}</span>
                 </div>
-                <div className="text-[10px] text-[#6b7280] mb-3">{sys.country} • Cost: {sys.cost}</div>
-                <p className="text-xs text-[#9ca3af] line-clamp-3 mb-4 leading-relaxed">{sys.description}</p>
+                <div className="text-[10px] text-[#64748b] font-mono mb-2">{sys.country} • Cost: {sys.cost}</div>
+                <p className="text-[11px] text-[#94a3b8] line-clamp-3 mb-4 leading-relaxed font-sans">{sys.description}</p>
               </div>
-              <button className="w-full py-1.5 rounded bg-[#00ff88]/5 text-[#00ff88] text-[10px] font-bold tracking-wider hover:bg-[#00ff88]/15 border border-[#00ff88]/15">
-                VIEW REGIMENT COMPOSITION & AMMO
+              <button className="w-full py-1.5 bg-[#1b2340] text-[#38bdf8] text-[9px] font-mono font-bold tracking-wider hover:bg-[rgba(56,189,248,0.06)] border border-[rgba(56,189,248,0.12)]">
+                VIEW SPECIFICATIONS & COMPOSITION
               </button>
             </div>
           ))}
@@ -736,23 +371,23 @@ export default function EncyclopediaPage() {
 
       {/* ATTACKERS TAB */}
       {activeTab === 'attackers' && (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
           {filteredAttackers.map(sys => (
             <div
               key={sys.id}
               onClick={() => setSelectedItem(sys)}
-              className="card card-interactive p-5 flex flex-col justify-between hover:border-[#ef4444]/40"
+              className="card card-interactive p-4 flex flex-col justify-between hover:border-[rgba(220,38,38,0.2)]"
             >
               <div>
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-sm font-bold text-white">{sys.name}</h3>
+                  <h3 className="text-[12px] font-bold text-white font-mono">{sys.name}</h3>
                   <span className="badge badge-red text-[9px]">{sys.category}</span>
                 </div>
-                <div className="text-[10px] text-[#6b7280] mb-3">{sys.country} • Max Speed: {sys.speed}</div>
-                <p className="text-xs text-[#9ca3af] line-clamp-3 mb-4 leading-relaxed">{sys.description}</p>
+                <div className="text-[10px] text-[#64748b] font-mono mb-2">{sys.country} • Max Velocity: {sys.speed}</div>
+                <p className="text-[11px] text-[#94a3b8] line-clamp-3 mb-4 leading-relaxed font-sans">{sys.description}</p>
               </div>
-              <button className="w-full py-1.5 rounded bg-[#ef4444]/5 text-[#ef4444] text-[10px] font-bold tracking-wider hover:bg-[#ef4444]/15 border border-[#ef4444]/15">
-                VIEW PLATFORM PAYLOAD SPECIFICATIONS
+              <button className="w-full py-1.5 bg-[#1b2340] text-[#dc2626] text-[9px] font-mono font-bold tracking-wider hover:bg-[rgba(220,38,38,0.06)] border border-[rgba(220,38,38,0.12)]">
+                VIEW PLATFORM CARRIAGE DETAILS
               </button>
             </div>
           ))}
@@ -765,7 +400,7 @@ export default function EncyclopediaPage() {
           <table className="data-table">
             <thead>
               <tr>
-                <th>Munition Name</th>
+                <th>Designation</th>
                 <th>Classification</th>
                 <th>Velocity</th>
                 <th>Range Envelope</th>
@@ -776,14 +411,14 @@ export default function EncyclopediaPage() {
             </thead>
             <tbody>
               {filteredMunitions.map((m, i) => (
-                <tr key={i} className="hover:bg-white/[0.02] cursor-pointer" onClick={() => setSelectedMunition(m)}>
-                  <td className="font-bold text-white">{m.name}</td>
+                <tr key={i} className="hover:bg-[rgba(148,163,184,0.02)] cursor-pointer" onClick={() => setSelectedMunition(m)}>
+                  <td className="font-bold text-white font-mono">{m.name}</td>
                   <td><span className="badge badge-cyan text-[9px]">{m.type}</span></td>
-                  <td className="font-mono text-xs">{m.speed}</td>
-                  <td className="font-mono text-xs">{m.range}</td>
-                  <td className="text-xs">{m.guidance}</td>
-                  <td className="font-mono text-[#00ff88] text-xs">{m.accuracy}</td>
-                  <td className="font-mono text-[#f59e0b] text-xs">{m.cost}</td>
+                  <td className="font-mono text-[11px]">{m.speed}</td>
+                  <td className="font-mono text-[11px]">{m.range}</td>
+                  <td className="text-[11px] text-[#94a3b8] font-mono">{m.guidance}</td>
+                  <td className="font-mono text-[#4ade80] text-[11px] font-bold">{m.accuracy}</td>
+                  <td className="font-mono text-[#f59e0b] text-[11px] font-bold">{m.cost}</td>
                 </tr>
               ))}
             </tbody>
@@ -791,158 +426,157 @@ export default function EncyclopediaPage() {
         </div>
       )}
 
-      {/* REGIMENT / PLATFORM DETAIL MODAL */}
+      {/* DETAILED DIALOG MODAL */}
       {selectedItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedItem(null)}>
-          <div className="card p-6 max-w-2xl w-full max-h-[85vh] overflow-y-auto animate-fade-in-up space-y-6" onClick={e => e.stopPropagation()}>
+          <div className="card p-5 max-w-2xl w-full max-h-[85vh] overflow-y-auto animate-fade-in-up space-y-4" onClick={e => e.stopPropagation()}>
             {/* Header */}
-            <div className="flex justify-between items-start border-b border-white/5 pb-3">
+            <div className="flex justify-between items-start border-b border-[rgba(148,163,184,0.08)] pb-2">
               <div>
-                <h2 className="text-lg font-bold text-white">{selectedItem.name}</h2>
-                <p className="text-xs text-[#6b7280]">{selectedItem.country} • Procurement Cost: {selectedItem.cost}</p>
+                <h2 className="text-[14px] font-bold text-white font-mono uppercase tracking-wider">{selectedItem.name}</h2>
+                <p className="text-[10px] text-[#64748b] font-mono mt-0.5">{selectedItem.country} • Est. Cost: {selectedItem.cost}</p>
               </div>
-              <button onClick={() => setSelectedItem(null)} className="text-[#6b7280] hover:text-white text-md">✕</button>
+              <button onClick={() => setSelectedItem(null)} className="text-[#64748b] hover:text-white font-mono text-sm">✕</button>
             </div>
 
             {/* Description */}
-            <p className="text-xs text-[#9ca3af] leading-relaxed">{selectedItem.description}</p>
+            <div>
+              <span className="text-[9px] font-mono text-[#475569] uppercase tracking-[0.05em]">SYSTEM DESCRIPTION</span>
+              <p className="text-[11px] text-[#cbd5e1] leading-relaxed mt-1 font-sans">{selectedItem.description}</p>
+            </div>
 
-            {/* Flight Performance Parameters (For Jets/Drones/Ballistics) */}
+            {/* Flight parameters for attackers */}
             {selectedItem.speed && (
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white/[0.01] border border-white/5 p-4 rounded-lg">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3 bg-[#0b0f19] border border-[rgba(148,163,184,0.06)] p-3 font-mono text-[10px]">
                 {[
                   ['Maximum Speed', selectedItem.speed],
                   ['Flight Ceiling', selectedItem.altitude ?? 'N/A'],
-                  ['Operating Range', selectedItem.range ?? 'N/A'],
-                  ['Payload Weight/Cap', selectedItem.payloadCapacity ?? 'N/A']
+                  ['Operational Range', selectedItem.range ?? 'N/A'],
+                  ['Payload Capacity', selectedItem.payloadCapacity ?? 'N/A']
                 ].map(([label, val]) => (
                   <div key={label}>
-                    <div className="text-[10px] text-[#4b5563] uppercase">{label}</div>
-                    <div className="text-xs font-mono font-bold text-[#e5e7eb]">{val}</div>
+                    <div className="text-[8px] text-[#475569] uppercase tracking-[0.05em]">{label}</div>
+                    <div className="text-[#cbd5e1] font-bold mt-0.5">{val}</div>
                   </div>
                 ))}
               </div>
             )}
 
-            {/* Missile Guidance & Warhead Specs */}
-            {(selectedItem.guidance || selectedItem.warhead) && (
-              <div className="grid grid-cols-2 gap-4 bg-white/[0.01] border border-white/5 p-4 rounded-lg">
-                {selectedItem.guidance && (
-                  <div>
-                    <div className="text-[10px] text-[#4b5563] uppercase">Guidance Tech</div>
-                    <div className="text-xs font-mono font-bold text-[#e5e7eb]">{selectedItem.guidance}</div>
-                  </div>
-                )}
-                {selectedItem.warhead && (
-                  <div>
-                    <div className="text-[10px] text-[#4b5563] uppercase">Warhead Payload</div>
-                    <div className="text-xs font-mono font-bold text-[#e5e7eb]">{selectedItem.warhead}</div>
-                  </div>
-                )}
+            {/* Operational History, Breakthroughs, and Achievements */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 font-mono text-[10px] border-t border-[rgba(148,163,184,0.04)] pt-3">
+              <div>
+                <div className="text-[8px] text-[#475569] uppercase tracking-[0.05em] font-bold text-white">OPERATIONAL HISTORY</div>
+                <p className="text-[#94a3b8] leading-relaxed mt-1 text-[9px] font-sans">{selectedItem.history}</p>
               </div>
-            )}
-
-            {/* Jet Carried Payloads List */}
-            {selectedItem.payloadCarriage && (
-              <div className="space-y-2">
-                <h4 className="text-xs font-bold text-[#ef4444] uppercase tracking-wider">Deployable Weapon Carriage Configurations</h4>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                  {selectedItem.payloadCarriage.map((payload, i) => (
-                    <div key={i} className="p-2.5 rounded bg-black/30 border border-white/5 text-xs text-white font-mono flex items-center gap-2">
-                      <span className="text-[#ef4444]">⚔️</span> {payload}
-                    </div>
-                  ))}
-                </div>
+              <div>
+                <div className="text-[8px] text-[#475569] uppercase tracking-[0.05em] font-bold text-white">OPERATIONAL ACHIEVEMENTS</div>
+                <p className="text-[#94a3b8] leading-relaxed mt-1 text-[9px] font-sans">{selectedItem.achievements}</p>
               </div>
-            )}
+              <div>
+                <div className="text-[8px] text-[#475569] uppercase tracking-[0.05em] font-bold text-white">TECHNICAL BREAKTHROUGH</div>
+                <p className="text-[#94a3b8] leading-relaxed mt-1 text-[9px] font-sans">{selectedItem.breakthrough}</p>
+              </div>
+            </div>
 
-            {/* Regiment Component Breakdown (Defender) */}
+            {/* Composition Section */}
             {selectedItem.composition && selectedItem.composition.length > 0 && (
-              <div className="space-y-3">
-                <h4 className="text-xs font-bold text-[#00ff88] uppercase tracking-wider">Regiment & Battery System Composition</h4>
-                <div className="space-y-2">
-                  {selectedItem.composition.map((comp, i) => (
-                    <div key={i} className="p-3 rounded bg-white/[0.01] border border-white/5 flex flex-col md:flex-row justify-between items-start md:items-center gap-2 text-xs">
-                      <div>
-                        <div className="font-semibold text-white">{comp.name}</div>
-                        <div className="text-[10px] text-[#6b7280]">{comp.type} • {comp.qty}</div>
-                        <p className="text-[11px] text-[#4b5563] mt-1">{comp.description}</p>
+              <div className="space-y-1.5 border-t border-[rgba(148,163,184,0.04)] pt-3 font-mono text-[10px]">
+                <h4 className="text-[8px] text-[#475569] uppercase tracking-[0.05em] font-bold text-white">Regiment / Battery System Composition</h4>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                  {selectedItem.composition.map((comp: any, i: number) => (
+                    <div key={i} className="p-2 bg-[#0b0f19] border border-[rgba(148,163,184,0.06)]">
+                      <div className="flex justify-between items-center font-bold text-[#cbd5e1]">
+                        <span>{comp.name}</span>
+                        <span className="text-[#4ade80]">{comp.qty}</span>
                       </div>
+                      <div className="text-[9px] text-[#64748b] mt-0.5">{comp.type}</div>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Guided Missile Options (Defender) */}
+            {/* Ammo options */}
             {selectedItem.missiles && selectedItem.missiles.length > 0 && (
-              <div className="space-y-3">
-                <h4 className="text-xs font-bold text-[#00b4d8] uppercase tracking-wider">Ammunition & Interceptor Missile Variants</h4>
-                <div className="grid grid-cols-1 gap-3">
-                  {selectedItem.missiles.map((missile, i) => (
-                    <div key={i} className="p-4 rounded-lg bg-black/40 border border-white/5 space-y-2 text-xs">
-                      <div className="flex justify-between items-start border-b border-white/5 pb-2">
-                        <div>
-                          <div className="font-bold text-[#00b4d8] text-sm">{missile.name}</div>
-                          <div className="text-[10px] text-[#6b7280]">{missile.type}</div>
-                        </div>
-                        <div className="text-right">
-                          <span className="text-xs font-mono font-bold text-[#00ff88]">{missile.range}</span>
-                          <div className="text-[9px] text-[#4b5563]">{missile.cost} each</div>
-                        </div>
+              <div className="space-y-1.5 border-t border-[rgba(148,163,184,0.04)] pt-3 font-mono text-[10px]">
+                <h4 className="text-[8px] text-[#475569] uppercase tracking-[0.05em] font-bold text-white">Canisterized Interceptor Ammo Configurations</h4>
+                <div className="space-y-2">
+                  {selectedItem.missiles.map((mis: any, i: number) => (
+                    <div key={i} className="p-2 bg-[#0b0f19] border border-[rgba(148,163,184,0.06)]">
+                      <div className="flex justify-between text-[#cbd5e1] font-bold mb-1">
+                        <span>{mis.name} — {mis.type}</span>
+                        <span className="text-[#f59e0b]">{mis.cost}</span>
                       </div>
-                      <p className="text-[11px] text-[#9ca3af] leading-relaxed">{missile.description}</p>
-                      <div className="grid grid-cols-3 gap-2 pt-2 border-t border-white/5 text-[10px] font-mono">
-                        <div>
-                          <span className="text-[#4b5563]">Velocity:</span>
-                          <div className="text-[#e5e7eb] font-bold">{missile.speed}</div>
-                        </div>
-                        <div>
-                          <span className="text-[#4b5563]">Guidance:</span>
-                          <div className="text-[#e5e7eb] truncate" title={missile.guidance}>{missile.guidance}</div>
-                        </div>
-                        <div>
-                          <span className="text-[#4b5563]">Hit Probability:</span>
-                          <div className="text-[#e5e7eb] font-bold">{missile.accuracy}</div>
-                        </div>
+                      <div className="grid grid-cols-4 gap-2 text-[9px] text-[#64748b] mb-1.5">
+                        <div>Range: <span className="text-[#cbd5e1]">{mis.range}</span></div>
+                        <div>Velocity: <span className="text-[#cbd5e1]">{mis.speed}</span></div>
+                        <div>Guidance: <span className="text-[#cbd5e1] truncate">{mis.guidance}</span></div>
+                        <div>Accuracy: <span className="text-[#4ade80] font-bold">{mis.accuracy}</span></div>
                       </div>
+                      <p className="text-[9px] text-[#94a3b8] font-sans leading-relaxed border-t border-[rgba(148,163,184,0.03)] pt-1">{mis.description}</p>
                     </div>
                   ))}
                 </div>
+              </div>
+            )}
+
+            {/* Payload carriage specifications for combat aircraft */}
+            {selectedItem.payloadCarriage && selectedItem.payloadCarriage.length > 0 && selectedItem.payloadCarriage[0] !== 'N/A' && (
+              <div className="space-y-1.5 border-t border-[rgba(148,163,184,0.04)] pt-3 font-mono text-[10px]">
+                <h4 className="text-[8px] text-[#475569] uppercase tracking-[0.05em] font-bold text-[#dc2626]">Combat Weapon Carriage Specifications</h4>
+                <ul className="list-disc pl-4 space-y-0.5 text-[#cbd5e1] text-[9px]">
+                  {selectedItem.payloadCarriage.map((payload: string, i: number) => (
+                    <li key={i}>{payload}</li>
+                  ))}
+                </ul>
               </div>
             )}
           </div>
         </div>
       )}
 
-      {/* MUNITIONS DETAIL MODAL */}
+      {/* MUNITIONS DETAIL DIALOG MODAL */}
       {selectedMunition && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedMunition(null)}>
-          <div className="card p-6 max-w-md w-full animate-fade-in-up space-y-4" onClick={e => e.stopPropagation()}>
-            <div className="flex justify-between items-start border-b border-white/5 pb-3">
+          <div className="card p-5 max-w-md w-full animate-fade-in-up space-y-4" onClick={e => e.stopPropagation()}>
+            <div className="flex justify-between items-start border-b border-[rgba(148,163,184,0.08)] pb-2">
               <div>
-                <h2 className="text-lg font-bold text-white">{selectedMunition.name}</h2>
-                <p className="text-xs text-[#6b7280]">{selectedMunition.type}</p>
+                <h2 className="text-[13px] font-bold text-white font-mono uppercase tracking-wider">{selectedMunition.name}</h2>
+                <p className="text-[10px] text-[#64748b] font-mono mt-0.5">{selectedMunition.type}</p>
               </div>
-              <button onClick={() => setSelectedMunition(null)} className="text-[#6b7280] hover:text-white text-md">✕</button>
+              <button onClick={() => setSelectedMunition(null)} className="text-[#64748b] hover:text-white font-mono text-sm">✕</button>
             </div>
-            
-            <p className="text-xs text-[#9ca3af] leading-relaxed">{selectedMunition.description}</p>
 
-            <div className="grid grid-cols-2 gap-4 text-xs font-mono">
-              {[
-                ['Range Envelope', selectedMunition.range],
-                ['Flight Velocity', selectedMunition.speed],
-                ['Unit Cost', selectedMunition.cost],
-                ['Guidance Tech', selectedMunition.guidance],
-                ['Neutralization Rate', selectedMunition.accuracy],
-                ['Warhead Configuration', selectedMunition.warhead]
-              ].map(([lbl, val]) => (
-                <div key={lbl}>
-                  <span className="text-[10px] text-[#4b5563] uppercase">{lbl}</span>
-                  <div className="text-white font-bold">{val}</div>
-                </div>
-              ))}
+            <div className="grid grid-cols-2 gap-3 font-mono text-[10px] bg-[#0b0f19] border border-[rgba(148,163,184,0.06)] p-3">
+              <div>
+                <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Velocity</span>
+                <span className="text-[#cbd5e1] font-bold mt-0.5">{selectedMunition.speed}</span>
+              </div>
+              <div>
+                <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Target Envelope</span>
+                <span className="text-[#cbd5e1] font-bold mt-0.5">{selectedMunition.range}</span>
+              </div>
+              <div>
+                <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Guidance Seeker</span>
+                <span className="text-[#cbd5e1] font-bold mt-0.5 truncate">{selectedMunition.guidance}</span>
+              </div>
+              <div>
+                <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Kill Probability</span>
+                <span className="text-[#4ade80] font-bold mt-0.5">{selectedMunition.accuracy}</span>
+              </div>
+              <div>
+                <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Warhead Capacity</span>
+                <span className="text-[#cbd5e1] font-bold mt-0.5">{selectedMunition.warhead}</span>
+              </div>
+              <div>
+                <span className="text-[#475569] block text-[8px] uppercase tracking-[0.05em]">Estimated Unit Cost</span>
+                <span className="text-[#f59e0b] font-bold mt-0.5">{selectedMunition.cost}</span>
+              </div>
+            </div>
+
+            <div>
+              <span className="text-[8px] font-mono text-[#475569] uppercase tracking-[0.05em]">TACTICAL NOTES & ROLE</span>
+              <p className="text-[11px] text-[#cbd5e1] leading-relaxed mt-1 font-sans">{selectedMunition.description}</p>
             </div>
           </div>
         </div>

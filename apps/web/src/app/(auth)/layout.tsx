@@ -6,28 +6,28 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-[#070b12] text-[#e5e7eb] flex items-center justify-center relative px-4 overflow-hidden">
-      {/* Background Matrix/Grid effect */}
-      <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(0,255,136,0.02),rgba(0,0,0,0),rgba(0,180,216,0.02))] bg-[length:100%_4px,3px_100%] pointer-events-none" />
+    <div className="min-h-screen bg-[#0b0f19] text-[#cbd5e1] flex flex-col">
+      {/* Classification Banner */}
+      <div className="classification-banner">
+        UNCLASSIFIED // FOR OFFICIAL USE ONLY — EDUCATIONAL SIMULATOR
+      </div>
       
-      {/* Dynamic ambient glowing circles */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-[#00ff88]/[0.02] filter blur-[80px] pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full bg-[#00b4d8]/[0.02] filter blur-[80px] pointer-events-none" />
-      
-      {/* Outer border wrapper */}
-      <div className="w-full max-w-[420px] relative z-10">
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-[#00ff88] to-[#00b4d8] text-[#0a0e17] font-black text-xl mb-3 shadow-[0_0_20px_rgba(0,255,136,0.2)]">
-            IA
+      <div className="flex-1 flex items-center justify-center px-4">
+        {/* Login Container */}
+        <div className="w-full max-w-[380px] relative z-10">
+          <div className="text-center mb-6">
+            <div className="inline-flex items-center justify-center w-10 h-10 bg-[#1b2340] border border-[rgba(56,189,248,0.2)] text-[#38bdf8] font-mono font-bold text-sm mb-3">
+              AD
+            </div>
+            <h1 className="text-lg font-bold text-[#cbd5e1] tracking-[0.15em] font-mono uppercase">IADES Gateway</h1>
+            <p className="text-[10px] text-[#475569] uppercase tracking-[0.15em] mt-1 font-mono">Air Defence Simulator // Secure Access</p>
           </div>
-          <h1 className="text-2xl font-bold text-white tracking-wide">IADES HQ GATEWAY</h1>
-          <p className="text-xs text-[#6b7280] uppercase tracking-widest mt-1">Indian Air Defence Simulator</p>
-        </div>
-        
-        {children}
-        
-        <div className="text-center mt-6 text-[10px] text-[#4b5563]">
-          SECURE PROTOCOL • EDUCATIONAL ACCESS ONLY
+          
+          {children}
+          
+          <div className="text-center mt-6 text-[9px] text-[#475569] font-mono tracking-[0.1em] uppercase">
+            SECURE PROTOCOL — EDUCATIONAL ACCESS ONLY
+          </div>
         </div>
       </div>
     </div>
