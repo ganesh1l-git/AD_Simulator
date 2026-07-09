@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" fill="none">
+  <rect width="400" height="300" fill="#0b0f19"/>
+  <rect x="1" y="1" width="398" height="298" stroke="#1e293b" stroke-width="2" fill="none"/>
+  <g transform="translate(200,130)">
+    <circle cx="0" cy="0" r="40" stroke="#334155" stroke-width="1.5" fill="none"/>
+    <circle cx="0" cy="0" r="25" stroke="#334155" stroke-width="1" fill="none"/>
+    <line x1="-45" y1="0" x2="45" y2="0" stroke="#334155" stroke-width="1"/>
+    <line x1="0" y1="-45" x2="0" y2="45" stroke="#334155" stroke-width="1"/>
+    <polygon points="0,-12 8,8 -8,8" fill="#1e293b" stroke="#475569" stroke-width="1"/>
+  </g>
+  <text x="200" y="210" text-anchor="middle" font-family="monospace" font-size="11" fill="#475569" letter-spacing="2">CLASSIFIED IMAGE</text>
+  <text x="200" y="230" text-anchor="middle" font-family="monospace" font-size="9" fill="#334155" letter-spacing="1">NO VISUAL DATA AVAILABLE</text>
+</svg>

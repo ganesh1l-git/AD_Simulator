@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import mergedDefenders from '../simulation/new/merged_defence_catalog.json';
 import mergedAttackers from '../simulation/new/merged_threat_catalog.json';
+import { getEquipmentImageUrl } from './equipmentImages';
 
 // Rich historical and operational manuals lookup map to inject detailed educational data
 // for simulator assets when viewed in the encyclopedia.
@@ -141,6 +142,15 @@ export default function EncyclopediaPage() {
   const [search, setSearch] = useState('');
   const [selectedItem, setSelectedItem] = useState<any | null>(null);
   const [selectedMunition, setSelectedMunition] = useState<any | null>(null);
+  const [imgErrors, setImgErrors] = useState<Set<string>>(new Set());
+
+  const handleImgError = useCallback((name: string) => {
+    setImgErrors(prev => {
+      const next = new Set(prev);
+      next.add(name);
+      return next;
+    });
+  }, []);
 
   // 1. Process and Merge Defenders
   const defendersList = useMemo(() => {
@@ -176,6 +186,7 @@ export default function EncyclopediaPage() {
         id: sys.id,
         name: sys.name,
         category: getCategoryLabel(sys.category),
+        rawCategory: sys.category,
         country: getCountryName(sys.country),
         cost: `$${sys.batteryCost}M (Battery Base)`,
         description: details.description,
@@ -208,6 +219,7 @@ export default function EncyclopediaPage() {
         id: t.id,
         name: t.name,
         category: t.type,
+        rawCategory: t.type,
         country: getCountryName(t.country),
         cost: `$${t.cost}M (Base Unit)`,
         description: details.description,
@@ -351,19 +363,43 @@ export default function EncyclopediaPage() {
             <div
               key={sys.id}
               onClick={() => setSelectedItem(sys)}
-              className="card card-interactive p-4 flex flex-col justify-between hover:border-[rgba(56,189,248,0.2)]"
+              className="card card-interactive p-0 flex flex-col justify-between hover:border-[rgba(56,189,248,0.2)] overflow-hidden"
             >
-              <div>
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-[12px] font-bold text-white font-mono">{sys.name}</h3>
-                  <span className="badge badge-green text-[9px]">{sys.category}</span>
-                </div>
-                <div className="text-[10px] text-[#64748b] font-mono mb-2">{sys.country} • Cost: {sys.cost}</div>
-                <p className="text-[11px] text-[#94a3b8] line-clamp-3 mb-4 leading-relaxed font-sans">{sys.description}</p>
+              {/* Equipment Image */}
+              <div className="relative w-full h-[160px] bg-[#0b0f19] overflow-hidden">
+                {!imgErrors.has(sys.name) ? (
+                  <img
+                    src={getEquipmentImageUrl(sys.name, sys.rawCategory)}
+                    alt={sys.name}
+                    className="w-full h-full object-contain p-1.5 transition-transform duration-500 hover:scale-105"
+                    onError={() => handleImgError(sys.name)}
+                    loading="lazy"
+                  />
+                ) : (
+                  <img
+                    src={getEquipmentImageUrl('', sys.rawCategory)}
+                    alt={sys.name}
+                    className="w-full h-full object-contain p-1.5"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1aee] via-transparent to-transparent" />
+                <span className="absolute top-2 right-2 badge badge-green text-[9px]">{sys.category}</span>
+                {sys.isIndian && (
+                  <span className="absolute top-2 left-2 px-1.5 py-0.5 text-[8px] font-mono font-bold bg-[rgba(251,146,60,0.15)] text-[#fb923c] border border-[rgba(251,146,60,0.3)]">
+                    🇮🇳 INDIAN
+                  </span>
+                )}
               </div>
-              <button className="w-full py-1.5 bg-[#1b2340] text-[#38bdf8] text-[9px] font-mono font-bold tracking-wider hover:bg-[rgba(56,189,248,0.06)] border border-[rgba(56,189,248,0.12)]">
-                VIEW SPECIFICATIONS & COMPOSITION
-              </button>
+              <div className="p-4 flex flex-col flex-1 justify-between">
+                <div>
+                  <h3 className="text-[12px] font-bold text-white font-mono mb-1">{sys.name}</h3>
+                  <div className="text-[10px] text-[#64748b] font-mono mb-2">{sys.country} • Cost: {sys.cost}</div>
+                  <p className="text-[11px] text-[#94a3b8] line-clamp-2 mb-3 leading-relaxed font-sans">{sys.description}</p>
+                </div>
+                <button className="w-full py-1.5 bg-[#1b2340] text-[#38bdf8] text-[9px] font-mono font-bold tracking-wider hover:bg-[rgba(56,189,248,0.06)] border border-[rgba(56,189,248,0.12)]">
+                  VIEW SPECIFICATIONS & COMPOSITION
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -376,19 +412,43 @@ export default function EncyclopediaPage() {
             <div
               key={sys.id}
               onClick={() => setSelectedItem(sys)}
-              className="card card-interactive p-4 flex flex-col justify-between hover:border-[rgba(220,38,38,0.2)]"
+              className="card card-interactive p-0 flex flex-col justify-between hover:border-[rgba(220,38,38,0.2)] overflow-hidden"
             >
-              <div>
-                <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-[12px] font-bold text-white font-mono">{sys.name}</h3>
-                  <span className="badge badge-red text-[9px]">{sys.category}</span>
-                </div>
-                <div className="text-[10px] text-[#64748b] font-mono mb-2">{sys.country} • Max Velocity: {sys.speed}</div>
-                <p className="text-[11px] text-[#94a3b8] line-clamp-3 mb-4 leading-relaxed font-sans">{sys.description}</p>
+              {/* Equipment Image */}
+              <div className="relative w-full h-[160px] bg-[#0b0f19] overflow-hidden">
+                {!imgErrors.has(sys.name) ? (
+                  <img
+                    src={getEquipmentImageUrl(sys.name, sys.rawCategory)}
+                    alt={sys.name}
+                    className="w-full h-full object-contain p-1.5 transition-transform duration-500 hover:scale-105"
+                    onError={() => handleImgError(sys.name)}
+                    loading="lazy"
+                  />
+                ) : (
+                  <img
+                    src={getEquipmentImageUrl('', sys.rawCategory)}
+                    alt={sys.name}
+                    className="w-full h-full object-contain p-1.5"
+                  />
+                )}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1aee] via-transparent to-transparent" />
+                <span className="absolute top-2 right-2 badge badge-red text-[9px]">{sys.category}</span>
+                {sys.isIndian && (
+                  <span className="absolute top-2 left-2 px-1.5 py-0.5 text-[8px] font-mono font-bold bg-[rgba(251,146,60,0.15)] text-[#fb923c] border border-[rgba(251,146,60,0.3)]">
+                    🇮🇳 INDIAN
+                  </span>
+                )}
               </div>
-              <button className="w-full py-1.5 bg-[#1b2340] text-[#dc2626] text-[9px] font-mono font-bold tracking-wider hover:bg-[rgba(220,38,38,0.06)] border border-[rgba(220,38,38,0.12)]">
-                VIEW PLATFORM CARRIAGE DETAILS
-              </button>
+              <div className="p-4 flex flex-col flex-1 justify-between">
+                <div>
+                  <h3 className="text-[12px] font-bold text-white font-mono mb-1">{sys.name}</h3>
+                  <div className="text-[10px] text-[#64748b] font-mono mb-2">{sys.country} • Max Velocity: {sys.speed}</div>
+                  <p className="text-[11px] text-[#94a3b8] line-clamp-2 mb-3 leading-relaxed font-sans">{sys.description}</p>
+                </div>
+                <button className="w-full py-1.5 bg-[#1b2340] text-[#dc2626] text-[9px] font-mono font-bold tracking-wider hover:bg-[rgba(220,38,38,0.06)] border border-[rgba(220,38,38,0.12)]">
+                  VIEW PLATFORM CARRIAGE DETAILS
+                </button>
+              </div>
             </div>
           ))}
         </div>
@@ -429,16 +489,37 @@ export default function EncyclopediaPage() {
       {/* DETAILED DIALOG MODAL */}
       {selectedItem && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onClick={() => setSelectedItem(null)}>
-          <div className="card p-5 max-w-2xl w-full max-h-[85vh] overflow-y-auto animate-fade-in-up space-y-4" onClick={e => e.stopPropagation()}>
-            {/* Header */}
-            <div className="flex justify-between items-start border-b border-[rgba(148,163,184,0.08)] pb-2">
-              <div>
-                <h2 className="text-[14px] font-bold text-white font-mono uppercase tracking-wider">{selectedItem.name}</h2>
-                <p className="text-[10px] text-[#64748b] font-mono mt-0.5">{selectedItem.country} • Est. Cost: {selectedItem.cost}</p>
+          <div className="card p-0 max-w-2xl w-full max-h-[85vh] overflow-y-auto animate-fade-in-up" onClick={e => e.stopPropagation()}>
+            {/* Hero Image */}
+            <div className="relative w-full h-[220px] bg-[#0b0f19] overflow-hidden">
+              {!imgErrors.has(selectedItem.name + '_modal') ? (
+                <img
+                  src={getEquipmentImageUrl(selectedItem.name, selectedItem.rawCategory)}
+                  alt={selectedItem.name}
+                  className="w-full h-full object-contain p-2"
+                  onError={() => handleImgError(selectedItem.name + '_modal')}
+                />
+              ) : (
+                <img
+                  src={getEquipmentImageUrl('', selectedItem.rawCategory)}
+                  alt={selectedItem.name}
+                  className="w-full h-full object-contain p-2"
+                />
+              )}
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a] via-[#0a0e1a66] to-transparent" />
+              <button
+                onClick={() => setSelectedItem(null)}
+                className="absolute top-3 right-3 w-8 h-8 flex items-center justify-center bg-black/50 backdrop-blur-sm text-[#94a3b8] hover:text-white hover:bg-black/70 transition-colors font-mono text-sm rounded-sm border border-[rgba(148,163,184,0.1)]"
+              >
+                ✕
+              </button>
+              <div className="absolute bottom-3 left-4 right-4">
+                <h2 className="text-[16px] font-bold text-white font-mono uppercase tracking-wider drop-shadow-lg">{selectedItem.name}</h2>
+                <p className="text-[10px] text-[#94a3b8] font-mono mt-0.5 drop-shadow-lg">{selectedItem.country} • Est. Cost: {selectedItem.cost}</p>
               </div>
-              <button onClick={() => setSelectedItem(null)} className="text-[#64748b] hover:text-white font-mono text-sm">✕</button>
             </div>
 
+            <div className="p-5 space-y-4">
             {/* Description */}
             <div>
               <span className="text-[9px] font-mono text-[#475569] uppercase tracking-[0.05em]">SYSTEM DESCRIPTION</span>
@@ -531,6 +612,7 @@ export default function EncyclopediaPage() {
                 </ul>
               </div>
             )}
+            </div>
           </div>
         </div>
       )}
