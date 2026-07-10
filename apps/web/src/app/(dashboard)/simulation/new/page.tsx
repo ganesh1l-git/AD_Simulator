@@ -882,11 +882,14 @@ export default function SimulationPage() {
         const patrolRange = 100.0;
         let isPureEscort = false;
         if (t.loadoutStatus) {
-          const hasGroundStrike = Object.values(t.loadoutStatus).some((wStatus: any) => {
-            return wStatus.weapon.set !== 2;
+          const hasUnfiredGroundStrike = Object.values(t.loadoutStatus).some((wStatus: any) => {
+            return wStatus.weapon.set !== 2 && wStatus.fired < wStatus.total;
           });
           const isAirSuperiority = isAirSuperiorityJet(t.threat.name);
-          if (isAirSuperiority || !hasGroundStrike) {
+          const hasGroundStrikeAtAll = Object.values(t.loadoutStatus).some((wStatus: any) => {
+            return wStatus.weapon.set !== 2;
+          });
+          if ((isAirSuperiority && !hasUnfiredGroundStrike) || !hasGroundStrikeAtAll) {
             isPureEscort = true;
           }
         }
@@ -894,13 +897,14 @@ export default function SimulationPage() {
         if (isPureEscort && nextDistance <= patrolRange && !t.isReturning) {
           if (!t.isPatrolling) {
             t.isPatrolling = true;
+            (t as any).patrolDistance = nextDistance;
             setSimLogs(prev => [...prev, {
               time: simTimeRef.current,
-              message: `[PATROL] Escort fighter ${t.threat.name} established Combat Air Patrol (CAP) line at ${patrolRange}km. Defending wingmen.`,
+              message: `[PATROL] Escort fighter ${t.threat.name} established Combat Air Patrol (CAP) line at ${nextDistance.toFixed(0)}km. Defending wingmen.`,
               type: 'INFO'
             }]);
           }
-          nextDistance = patrolRange;
+          nextDistance = (t as any).patrolDistance ?? nextDistance;
         }
 
         t.distanceToTarget = nextDistance;
@@ -1024,14 +1028,27 @@ export default function SimulationPage() {
             }
           });
 
-          // If all configured ground-strike weapons are fired, the aircraft RTBs immediately
+          // If all configured ground-strike weapons are fired, the aircraft RTBs immediately (unless it's an air superiority fighter)
           if (hasGroundStrikePayloads && !hasUnfiredGroundStrikePayloads) {
-            t.isReturning = true;
-            setSimLogs(prev => [...prev, {
-              time: simTimeRef.current,
-              message: `[RTB] ${t.threat.name} expended all ground strike payloads. Turning back to base.`,
-              type: 'INFO'
-            }]);
+            const isAirSuperiority = isAirSuperiorityJet(t.threat.name);
+            if (isAirSuperiority) {
+              if (!t.isPatrolling) {
+                t.isPatrolling = true;
+                (t as any).patrolDistance = nextDistance;
+                setSimLogs(prev => [...prev, {
+                  time: simTimeRef.current,
+                  message: `[PATROL] Air superiority fighter ${t.threat.name} expended ground strike payloads. Transitioning to Combat Air Patrol at ${nextDistance.toFixed(0)}km to defend wingmen.`,
+                  type: 'INFO'
+                }]);
+              }
+            } else {
+              t.isReturning = true;
+              setSimLogs(prev => [...prev, {
+                time: simTimeRef.current,
+                message: `[RTB] ${t.threat.name} expended all ground strike payloads. Turning back to base.`,
+                type: 'INFO'
+              }]);
+            }
           }
         }
 
