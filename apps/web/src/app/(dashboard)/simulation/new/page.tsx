@@ -84,21 +84,42 @@ const mapLocalThreatToShared = (type: string): string => {
 };
 
 
+const isAirSuperiorityJet = (name: string): boolean => {
+  const n = name.toLowerCase();
+  return (
+    n.includes('f-22') ||
+    n.includes('f-15ex') ||
+    n.includes('j-20') ||
+    n.includes('su-35') ||
+    n.includes('su-57') ||
+    n.includes('j-16') ||
+    n.includes('typhoon') ||
+    n.includes('rafale') ||
+    n.includes('kf-21') ||
+    n.includes('su-30') ||
+    n.includes('mig-31') ||
+    n.includes('f-15c') ||
+    n.includes('f-15k') ||
+    n.includes('j-10') ||
+    n.includes('f-16')
+  );
+};
+
+
 const getA2AMissile = (loadoutStatus: any, type: 'BVR' | 'SR') => {
   if (!loadoutStatus) return null;
   for (const [wName, status] of Object.entries(loadoutStatus) as any) {
     if (status.fired < status.total) {
-      const nameLower = wName.toLowerCase();
-      const isBVR = nameLower.includes('amraam') || nameLower.includes('pl-15') || nameLower.includes('r-77') || nameLower.includes('meteor') || nameLower.includes('mica') || nameLower.includes('sd-10') || nameLower.includes('aim-260') || nameLower.includes('r-37') || nameLower.includes('r-27') || nameLower.includes('pl-21') || nameLower.includes('r-33') || nameLower.includes('derby') || nameLower.includes('gökdoğan');
-      const isSR = nameLower.includes('sidewinder') || nameLower.includes('pl-5') || nameLower.includes('r-73') || nameLower.includes('magic') || nameLower.includes('python') || nameLower.includes('aim-9') || nameLower.includes('asraam') || nameLower.includes('pl-10') || nameLower.includes('pl-8') || nameLower.includes('r-74') || nameLower.includes('iris-t') || nameLower.includes('bozdoğan');
-      
-      const isA2A = isBVR || isSR;
+      const isA2A = status.weapon.set === 2;
       if (!isA2A) continue; // Skip non-A2A weapons
 
-      if (type === 'BVR' && (isBVR || status.weapon.range > 30)) {
+      const isBVR = status.weapon.range > 30;
+      const isSR = status.weapon.range <= 30;
+
+      if (type === 'BVR' && isBVR) {
         return { name: wName, status };
       }
-      if (type === 'SR' && (isSR || status.weapon.range <= 30)) {
+      if (type === 'SR' && isSR) {
         return { name: wName, status };
       }
     }
@@ -163,6 +184,7 @@ interface VisualThreat {
   isLeaked: boolean;
   detected: boolean;
   isReturning?: boolean;
+  isPatrolling?: boolean;
   retreated?: boolean;
   loadoutStatus?: {
     [wName: string]: {
@@ -187,6 +209,7 @@ interface VisualInterceptor {
   isDead: boolean;
   color: string;
   speed: number;
+  isA2A?: boolean;
 }
 
 interface VisualLog {
@@ -853,13 +876,72 @@ export default function SimulationPage() {
 
         // Flight towards target: distance to target decreases
         const currentDistance = t.distanceToTarget ?? 200.0;
-        const nextDistance = Math.max(0.0, currentDistance - distStep);
+        let nextDistance = Math.max(0.0, currentDistance - distStep);
+
+        // Check if pure escort/air superiority fighter should establish CAP line at 100km
+        const patrolRange = 100.0;
+        let isPureEscort = false;
+        if (t.loadoutStatus) {
+          const hasGroundStrike = Object.values(t.loadoutStatus).some((wStatus: any) => {
+            return wStatus.weapon.set !== 2;
+          });
+          const isAirSuperiority = isAirSuperiorityJet(t.threat.name);
+          if (isAirSuperiority || !hasGroundStrike) {
+            isPureEscort = true;
+          }
+        }
+
+        if (isPureEscort && nextDistance <= patrolRange && !t.isReturning) {
+          if (!t.isPatrolling) {
+            t.isPatrolling = true;
+            setSimLogs(prev => [...prev, {
+              time: simTimeRef.current,
+              message: `[PATROL] Escort fighter ${t.threat.name} established Combat Air Patrol (CAP) line at ${patrolRange}km. Defending wingmen.`,
+              type: 'INFO'
+            }]);
+          }
+          nextDistance = patrolRange;
+        }
+
         t.distanceToTarget = nextDistance;
         const initDist = t.initialDistance ?? 200.0;
         t.progress = initDist > 0 ? (initDist - nextDistance) / initDist : 1.0;
 
-        t.x = t.startX + ((t.targetX ?? 50) - t.startX) * t.progress;
-        t.y = t.startY + ((t.targetY ?? 80) - t.startY) * t.progress;
+        const baseX = t.startX + ((t.targetX ?? 50) - t.startX) * t.progress;
+        const baseY = t.startY + ((t.targetY ?? 80) - t.startY) * t.progress;
+
+        if (t.isPatrolling) {
+          const angle = (simTimeRef.current * 0.1) % (2 * Math.PI);
+          t.x = baseX + Math.cos(angle) * 2.0;
+          t.y = baseY + Math.sin(angle) * 2.0;
+
+          // Check if it should return to base because all strike packages have finished/dead/returning
+          const activeStrikeThreats = activeThreats.some(other => {
+            if (other.id === t.id || other.isDead || other.isLeaked || other.isReturning) return false;
+            let otherIsEscort = false;
+            if (other.loadoutStatus) {
+              const hasGround = Object.values(other.loadoutStatus).some((w: any) => {
+                return w.weapon.set !== 2;
+              });
+              const isAirSup = isAirSuperiorityJet(other.threat.name);
+              otherIsEscort = isAirSup || !hasGround;
+            }
+            return !otherIsEscort;
+          });
+
+          if (!activeStrikeThreats) {
+            t.isPatrolling = false;
+            t.isReturning = true;
+            setSimLogs(prev => [...prev, {
+              time: simTimeRef.current,
+              message: `[RTB] Escort fighter ${t.threat.name} returning to base (all strike wingmen resolved).`,
+              type: 'INFO'
+            }]);
+          }
+        } else {
+          t.x = baseX;
+          t.y = baseY;
+        }
 
         // Check standoff launch condition for jets/UAVs
         if (t.loadoutStatus) {
@@ -867,8 +949,7 @@ export default function SimulationPage() {
           let hasUnfiredGroundStrikePayloads = false;
 
           Object.entries(t.loadoutStatus).forEach(([wName, wStatus]) => {
-            const nameLower = wName.toLowerCase();
-            const isA2A = nameLower.includes('amraam') || nameLower.includes('pl-15') || nameLower.includes('r-77') || nameLower.includes('meteor') || nameLower.includes('mica') || nameLower.includes('sd-10') || nameLower.includes('sidewinder') || nameLower.includes('pl-10') || nameLower.includes('pl-5') || nameLower.includes('r-73') || nameLower.includes('magic') || nameLower.includes('python') || nameLower.includes('aim-9') || nameLower.includes('asraam') || nameLower.includes('derby') || nameLower.includes('gökdoğan') || nameLower.includes('bozdoğan') || nameLower.includes('iris-t') || nameLower.includes('r-37') || nameLower.includes('r-27') || nameLower.includes('pl-21') || nameLower.includes('pl-8') || nameLower.includes('r-33') || nameLower.includes('r-74');
+            const isA2A = wStatus.weapon.set === 2;
 
             if (isA2A) {
               // A2A missiles are reserved for defense/escort protection, never launched at the ground city target
@@ -954,6 +1035,8 @@ export default function SimulationPage() {
           }
         }
 
+
+
         // Check if threat has reached HQ target or battery target
         if (!t.isReturning && nextDistance <= 0.01) {
           t.isLeaked = true;
@@ -969,12 +1052,22 @@ export default function SimulationPage() {
               type: 'BREACH'
             }]);
           } else {
-            setLeakerCount(prev => prev + 1);
-            setSimLogs(prev => [...prev, {
-              time: simTimeRef.current,
-              message: `[BREACH] Attacker ${t.threat.name} impacted Command HQ`,
-              type: 'BREACH'
-            }]);
+            if (isPureEscort) {
+              t.isReturning = true;
+              t.distanceToTarget = 0.01;
+              setSimLogs(prev => [...prev, {
+                time: simTimeRef.current,
+                message: `[RTB] Escort fighter ${t.threat.name} completed escort/defense patrol. Returning to base.`,
+                type: 'INFO'
+              }]);
+            } else {
+              setLeakerCount(prev => prev + 1);
+              setSimLogs(prev => [...prev, {
+                time: simTimeRef.current,
+                message: `[BREACH] Attacker ${t.threat.name} impacted Command HQ`,
+                type: 'BREACH'
+              }]);
+            }
           }
         }
       });
@@ -1317,6 +1410,46 @@ export default function SimulationPage() {
       activeInterceptors.forEach(interceptor => {
         if (interceptor.isDead) return;
 
+        if (interceptor.isA2A) {
+          // A2A Interceptor update: target is a SAM interceptor
+          const targetSAM = activeInterceptors.find(sam => sam.id === interceptor.targetId && !sam.isDead && !sam.isA2A);
+          if (!targetSAM) {
+            interceptor.isDead = true;
+            return;
+          }
+
+          const dx = targetSAM.x - interceptor.x;
+          const dy = targetSAM.y - interceptor.y;
+          const distPct = Math.sqrt(dx * dx + dy * dy);
+          const stepPct = ((interceptor.speed * 0.34) / 2.5) * simSpeed;
+
+          if (stepPct >= distPct) {
+            interceptor.x = targetSAM.x;
+            interceptor.y = targetSAM.y;
+            interceptor.isDead = true;
+
+            const hit = Math.random() < interceptor.accuracy;
+            if (hit) {
+              targetSAM.isDead = true;
+              setSimLogs(prev => [...prev, {
+                time: simTimeRef.current,
+                message: `💥 A2A INTERCEPT: SAM interceptor destroyed in flight!`,
+                type: 'INTERCEPT_SUCCESS'
+              }]);
+            } else {
+              setSimLogs(prev => [...prev, {
+                time: simTimeRef.current,
+                message: `💨 A2A MISS: A2A missile missed the incoming SAM.`,
+                type: 'INTERCEPT_FAIL'
+              }]);
+            }
+          } else {
+            interceptor.x += (dx / distPct) * stepPct;
+            interceptor.y += (dy / distPct) * stepPct;
+          }
+          return;
+        }
+
         const target = activeThreats.find(t => t.id === interceptor.targetId);
         if (!target || target.isDead || target.isLeaked) {
           interceptor.isDead = true;
@@ -1336,7 +1469,8 @@ export default function SimulationPage() {
         }
 
         // --- A2A Self-defense logic ---
-        if (target.threat.type === 'FIGHTER') {
+        const hasA2ASelfDefense = target.loadoutStatus && Object.values(target.loadoutStatus).some((wStatus: any) => wStatus.weapon.set === 2 && wStatus.fired < wStatus.total);
+        if (hasA2ASelfDefense) {
           if (!(interceptor as any).a2aChecked) {
             (interceptor as any).a2aChecked = { bvr: false, sr: false };
           }
@@ -1347,98 +1481,79 @@ export default function SimulationPage() {
 
           // BVR range: 30km to 100km
           if (distanceInKm > 30 && distanceInKm <= 100 && !(interceptor as any).a2aChecked.bvr) {
-            (interceptor as any).a2aChecked.bvr = true;
             const a2a = getA2AMissile(target.loadoutStatus, 'BVR');
             if (a2a) {
+              (interceptor as any).a2aChecked.bvr = true;
               a2a.status.fired++;
-              const isModern = target.threat.name.includes('Block III') || target.threat.name.includes('Block 52+') || target.threat.name.includes('Rafale') || target.threat.name.includes('Su-30');
-              const detectProb = isModern ? 0.75 : 0.50;
-              if (Math.random() < detectProb) {
-                setSimLogs(prev => [...prev, {
-                  time: simTimeRef.current,
-                  message: `✈️ A2A DEFENSE: ${target.threat.name} RWR locked SAM. Fired ${a2a.name} (BVR AAM) in self-defense!`,
-                  type: 'LAUNCH'
-                }]);
-                if (Math.random() < 0.60) {
-                  interceptor.isDead = true;
-                  setSimLogs(prev => [...prev, {
-                    time: simTimeRef.current,
-                    message: `💥 A2A INTERCEPT: SAM destroyed in flight by ${target.threat.name}'s BVR missile!`,
-                    type: 'INTERCEPT_SUCCESS'
-                  }]);
-                  return;
-                } else {
-                  setSimLogs(prev => [...prev, {
-                    time: simTimeRef.current,
-                    message: `💨 A2A MISS: BVR missile fired by ${target.threat.name} missed the incoming SAM.`,
-                    type: 'INTERCEPT_FAIL'
-                  }]);
-                }
-              }
+              const isModern = isAirSuperiorityJet(target.threat.name) || target.threat.name.includes('Block III') || target.threat.name.includes('Block 52+') || target.threat.name.includes('Rafale') || target.threat.name.includes('Su-30') || target.threat.name.includes('JF-17');
+              const detectProb = isModern ? 0.85 : 0.60;
+
+              // Spawn A2A interceptor targeting this SAM
+              const a2aIntId = `a2a-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+              activeInterceptors.push({
+                id: a2aIntId,
+                startX: target.x,
+                startY: target.y,
+                x: target.x,
+                y: target.y,
+                targetId: interceptor.id,
+                progress: 0,
+                accuracy: 0.60,
+                isDead: false,
+                color: '#38bdf8', // Cyan for A2A
+                speed: a2a.status.weapon.speed,
+                isA2A: true,
+              });
+
+              setSimLogs(prev => [...prev, {
+                time: simTimeRef.current,
+                message: `✈️ A2A DEFENSE: ${target.threat.name} RWR locked SAM. Launched ${a2a.name} (BVR AAM) in self-defense!`,
+                type: 'LAUNCH'
+              }]);
             }
           }
 
           // SR range: <= 30km
           if (distanceInKm <= 30 && !(interceptor as any).a2aChecked.sr) {
-            (interceptor as any).a2aChecked.sr = true;
             const a2a = getA2AMissile(target.loadoutStatus, 'SR');
             if (a2a) {
+              (interceptor as any).a2aChecked.sr = true;
               a2a.status.fired++;
-              const isModern = target.threat.name.includes('Block III') || target.threat.name.includes('Block 52+') || target.threat.name.includes('Rafale') || target.threat.name.includes('Su-30');
-              const detectProb = isModern ? 0.75 : 0.50;
-              if (Math.random() < detectProb) {
-                setSimLogs(prev => [...prev, {
-                  time: simTimeRef.current,
-                  message: `✈️ A2A DEFENSE: ${target.threat.name} visual contact on SAM. Fired ${a2a.name} (SR AAM) in self-defense!`,
-                  type: 'LAUNCH'
-                }]);
-                if (Math.random() < 0.70) {
-                  interceptor.isDead = true;
-                  setSimLogs(prev => [...prev, {
-                    time: simTimeRef.current,
-                    message: `💥 A2A INTERCEPT: SAM destroyed in terminal phase by ${target.threat.name}'s SR missile!`,
-                    type: 'INTERCEPT_SUCCESS'
-                  }]);
-                  return;
-                } else {
-                  setSimLogs(prev => [...prev, {
-                    time: simTimeRef.current,
-                    message: `💨 A2A MISS: SR missile fired by ${target.threat.name} missed the incoming SAM.`,
-                    type: 'INTERCEPT_FAIL'
-                  }]);
-                }
-              }
+
+              // Spawn A2A interceptor targeting this SAM
+              const a2aIntId = `a2a-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+              activeInterceptors.push({
+                id: a2aIntId,
+                startX: target.x,
+                startY: target.y,
+                x: target.x,
+                y: target.y,
+                targetId: interceptor.id,
+                progress: 0,
+                accuracy: 0.60,
+                isDead: false,
+                color: '#60a5fa', // Blue for SR A2A
+                speed: a2a.status.weapon.speed,
+                isA2A: true,
+              });
+
+              setSimLogs(prev => [...prev, {
+                time: simTimeRef.current,
+                message: `✈️ A2A DEFENSE: ${target.threat.name} visual contact on SAM. Launched ${a2a.name} (SR AAM) in self-defense!`,
+                type: 'LAUNCH'
+              }]);
             }
           }
         }
 
         // --- Escort Cover Intercept Logic ---
-        // Air superiority escorts (F-22, F-15EX, J-20, Su-35, Su-57, J-16, Typhoon, Rafale, KF-21, Su-30, MiG-31)
-        // can detect SAM interceptors targeting their wingmen and launch BVR A2A missiles to destroy the SAM in flight.
         if (!(interceptor as any).escortInterceptionChecked) {
-          (interceptor as any).escortInterceptionChecked = true;
-
           const escort = activeThreats.find(escortThreat => {
-            if (escortThreat.isDead || escortThreat.isLeaked || escortThreat.threat.type !== 'FIGHTER') return false;
+            if (escortThreat.isDead || escortThreat.isLeaked) return false;
             if (escortThreat.id === target.id) return false; // Self-defense logic already covers this target
 
             const escName = escortThreat.threat.name.toLowerCase();
-            const isAirSuperiority = escName.includes('f-22') ||
-                                     escName.includes('f-15ex') ||
-                                     escName.includes('j-20') ||
-                                     escName.includes('su-35') ||
-                                     escName.includes('su-57') ||
-                                     escName.includes('j-16') ||
-                                     escName.includes('typhoon') ||
-                                     escName.includes('rafale') ||
-                                     escName.includes('kf-21') ||
-                                     escName.includes('su-30') ||
-                                     escName.includes('mig-31') ||
-                                     escName.includes('f-15c') ||
-                                     escName.includes('f-15k') ||
-                                     escName.includes('j-10') ||
-                                     escName.includes('f-16');
-
+            const isAirSuperiority = isAirSuperiorityJet(escName);
             if (!isAirSuperiority) return false;
 
             const a2a = getA2AMissile(escortThreat.loadoutStatus, 'BVR');
@@ -1456,31 +1571,31 @@ export default function SimulationPage() {
           if (escort) {
             const a2a = getA2AMissile(escort.loadoutStatus, 'BVR');
             if (a2a) {
+              (interceptor as any).escortInterceptionChecked = true;
               a2a.status.fired++;
-              const isModern = escort.threat.name.includes('F-22') || escort.threat.name.includes('J-20') || escort.threat.name.includes('Su-57');
-              const detectProb = isModern ? 0.85 : 0.65;
-              if (Math.random() < detectProb) {
-                setSimLogs(prev => [...prev, {
-                  time: simTimeRef.current,
-                  message: `🛡️ ESCORT COVER: Escort fighter ${escort.threat.name} locked SAM targeting wingman ${target.threat.name}. Fired ${a2a.name} (BVR AAM) to defend wingman!`,
-                  type: 'LAUNCH'
-                }]);
-                if (Math.random() < 0.50) {
-                  interceptor.isDead = true;
-                  setSimLogs(prev => [...prev, {
-                    time: simTimeRef.current,
-                    message: `💥 ESCORT SUCCESS: SAM destroyed in flight by ${escort.threat.name}'s escort missile!`,
-                    type: 'INTERCEPT_SUCCESS'
-                  }]);
-                  return;
-                } else {
-                  setSimLogs(prev => [...prev, {
-                    time: simTimeRef.current,
-                    message: `💨 ESCORT MISS: Escort BVR missile fired by ${escort.threat.name} missed the SAM.`,
-                    type: 'INTERCEPT_FAIL'
-                  }]);
-                }
-              }
+
+              // Spawn A2A interceptor targeting this SAM
+              const a2aIntId = `a2a-${Date.now()}-${Math.random().toString(36).substr(2, 4)}`;
+              activeInterceptors.push({
+                id: a2aIntId,
+                startX: escort.x,
+                startY: escort.y,
+                x: escort.x,
+                y: escort.y,
+                targetId: interceptor.id,
+                progress: 0,
+                accuracy: 0.60,
+                isDead: false,
+                color: '#38bdf8', // Cyan for BVR A2A
+                speed: a2a.status.weapon.speed,
+                isA2A: true,
+              });
+
+              setSimLogs(prev => [...prev, {
+                time: simTimeRef.current,
+                message: `🛡️ ESCORT COVER: Escort fighter ${escort.threat.name} locked SAM targeting wingman ${target.threat.name}. Launched ${a2a.name} (BVR AAM) to defend wingman!`,
+                type: 'LAUNCH'
+              }]);
             }
           }
         }
@@ -1726,9 +1841,9 @@ export default function SimulationPage() {
         const intY = (i.y / 100) * canvas.height;
 
         ctx.strokeStyle = i.color;
-        ctx.lineWidth = 2.5;
+        ctx.lineWidth = i.isA2A ? 1.5 : 2.5;
         ctx.beginPath();
-        ctx.arc(intX, intY, 3, 0, Math.PI * 2);
+        ctx.arc(intX, intY, i.isA2A ? 2 : 3, 0, Math.PI * 2);
         ctx.stroke();
 
         // Flame trailing line
@@ -2941,7 +3056,24 @@ export default function SimulationPage() {
           )}
 
           {/* Actions */}
-          <div className="flex gap-3">
+          <div className="flex gap-3 flex-wrap">
+            <button
+              onClick={() => {
+                const resetDefender = defenderProcured.map(battery => ({
+                  ...battery,
+                  isDestroyed: false,
+                }));
+                setDefenderProcured(resetDefender);
+                setPhase('procure_attacker');
+                setSimLogs([]);
+                setLeakerCount(0);
+                setHitCount(0);
+              }}
+              className="px-5 py-2 font-mono text-xs font-bold uppercase tracking-wider rounded-[2px] transition-all bg-[#00ff88] hover:bg-[#00dd77] text-black border-none cursor-pointer flex items-center gap-1.5"
+            >
+              <span>🔄</span> Retry with Exact Loadout
+            </button>
+
             <button
               onClick={() => {
                 setPhase('config');

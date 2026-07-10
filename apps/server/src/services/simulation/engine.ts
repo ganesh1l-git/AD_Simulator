@@ -136,6 +136,28 @@ function isFighterClass(type: string): boolean {
   return type === 'FIGHTER_AIRCRAFT' || type === 'BOMBER_AIRCRAFT' || type === 'ATTACK_HELICOPTER';
 }
 
+/** Returns true if threat is an air superiority jet */
+function isAirSuperiorityJet(name: string): boolean {
+  const n = name.toLowerCase();
+  return (
+    n.includes('f-22') ||
+    n.includes('f-15ex') ||
+    n.includes('j-20') ||
+    n.includes('su-35') ||
+    n.includes('su-57') ||
+    n.includes('j-16') ||
+    n.includes('typhoon') ||
+    n.includes('rafale') ||
+    n.includes('kf-21') ||
+    n.includes('su-30') ||
+    n.includes('mig-31') ||
+    n.includes('f-15c') ||
+    n.includes('f-15k') ||
+    n.includes('j-10') ||
+    n.includes('f-16')
+  );
+}
+
 /** Compute effective accuracy with radar bonus applied */
 function computeEffectiveAccuracy(
   sys: SimSystem,
@@ -582,7 +604,7 @@ export async function runSimulation(simulationId: string): Promise<void> {
                     const useSR = !useBVR && threat.srAmmo > 0;
 
                     if (useBVR || useSR) {
-                      const a2aHitProb = useBVR ? 0.60 : 0.70;
+                      const a2aHitProb = 0.60;
                       const a2aType = useBVR ? 'BVR' : 'SHORT_RANGE';
 
                       if (useBVR) threat.bvrAmmo--;
@@ -623,6 +645,65 @@ export async function runSimulation(simulationId: string): Promise<void> {
                             fighterName: threat.name,
                             a2aType,
                             message: `${threat.name} A2A missed — SAM continues`,
+                          },
+                        });
+                      }
+                    }
+                  }
+                }
+
+                // =========================================
+                // A2A ESCORT COVER — Escorts protect wingmen
+                // =========================================
+                if (samSurvived) {
+                  const escort = simThreats.find(esc =>
+                    esc.id !== threat.id &&
+                    isFighterClass(esc.type) &&
+                    isAirSuperiorityJet(esc.name) &&
+                    ['INBOUND', 'DETECTED', 'CLASSIFIED', 'ENGAGED'].includes(esc.status) &&
+                    esc.bvrAmmo > 0
+                  );
+
+                  if (escort) {
+                    const isModern = escort.name.includes('F-22') || escort.name.includes('J-20') || escort.name.includes('Su-57');
+                    const detectProb = isModern ? 0.85 : 0.65;
+                    if (Math.random() < detectProb) {
+                      escort.bvrAmmo--;
+
+                      events.push({
+                        id: uuid(), timestamp: launchDelay + 2,
+                        type: 'A2A_FIRED',
+                        data: {
+                          threatId: escort.id,
+                          fighterName: escort.name,
+                          a2aType: 'BVR',
+                          targetSystem: availableSystem.name,
+                          message: `🛡️ ESCORT COVER: Escort fighter ${escort.name} locked SAM targeting wingman ${threat.name}. Fired BVR AAM to defend wingman!`,
+                        },
+                      });
+
+                      const a2aSuccess = Math.random() < 0.60;
+                      if (a2aSuccess) {
+                        samSurvived = false;
+                        events.push({
+                          id: uuid(), timestamp: launchDelay + flightTime * 0.6,
+                          type: 'A2A_INTERCEPT_SUCCESS',
+                          data: {
+                            threatId: escort.id,
+                            fighterName: escort.name,
+                            a2aType: 'BVR',
+                            message: `💥 ESCORT SUCCESS: SAM destroyed in flight by ${escort.name}'s escort BVR missile!`,
+                          },
+                        });
+                      } else {
+                        events.push({
+                          id: uuid(), timestamp: launchDelay + flightTime * 0.6,
+                          type: 'A2A_INTERCEPT_FAILURE',
+                          data: {
+                            threatId: escort.id,
+                            fighterName: escort.name,
+                            a2aType: 'BVR',
+                            message: `💨 ESCORT MISS: Escort BVR missile fired by ${escort.name} missed the SAM.`,
                           },
                         });
                       }
@@ -687,12 +768,21 @@ export async function runSimulation(simulationId: string): Promise<void> {
                         reason: 'Interception probability roll failed',
                       },
                     });
-                    events.push({
-                      id: uuid(), timestamp: interceptAttemptTime + 10,
-                      type: 'THREAT_IMPACT',
-                      data: { threatId: threat.id, threatName: threat.name },
-                    });
-                    threat.status = 'IMPACT';
+                    if (isAirSuperiorityJet(threat.name)) {
+                      events.push({
+                        id: uuid(), timestamp: interceptAttemptTime + 10,
+                        type: 'THREAT_RTB',
+                        data: { threatId: threat.id, threatName: threat.name, message: `${threat.name} completed escort patrol and returned to base.` },
+                      });
+                      threat.status = 'MISSED';
+                    } else {
+                      events.push({
+                        id: uuid(), timestamp: interceptAttemptTime + 10,
+                        type: 'THREAT_IMPACT',
+                        data: { threatId: threat.id, threatName: threat.name },
+                      });
+                      threat.status = 'IMPACT';
+                    }
                   }
 
                   // STEP 8: Record
@@ -730,12 +820,21 @@ export async function runSimulation(simulationId: string): Promise<void> {
                       reason: `Interceptor missile destroyed by ${threat.name} A2A self-defense`,
                     },
                   });
-                  events.push({
-                    id: uuid(), timestamp: interceptAttemptTime + 10,
-                    type: 'THREAT_IMPACT',
-                    data: { threatId: threat.id, threatName: threat.name },
-                  });
-                  threat.status = 'IMPACT';
+                  if (isAirSuperiorityJet(threat.name)) {
+                    events.push({
+                      id: uuid(), timestamp: interceptAttemptTime + 10,
+                      type: 'THREAT_RTB',
+                      data: { threatId: threat.id, threatName: threat.name, message: `${threat.name} completed escort patrol and returned to base.` },
+                    });
+                    threat.status = 'MISSED';
+                  } else {
+                    events.push({
+                      id: uuid(), timestamp: interceptAttemptTime + 10,
+                      type: 'THREAT_IMPACT',
+                      data: { threatId: threat.id, threatName: threat.name },
+                    });
+                    threat.status = 'IMPACT';
+                  }
                   availableSystem.currentTargets--;
                 }
               }
