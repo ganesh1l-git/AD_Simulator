@@ -2776,6 +2776,55 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
       }
     },
     {
+      "name": "J-10C Vigorous Dragon",
+      "category": "Tactical Combat Fighter",
+      "cost": "$45 Million",
+      "manufactured": 300,
+      "active": 280,
+      "accidents": 5,
+      "retired": 5,
+      "ordered": 50,
+      "mtow": "19,277 kg (42,500 lbs)",
+      "payloadCapacity": "5,600 kg (12,300 lbs)",
+      "thrust": "1x 81.4 kN dry / 132 kN afterburner (WS-10B)",
+      "legacy": "Older 3rd-generation single-engine airframes",
+      "variants": [
+        "J-10C Block I",
+        "J-10C Block II"
+      ],
+      "weapons": {
+        "a2a": [
+          "PL-15 active radar BVRAAM (150km)",
+          "PL-10 high-agility IR dogfight (20km)",
+          "PL-12 active radar homing (100km)",
+          "PL-5 SRAAM (18km)"
+        ],
+        "a2g": [],
+        "antiRad": [
+          "YJ-91 anti-radiation seeker (120km)"
+        ],
+        "antiShip": [
+          "YJ-83K active radar anti-ship (180km)",
+          "CM-400AKG supersonic standoff (250km)"
+        ],
+        "glideBombs": [
+          "LS-6 satellite guided bomb (250kg)"
+        ],
+        "cruise": [],
+        "ballisticHypersonic": [],
+        "laserGuided": []
+      },
+      "operationalHistory": "Developed under requirement programs to establish air parity for the China Armed Forces. Rigid developmental evaluations tested early-stage structures in extreme temperature environments, verifying flight mechanics under heavy crosswinds. achievements include successful deployments in major theater commands and peacetime drills (Red Flag, Cobra Warrior, Malabar), confirming the system's operational stability across strategic borders.",
+      "combatRecord": "Inducted into active combat squadrons and intercept batteries. Participated in regional border patrols, air interdictions, and airspace security monitoring runs. Successfully deployed in combat operations, recording multiple targets neutralized in border actions and conflicts.",
+      "futurePlans": "Mid-life updates are scheduled to integrate updated AESA radars, secure cryptolinks, and localized air-to-air missile options.",
+      "stats": {
+        "Range": "2,800 km",
+        "Speed": "Mach 1.8",
+        "Ceiling": "16,000 m",
+        "Radar": "Multi-mode Active AESA"
+      }
+    },
+    {
       "name": "J-16 Strike Fighter",
       "category": "Tactical Combat Fighter",
       "cost": "$80 Million",

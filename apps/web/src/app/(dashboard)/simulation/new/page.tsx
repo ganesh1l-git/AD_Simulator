@@ -1052,6 +1052,19 @@ export default function SimulationPage() {
           }
         }
 
+        // If a jet has launched all of its missiles of all categories, it leaves (RTB).
+        const hasAnyLoadout = t.loadoutStatus && Object.keys(t.loadoutStatus).length > 0;
+        const allMissilesFired = hasAnyLoadout && Object.values(t.loadoutStatus || {}).every((wStatus: any) => wStatus.fired >= wStatus.total);
+        if (allMissilesFired && !t.isReturning) {
+          t.isReturning = true;
+          t.isPatrolling = false;
+          setSimLogs(prev => [...prev, {
+            time: simTimeRef.current,
+            message: `[RTB] ${t.threat.name} has expended all weapons across all categories. Returning to base.`,
+            type: 'INFO'
+          }]);
+        }
+
 
 
         // Check if threat has reached HQ target or battery target
