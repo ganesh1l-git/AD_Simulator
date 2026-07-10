@@ -3640,7 +3640,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "Kh-59ME television-guided (115km)"
         ],
         "antiRad": [
-          "Kh-31PD supersonic anti-radiation (250km)"
+          "Kh-31PD supersonic anti-radiation (250km)",
+          "Kh-31PM supersonic anti-radiation (260km)"
         ],
         "antiShip": [
           "Kh-31AD supersonic anti-ship (250km)",
@@ -3692,7 +3693,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "Kh-59ME television-guided (115km)"
         ],
         "antiRad": [
-          "Kh-31PD supersonic anti-radiation (250km)"
+          "Kh-31PD supersonic anti-radiation (250km)",
+          "Kh-31PM supersonic anti-radiation (260km)"
         ],
         "antiShip": [
           "Kh-31AD supersonic anti-ship (250km)",
@@ -3786,7 +3788,9 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "Kh-59Mk2 tactical standoff cruise (290km)",
           "Kh-38M laser guided modular (40km)"
         ],
-        "antiRad": [],
+        "antiRad": [
+          "Kh-31PM supersonic anti-radiation (260km)"
+        ],
         "antiShip": [],
         "glideBombs": [],
         "cruise": [],
@@ -3832,7 +3836,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "Kh-29L laser guided (10km)"
         ],
         "antiRad": [
-          "Kh-31P supersonic anti-radiation (110km)"
+          "Kh-31P supersonic anti-radiation (110km)",
+          "Kh-31PM supersonic anti-radiation (260km)"
         ],
         "antiShip": [],
         "glideBombs": [
@@ -3959,7 +3964,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "Kh-29T TV-guided missile (12km)"
         ],
         "antiRad": [
-          "Kh-31P anti-radiation (110km)"
+          "Kh-31P anti-radiation (110km)",
+          "Kh-31PM supersonic anti-radiation (260km)"
         ],
         "antiShip": [],
         "glideBombs": [],
@@ -4003,7 +4009,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "Kh-29T TV-guided missile (12km)"
         ],
         "antiRad": [
-          "Kh-31P anti-radiation (110km)"
+          "Kh-31P anti-radiation (110km)",
+          "Kh-31PM supersonic anti-radiation (260km)"
         ],
         "antiShip": [],
         "glideBombs": [],

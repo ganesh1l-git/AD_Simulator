@@ -5074,6 +5074,23 @@ async function main() {
       warheadWeight: 60,
       description: 'MAR-1 is a Brazilian anti-radiation missile that homes on radar frequency emissions. Educational reference for studying SEAD tactics where attackers destroy radar eyes of an air defence network.',
     },
+    {
+      name: 'Kh-31PM Supersonic ARM',
+      type: 'ANTI_RADIATION_MISSILE' as const,
+      countryOfOrigin: 'Russia',
+      speedClass: 'SUPERSONIC' as const,
+      maxSpeed: 3.5,
+      altitudeClass: 'HIGH' as const,
+      minAltitude: 50,
+      maxAltitude: 15000,
+      radarVisibility: 'LOW' as const,
+      rcs: 0.08,
+      threatScore: 88,
+      costEstimate: 1400,
+      range: 260,
+      warheadWeight: 45,
+      description: 'Kh-31PM is an advanced Russian supersonic anti-radiation missile (ARM) with a range of up to 260 km and a broad-band passive seeker. It is designed to target modern air defence radar systems.',
+    },
 
     // ---- Air-to-Air Missiles — fighter self-defense vs incoming SAMs ----
     {

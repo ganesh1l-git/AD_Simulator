@@ -3845,6 +3845,18 @@
         "set": 1
       },
       {
+        "name": "Kh-31PM Supersonic ARM",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 260,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "FAB-500 / 1500 with UMPC",
         "type": "GLIDE_BOMB",
         "speed": 0.9,
@@ -4074,6 +4086,18 @@
         "set": 1
       },
       {
+        "name": "Kh-31PM Supersonic ARM",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 260,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "KAB-500KR / KAB-500L",
         "type": "GLIDE_BOMB",
         "speed": 0.9,
@@ -4284,6 +4308,18 @@
         "rcs": 0.08,
         "altitude": 50,
         "cost": 0.9,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kh-31PM Supersonic ARM",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 260,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.4,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
@@ -4577,6 +4613,18 @@
         "set": 1
       },
       {
+        "name": "Kh-31PM Supersonic ARM",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 260,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "Kh-31AD High-Speed Anti-Ship",
         "type": "CRUISE",
         "speed": 3,
@@ -4832,6 +4880,18 @@
         "set": 1
       },
       {
+        "name": "Kh-31PM Supersonic ARM",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 260,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.4,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "FAB-250 / FAB-500",
         "type": "GLIDE_BOMB",
         "speed": 0.9,
@@ -4926,6 +4986,18 @@
         "rcs": 0.08,
         "altitude": 50,
         "cost": 0.9,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "Kh-31PM Supersonic ARM",
+        "type": "CRUISE",
+        "speed": 3.5,
+        "range": 260,
+        "rcs": 0.08,
+        "altitude": 50,
+        "cost": 1.4,
         "maxQty": 4,
         "weightSlots": 1,
         "set": 1
