@@ -967,7 +967,7 @@ export default function SimulationPage() {
                 // Spawn the fired payloads as individual entities starting at current jet position
                 wStatus.fired = wStatus.total;
                 for (let i = 0; i < wStatus.total; i++) {
-                  const isAntiRad = wStatus.weapon.name.toLowerCase().includes('anti-radiation') || wStatus.weapon.name.toLowerCase().includes('harm') || wStatus.weapon.name.toLowerCase().includes('arm') || wStatus.weapon.name.includes('YJ-91');
+                  const isAntiRad = wStatus.weapon.name.toLowerCase().includes('anti-radiation') || wStatus.weapon.name.toLowerCase().includes('harm') || wStatus.weapon.name.toLowerCase().includes('arm') || wStatus.weapon.name.includes('YJ-91') || wStatus.weapon.name.toLowerCase().includes('cm-400');
                   let targetBatteryId: string | undefined = undefined;
                   let targetX = 50;
                   let targetY = 80;
