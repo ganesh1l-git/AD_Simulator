@@ -5117,6 +5117,18 @@
         "set": 1
       },
       {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "YJ-91 Anti-Radiation",
         "type": "CRUISE",
         "speed": 3,
@@ -5200,6 +5212,18 @@
         "altitude": 50,
         "cost": 2,
         "maxQty": 12,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
         "weightSlots": 1,
         "set": 1
       },
@@ -5291,6 +5315,18 @@
         "set": 1
       },
       {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "YJ-12 Supersonic Cruise",
         "type": "CRUISE",
         "speed": 3,
@@ -5353,6 +5389,18 @@
     "country": "china",
     "maxSlots": 7,
     "weaponsCatalog": [
+      {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
       {
         "name": "PL-12",
         "type": "CRUISE",
@@ -5443,6 +5491,18 @@
     "country": "china",
     "maxSlots": 10,
     "weaponsCatalog": [
+      {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
       {
         "name": "PL-15 BVR AAM",
         "type": "CRUISE",
@@ -5570,6 +5630,18 @@
     "country": "china",
     "maxSlots": 12,
     "weaponsCatalog": [
+      {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
       {
         "name": "PL-15 BVR AAM",
         "type": "CRUISE",
@@ -5720,6 +5792,18 @@
     "country": "china",
     "maxSlots": 10,
     "weaponsCatalog": [
+      {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
       {
         "name": "PL-15 BVR AAM",
         "type": "CRUISE",
@@ -5988,6 +6072,18 @@
     "country": "china",
     "maxSlots": 12,
     "weaponsCatalog": [
+      {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
       {
         "name": "R-37M",
         "type": "CRUISE",
@@ -8858,6 +8954,18 @@
     "maxSlots": 10,
     "weaponsCatalog": [
       {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
+      {
         "name": "PL-12",
         "type": "CRUISE",
         "speed": 4,
@@ -8911,6 +9019,18 @@
     "country": "china",
     "maxSlots": 12,
     "weaponsCatalog": [
+      {
+        "name": "CM-400AKG Supersonic",
+        "type": "CRUISE",
+        "speed": 4,
+        "range": 240,
+        "rcs": 0.1,
+        "altitude": 15000,
+        "cost": 1.5,
+        "maxQty": 4,
+        "weightSlots": 1,
+        "set": 1
+      },
       {
         "name": "PL-15 BVR AAM",
         "type": "CRUISE",

@@ -2755,7 +2755,9 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
         ],
         "a2g": [],
         "antiRad": [],
-        "antiShip": [],
+        "antiShip": [
+          "CM-400AKG supersonic standoff (250km)"
+        ],
         "glideBombs": [
           "LS-6 satellite guided bomb (250kg)"
         ],
@@ -2804,7 +2806,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "YJ-91 anti-radiation seeker (120km)"
         ],
         "antiShip": [
-          "YJ-83K active radar anti-ship (180km)"
+          "YJ-83K active radar anti-ship (180km)",
+          "CM-400AKG supersonic standoff (250km)"
         ],
         "glideBombs": [],
         "cruise": [],
@@ -2852,7 +2855,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "YJ-91 anti-radiation seeker (120km)"
         ],
         "antiShip": [
-          "YJ-83K active radar anti-ship (180km)"
+          "YJ-83K active radar anti-ship (180km)",
+          "CM-400AKG supersonic standoff (250km)"
         ],
         "glideBombs": [],
         "cruise": [],
@@ -2900,7 +2904,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "YJ-91 anti-radiation seeker (120km)"
         ],
         "antiShip": [
-          "YJ-83K active radar anti-ship (180km)"
+          "YJ-83K active radar anti-ship (180km)",
+          "CM-400AKG supersonic standoff (250km)"
         ],
         "glideBombs": [],
         "cruise": [],
@@ -2948,7 +2953,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "YJ-91 anti-radiation seeker (120km)"
         ],
         "antiShip": [
-          "YJ-83K active radar anti-ship (180km)"
+          "YJ-83K active radar anti-ship (180km)",
+          "CM-400AKG supersonic standoff (250km)"
         ],
         "glideBombs": [],
         "cruise": [],
@@ -2987,7 +2993,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
         "a2g": [],
         "antiRad": [],
         "antiShip": [
-          "YJ-12 heavy supersonic anti-ship (Mach 3.5, 400km)"
+          "YJ-12 heavy supersonic anti-ship (Mach 3.5, 400km)",
+          "CM-400AKG supersonic standoff (250km)"
         ],
         "glideBombs": [],
         "cruise": [
@@ -3030,7 +3037,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
         "a2g": [],
         "antiRad": [],
         "antiShip": [
-          "YJ-12 heavy supersonic anti-ship (Mach 3.5, 400km)"
+          "YJ-12 heavy supersonic anti-ship (Mach 3.5, 400km)",
+          "CM-400AKG supersonic standoff (250km)"
         ],
         "glideBombs": [],
         "cruise": [
@@ -3079,7 +3087,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
           "YJ-91 anti-radiation seeker (120km)"
         ],
         "antiShip": [
-          "YJ-83K active radar anti-ship (180km)"
+          "YJ-83K active radar anti-ship (180km)",
+          "CM-400AKG supersonic standoff (250km)"
         ],
         "glideBombs": [],
         "cruise": [],
@@ -3129,7 +3138,8 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
         ],
         "antiShip": [
           "Kh-31AD supersonic anti-ship (250km)",
-          "Kh-35E active radar anti-ship (130km)"
+          "Kh-35E active radar anti-ship (130km)",
+          "CM-400AKG supersonic standoff (250km)"
         ],
         "glideBombs": [
           "UPAB-1500B precision satellite guided (50km)"

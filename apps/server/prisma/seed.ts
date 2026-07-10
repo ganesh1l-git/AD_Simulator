@@ -2732,6 +2732,23 @@ async function main() {
       warheadWeight: 130,
       description: 'Lightweight tactical air-launched cruise missile with low sea-skimming capability operated by Pakistan Air Force.',
     },
+    {
+      name: 'CM-400AKG Supersonic',
+      type: 'CRUISE_MISSILE' as const,
+      countryOfOrigin: 'China',
+      speedClass: 'SUPERSONIC' as const,
+      maxSpeed: 4.0,
+      altitudeClass: 'HIGH' as const,
+      minAltitude: 50,
+      maxAltitude: 15000,
+      radarVisibility: 'LOW' as const,
+      rcs: 0.1,
+      threatScore: 82,
+      costEstimate: 1500,
+      range: 240,
+      warheadWeight: 150,
+      description: 'CM-400AKG is a Chinese supersonic standoff air-to-surface missile with high speed (Mach 4) and terminal seeker, designed to hit high-value land targets or ships.',
+    },
     // INDIAN NEW ATTACKERS
     {
       name: 'Agni-P (Agni-Prime)',

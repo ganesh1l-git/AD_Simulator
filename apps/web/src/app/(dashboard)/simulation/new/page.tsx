@@ -427,13 +427,13 @@ export default function SimulationPage() {
       const numericVal = val === '' ? 0 : Number(val);
       if (numericVal < 0 || numericVal > weapon.maxQty) return prev;
 
-      // Validate loadout constraints:
-      // Ra'ad and CM-400AKG are mutually exclusive on JF-17 Block III (t3)
-      if (target.threat.id === 't3' && numericVal > 0) {
-        if (weaponName === "Ra'ad ALCM" && (Number(target.loadout['CM-400AKG Supersonic Missile']) || 0) > 0) {
+      // Ra'ad and CM-400AKG are mutually exclusive on JF-17 Block III
+      const isJF17 = target.threat.name.toLowerCase().includes('jf-17');
+      if (isJF17 && numericVal > 0) {
+        if (weaponName === "Ra'ad ALCM" && (Number(target.loadout['CM-400AKG Supersonic']) || 0) > 0) {
           return prev;
         }
-        if (weaponName === 'CM-400AKG Supersonic Missile' && (Number(target.loadout["Ra'ad ALCM"]) || 0) > 0) {
+        if (weaponName === 'CM-400AKG Supersonic' && (Number(target.loadout["Ra'ad ALCM"]) || 0) > 0) {
           return prev;
         }
       }
@@ -483,13 +483,13 @@ export default function SimulationPage() {
       const newQty = Math.max(0, Math.min(weapon.maxQty, currentQty + delta));
       if (currentQty === newQty) return prev;
 
-      // Validate loadout constraints:
-      // Ra'ad and CM-400AKG are mutually exclusive on JF-17 Block III (t3)
-      if (target.threat.id === 't3') {
-        if (weaponName === "Ra'ad ALCM" && newQty > 0 && (Number(target.loadout['CM-400AKG Supersonic Missile']) || 0) > 0) {
+      // Ra'ad and CM-400AKG are mutually exclusive on JF-17 Block III
+      const isJF17 = target.threat.name.toLowerCase().includes('jf-17');
+      if (isJF17) {
+        if (weaponName === "Ra'ad ALCM" && newQty > 0 && (Number(target.loadout['CM-400AKG Supersonic']) || 0) > 0) {
           return prev;
         }
-        if (weaponName === 'CM-400AKG Supersonic Missile' && newQty > 0 && (Number(target.loadout["Ra'ad ALCM"]) || 0) > 0) {
+        if (weaponName === 'CM-400AKG Supersonic' && newQty > 0 && (Number(target.loadout["Ra'ad ALCM"]) || 0) > 0) {
           return prev;
         }
       }
@@ -2150,9 +2150,9 @@ export default function SimulationPage() {
                                 <div className="text-[9px] text-[#ef4444] font-semibold tracking-wide uppercase border-b border-white/5 pb-0.5 mb-1">Set 1: Heavy Strike Loadout</div>
                                 {item.threat.weaponsCatalog.filter(w => w.set === 1).map(w => {
                                   const qty = item.loadout[w.name] || 0;
-                                  const isRaadCM400Conflict = item.threat.id === 't3' && (
-                                    (w.name === "Ra'ad ALCM" && (item.loadout['CM-400AKG Supersonic Missile'] || 0) > 0) ||
-                                    (w.name === "CM-400AKG Supersonic Missile" && (item.loadout["Ra'ad ALCM"] || 0) > 0)
+                                  const isRaadCM400Conflict = item.threat.name.toLowerCase().includes('jf-17') && (
+                                    (w.name === "Ra'ad ALCM" && (item.loadout['CM-400AKG Supersonic'] || 0) > 0) ||
+                                    (w.name === "CM-400AKG Supersonic" && (item.loadout["Ra'ad ALCM"] || 0) > 0)
                                   );
 
                                   return (
@@ -2212,9 +2212,9 @@ export default function SimulationPage() {
                                 <div className="text-[9px] text-[#22d3ee] font-semibold tracking-wide uppercase border-b border-white/5 pb-0.5 mb-1">Set 2: Tactical Self-Defence</div>
                                 {item.threat.weaponsCatalog.filter(w => w.set === 2).map(w => {
                                   const qty = item.loadout[w.name] || 0;
-                                  const isRaadCM400Conflict = item.threat.id === 't3' && (
-                                    (w.name === "Ra'ad ALCM" && (item.loadout['CM-400AKG Supersonic Missile'] || 0) > 0) ||
-                                    (w.name === "CM-400AKG Supersonic Missile" && (item.loadout["Ra'ad ALCM"] || 0) > 0)
+                                  const isRaadCM400Conflict = item.threat.name.toLowerCase().includes('jf-17') && (
+                                    (w.name === "Ra'ad ALCM" && (item.loadout['CM-400AKG Supersonic'] || 0) > 0) ||
+                                    (w.name === "CM-400AKG Supersonic" && (item.loadout["Ra'ad ALCM"] || 0) > 0)
                                   );
 
                                   return (
