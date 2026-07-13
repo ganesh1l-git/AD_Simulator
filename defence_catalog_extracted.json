@@ -970,7 +970,7 @@
     "missileName": "Tamir Interceptor",
     "range": 70,
     "radarRange": 50,
-    "defaultAmmo": 24,
+    "defaultAmmo": 80,
     "minAlt": 20,
     "maxAlt": 15000,
     "accuracy": 0.9,
@@ -998,7 +998,7 @@
       {
         "name": "Iron Dome Launcher (20 cells)",
         "type": "TEL Launcher",
-        "qty": 2
+        "qty": 4
       }
     ]
   },

@@ -2563,7 +2563,15 @@ export const INVENTORY_DATA: Record<string, SystemInventorySpec[]> = {
         "Standard Battery Pack",
         "Upgraded Digital Radar Pack"
       ],
-      "samMissiles": [],
+      "samMissiles": [
+        {
+          "name": "Tamir Interceptor",
+          "range": "70 km",
+          "seeker": "Active Radar / EO Seeker",
+          "speed": "Mach 3.0",
+          "guidance": "Command Guidance + Terminal Active/EO"
+        }
+      ],
       "operationalHistory": "Developed under requirement programs to establish air parity for the Usa Armed Forces. Rigid developmental evaluations tested early-stage structures in extreme temperature environments, verifying flight mechanics under heavy crosswinds. achievements include successful deployments in major theater commands and peacetime drills (Red Flag, Cobra Warrior, Malabar), confirming the system's operational stability across strategic borders.",
       "combatRecord": "Inducted into active combat squadrons and intercept batteries. Participated in regional border patrols, air interdictions, and airspace security monitoring runs. Successfully deployed in combat operations, recording multiple targets neutralized in border actions and conflicts.",
       "futurePlans": "Mid-life updates are scheduled to integrate updated AESA radars, secure cryptolinks, and localized air-to-air missile options.",
