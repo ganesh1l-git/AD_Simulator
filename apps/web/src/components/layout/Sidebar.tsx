@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { useUIStore } from '@/stores/uiStore';
 
 // SVG icon components — minimal, utilitarian defense UI style
 const icons = {
@@ -117,7 +117,7 @@ const navItems = [
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  const { sidebarCollapsed: collapsed, toggleSidebar } = useUIStore();
 
   return (
     <aside
@@ -140,7 +140,7 @@ export default function Sidebar() {
 
       {/* Collapse Toggle */}
       <button
-        onClick={() => setCollapsed(!collapsed)}
+        onClick={toggleSidebar}
         className="absolute -right-3 top-[72px] w-5 h-5 bg-[#1b2340] border border-[rgba(148,163,184,0.12)]
           flex items-center justify-center text-[9px] text-[#64748b] hover:text-[#cbd5e1] hover:border-[rgba(56,189,248,0.25)]
           transition-colors z-50"
