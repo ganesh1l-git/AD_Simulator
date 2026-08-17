@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const projectRoot = `c:\\Users\\ganes\\OneDrive\\Desktop\\project\\air defence project`;
+const projectRoot = __dirname;
 const seedPath = path.join(projectRoot, 'apps', 'server', 'prisma', 'seed.ts');
 
 let content = fs.readFileSync(seedPath, 'utf8');

@@ -1,4 +1,5 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api/v1';
+const envApiUrl = (process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001').replace(/\/$/, '');
+const API_BASE_URL = envApiUrl.endsWith('/api/v1') ? envApiUrl : `${envApiUrl}/api/v1`;
 
 // Standard fetcher — on 401, clears token and redirects to /login.
 // Use this for all authenticated API calls EXCEPT those that should not
